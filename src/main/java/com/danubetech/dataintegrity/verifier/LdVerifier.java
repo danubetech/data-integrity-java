@@ -18,7 +18,6 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
     private Canonicalizer canonicalizer;
 
     protected LdVerifier(DATAINTEGRITYSUITE dataIntegritySuite, ByteVerifier verifier, Canonicalizer canonicalizer) {
-
         this.dataIntegritySuite = dataIntegritySuite;
         this.verifier = verifier;
         this.canonicalizer = canonicalizer;

@@ -20,7 +20,8 @@ public class LdVerifierRegistry {
             EcdsaKoblitzSignature2016LdVerifier.class,
             JcsEcdsaSecp256k1Signature2019LdVerifier.class,
             BbsBlsSignature2020LdVerifier.class,
-            JsonWebSignature2020LdVerifier.class
+            JsonWebSignature2020LdVerifier.class,
+            DataIntegrityProofLdVerifier.class
     );
 
     private static final Map<String, Class<? extends LdVerifier<? extends DataIntegritySuite>>> LD_VERIFIERS_BY_DATA_INTEGRITY_SUITE_TERM;

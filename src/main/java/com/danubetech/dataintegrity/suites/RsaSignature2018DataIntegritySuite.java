@@ -1,11 +1,10 @@
 package com.danubetech.dataintegrity.suites;
 
+import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +20,6 @@ public class RsaSignature2018DataIntegritySuite extends DataIntegritySuite {
 				URI.create("https://registry.ietf.org/ietf-jose-jws-algorithms#RS256"),
 				List.of(KeyTypeName.RSA),
 				Map.of(KeyTypeName.RSA, List.of(JWSAlgorithm.RS256)),
-				Arrays.asList(URI.create("https://www.w3.org/2018/credentials/v1"), LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
-
+				List.of(URI.create("https://www.w3.org/2018/credentials/v1"), LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }

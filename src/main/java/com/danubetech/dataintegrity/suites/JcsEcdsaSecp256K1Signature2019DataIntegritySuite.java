@@ -1,11 +1,10 @@
 package com.danubetech.dataintegrity.suites;
 
+import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,6 @@ public class JcsEcdsaSecp256K1Signature2019DataIntegritySuite extends DataIntegr
 				URI.create("http://w3id.org/security#secp256k1"),
 				List.of(KeyTypeName.secp256k1),
 				Map.of(KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K)),
-				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SUITES_SECP256K1_2019_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }

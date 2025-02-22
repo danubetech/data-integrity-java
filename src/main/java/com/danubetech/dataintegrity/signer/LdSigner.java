@@ -1,13 +1,13 @@
 package com.danubetech.dataintegrity.signer;
 
 import com.apicatalog.jsonld.lang.Keywords;
+import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
-import com.danubetech.dataintegrity.DataIntegrityProof;
-import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,6 +21,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
     private ByteSigner signer;
     private Canonicalizer canonicalizer;
 
+    private String cryptosuite;
     private Date created;
     private Date expires;
     private String domain;
@@ -31,17 +32,16 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
     private String previousProof;
 
     protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, Canonicalizer canonicalizer) {
-
         this.dataIntegritySuite = dataIntegritySuite;
         this.signer = signer;
         this.canonicalizer = canonicalizer;
     }
 
-    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, Canonicalizer canonicalizer, Date created, Date expires, String domain, String challenge, String nonce, URI verificationMethod, String proofPurpose, String previousProof) {
-
+    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, Canonicalizer canonicalizer, String cryptosuite, Date created, Date expires, String domain, String challenge, String nonce, URI verificationMethod, String proofPurpose, String previousProof) {
         this.dataIntegritySuite = dataIntegritySuite;
         this.signer = signer;
         this.canonicalizer = canonicalizer;
+        this.cryptosuite = cryptosuite;
         this.created = created;
         this.expires = expires;
         this.domain = domain;
@@ -79,6 +79,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
                 .defaultContexts(false)
                 .defaultTypes(false)
                 .type(this.getDataIntegritySuite().getTerm())
+                .cryptosuite(this.getCryptosuite())
                 .created(this.getCreated())
                 .expires(this.getExpires())
                 .domain(this.getDomain())
@@ -147,6 +148,14 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
     public void setCanonicalizer(Canonicalizer canonicalizer) {
         this.canonicalizer = canonicalizer;
+    }
+
+    public String getCryptosuite() {
+        return cryptosuite;
+    }
+
+    public void setCryptosuite(String cryptosuite) {
+        this.cryptosuite = cryptosuite;
     }
 
     public Date getCreated() {

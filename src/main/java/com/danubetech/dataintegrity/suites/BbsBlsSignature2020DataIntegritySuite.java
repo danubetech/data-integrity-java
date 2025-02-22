@@ -1,11 +1,10 @@
 package com.danubetech.dataintegrity.suites;
 
+import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +22,6 @@ public class BbsBlsSignature2020DataIntegritySuite extends DataIntegritySuite {
 						KeyTypeName.Bls12381G2),
 				Map.of(KeyTypeName.Bls12381G1, List.of(JWSAlgorithm.BBSPlus),
 						KeyTypeName.Bls12381G2, List.of(JWSAlgorithm.BBSPlus)),
-				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }

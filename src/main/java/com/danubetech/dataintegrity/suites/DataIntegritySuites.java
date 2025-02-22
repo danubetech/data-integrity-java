@@ -18,6 +18,7 @@ public class DataIntegritySuites {
 	public static final JcsEcdsaSecp256K1Signature2019DataIntegritySuite DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019 = new JcsEcdsaSecp256K1Signature2019DataIntegritySuite();
 	public static final BbsBlsSignature2020DataIntegritySuite DATA_INTEGRITY_SUITE_BBSBLSSIGNATURE2020 = new BbsBlsSignature2020DataIntegritySuite();
 	public static final JsonWebSignature2020DataIntegritySuite DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020 = new JsonWebSignature2020DataIntegritySuite();
+	public static final DataIntegrityProofDataIntegritySuite DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF = new DataIntegrityProofDataIntegritySuite();
 
 	public static final List<? extends DataIntegritySuite> DATA_INTEGRITY_SUITES = List.of(
 			DATA_INTEGRITY_SUITE_RSASIGNATURE2018,
@@ -28,7 +29,8 @@ public class DataIntegritySuites {
 			DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016,
 			DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019,
 			DATA_INTEGRITY_SUITE_BBSBLSSIGNATURE2020,
-			DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020
+			DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020,
+			DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF
 	);
 
 	private static final Map<Class<? extends DataIntegritySuite>, DataIntegritySuite> DATA_INTEGRITY_SUITES_BY_DATA_INTEGRITY_SUITE_CLASS;
@@ -46,8 +48,8 @@ public class DataIntegritySuites {
 	static {
 		DATA_INTEGRITY_SUITES_BY_TERM = new HashMap<>();
 		for (DataIntegritySuite dataIntegritySuite : DATA_INTEGRITY_SUITES) {
-			String cryptographicSuiteTerm = dataIntegritySuite.getTerm();
-			DATA_INTEGRITY_SUITES_BY_TERM.put(cryptographicSuiteTerm, dataIntegritySuite);
+			String dataIntegritySuiteTerm = dataIntegritySuite.getTerm();
+			DATA_INTEGRITY_SUITES_BY_TERM.put(dataIntegritySuiteTerm, dataIntegritySuite);
 		}
 	}
 
@@ -66,16 +68,16 @@ public class DataIntegritySuites {
 		return DATA_INTEGRITY_SUITES_BY_DATA_INTEGRITY_SUITE_CLASS.get(clazz);
 	}
 
-	public static DataIntegritySuite findSignatureSuiteByTerm(String cryptographicSuiteTerm) {
-		return DATA_INTEGRITY_SUITES_BY_TERM.get(cryptographicSuiteTerm);
+	public static DataIntegritySuite findDataIntegritySuiteByTerm(String dataIntegritySuiteTerm) {
+		return DATA_INTEGRITY_SUITES_BY_TERM.get(dataIntegritySuiteTerm);
 	}
 
-	public static List<DataIntegritySuite> findSignatureSuitesByKeyTypeName(KeyTypeName keyTypeName) {
+	public static List<DataIntegritySuite> findDataIntegrityByKeyTypeName(KeyTypeName keyTypeName) {
 		return DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.get(keyTypeName);
 	}
 
-	public static DataIntegritySuite findDefaultSignatureSuiteByKeyTypeName(KeyTypeName keyTypeName) {
-		List<DataIntegritySuite> foundDataIntegritySuitesByKeyTypeName = findSignatureSuitesByKeyTypeName(keyTypeName);
+	public static DataIntegritySuite findDefaultDataIntegrityByKeyTypeName(KeyTypeName keyTypeName) {
+		List<DataIntegritySuite> foundDataIntegritySuitesByKeyTypeName = findDataIntegrityByKeyTypeName(keyTypeName);
 		return foundDataIntegritySuitesByKeyTypeName == null ? null : foundDataIntegritySuitesByKeyTypeName.get(0);
 	}
 }

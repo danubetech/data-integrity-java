@@ -18,10 +18,10 @@ public abstract class DataIntegritySuite {
 	private final URI digestAlgorithm;
 	private final URI proofAlgorithm;
 	private final List<KeyTypeName> keyTypeNames;
-	private final Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
+	private final Map<KeyTypeName, List<String>> jwsAlgorithmsForKeyTypeName;
 	private final List<URI> supportedJsonLDContexts;
 
-	public DataIntegritySuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName, List<URI> supportedJsonLDContexts) {
+	public DataIntegritySuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmsForKeyTypeName, List<URI> supportedJsonLDContexts) {
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
@@ -29,7 +29,7 @@ public abstract class DataIntegritySuite {
 		this.digestAlgorithm = digestAlgorithm;
 		this.proofAlgorithm = proofAlgorithm;
 		this.keyTypeNames = keyTypeNames;
-		this.jwsAlgorithmForKeyTypeName = jwsAlgorithmForKeyTypeName;
+		this.jwsAlgorithmsForKeyTypeName = jwsAlgorithmsForKeyTypeName;
 		this.supportedJsonLDContexts = supportedJsonLDContexts;
 	}
 
@@ -76,7 +76,7 @@ public abstract class DataIntegritySuite {
 	}
 
 	public Map<KeyTypeName, List<String>> getJwsAlgorithmsForKeyTypeName() {
-		return jwsAlgorithmForKeyTypeName;
+		return jwsAlgorithmsForKeyTypeName;
 	}
 
 	public List<URI> getSupportedJsonLDContexts() {
@@ -88,17 +88,17 @@ public abstract class DataIntegritySuite {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		DataIntegritySuite that = (DataIntegritySuite) o;
-		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(canonicalizationAlgorithm, that.canonicalizationAlgorithm) && Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(proofAlgorithm, that.proofAlgorithm) && Objects.equals(keyTypeNames, that.keyTypeNames) && Objects.equals(jwsAlgorithmForKeyTypeName, that.jwsAlgorithmForKeyTypeName) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
+		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(canonicalizationAlgorithm, that.canonicalizationAlgorithm) && Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(proofAlgorithm, that.proofAlgorithm) && Objects.equals(keyTypeNames, that.keyTypeNames) && Objects.equals(jwsAlgorithmsForKeyTypeName, that.jwsAlgorithmsForKeyTypeName) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(term, id, type, canonicalizationAlgorithm, digestAlgorithm, proofAlgorithm, keyTypeNames, jwsAlgorithmForKeyTypeName, supportedJsonLDContexts);
+		return Objects.hash(term, id, type, canonicalizationAlgorithm, digestAlgorithm, proofAlgorithm, keyTypeNames, jwsAlgorithmsForKeyTypeName, supportedJsonLDContexts);
 	}
 
 	@Override
 	public String toString() {
-		return "SignatureSuite{" +
+		return "DataIntegritySuite{" +
 				"term='" + term + '\'' +
 				", id=" + id +
 				", type=" + type +
@@ -106,7 +106,7 @@ public abstract class DataIntegritySuite {
 				", digestAlgorithm=" + digestAlgorithm +
 				", proofAlgorithm=" + proofAlgorithm +
 				", keyTypeNames=" + keyTypeNames +
-				", jwsAlgorithmForKeyTypeName=" + jwsAlgorithmForKeyTypeName +
+				", jwsAlgorithmForKeyTypeName=" + jwsAlgorithmsForKeyTypeName +
 				", supportedJsonLDContexts=" + supportedJsonLDContexts +
 				'}';
 	}

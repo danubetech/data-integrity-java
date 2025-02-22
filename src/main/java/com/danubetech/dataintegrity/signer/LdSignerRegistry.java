@@ -20,7 +20,8 @@ public class LdSignerRegistry {
             EcdsaKoblitzSignature2016LdSigner.class,
             JcsEcdsaSecp256k1Signature2019LdSigner.class,
             BbsBlsSignature2020LdSigner.class,
-            JsonWebSignature2020LdSigner.class
+            JsonWebSignature2020LdSigner.class,
+            DataIntegrityProofLdSigner.class
     );
 
     private static final Map<String, Class<? extends LdSigner<? extends DataIntegritySuite>>> LD_SIGNERS_BY_DATA_INTEGRITY_SUITE_TERM;
