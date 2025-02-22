@@ -1,0 +1,81 @@
+package com.danubetech.dataintegrity.suites;
+
+import com.danubetech.keyformats.jose.KeyTypeName;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class DataIntegritySuites {
+
+	public static final RsaSignature2018DataIntegritySuite DATA_INTEGRITY_SUITE_RSASIGNATURE2018 = new RsaSignature2018DataIntegritySuite();
+	public static final Ed25519Signature2018DataIntegritySuite DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018 = new Ed25519Signature2018DataIntegritySuite();
+	public static final Ed25519Signature2020DataIntegritySuite DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020 = new Ed25519Signature2020DataIntegritySuite();
+	public static final JcsEd25519Signature2020DataIntegritySuite DATA_INTEGRITY_SUITE_JCSED25519SIGNATURE2020 = new JcsEd25519Signature2020DataIntegritySuite();
+	public static final EcdsaSecp256K1Signature2019DataIntegritySuite DATA_INTEGRITY_SUITE_ECDSASECP256L1SIGNATURE2019 = new EcdsaSecp256K1Signature2019DataIntegritySuite();
+	public static final EcdsaKoblitzSignature2016DataIntegritySuite DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016 = new EcdsaKoblitzSignature2016DataIntegritySuite();
+	public static final JcsEcdsaSecp256K1Signature2019DataIntegritySuite DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019 = new JcsEcdsaSecp256K1Signature2019DataIntegritySuite();
+	public static final BbsBlsSignature2020DataIntegritySuite DATA_INTEGRITY_SUITE_BBSBLSSIGNATURE2020 = new BbsBlsSignature2020DataIntegritySuite();
+	public static final JsonWebSignature2020DataIntegritySuite DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020 = new JsonWebSignature2020DataIntegritySuite();
+
+	public static final List<? extends DataIntegritySuite> DATA_INTEGRITY_SUITES = List.of(
+			DATA_INTEGRITY_SUITE_RSASIGNATURE2018,
+			DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018,
+			DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020,
+			DATA_INTEGRITY_SUITE_JCSED25519SIGNATURE2020,
+			DATA_INTEGRITY_SUITE_ECDSASECP256L1SIGNATURE2019,
+			DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016,
+			DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019,
+			DATA_INTEGRITY_SUITE_BBSBLSSIGNATURE2020,
+			DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020
+	);
+
+	private static final Map<Class<? extends DataIntegritySuite>, DataIntegritySuite> DATA_INTEGRITY_SUITES_BY_DATA_INTEGRITY_SUITE_CLASS;
+	private static final Map<String, DataIntegritySuite> DATA_INTEGRITY_SUITES_BY_TERM;
+	private static final Map<KeyTypeName, List<DataIntegritySuite>> DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME;
+
+	static {
+		DATA_INTEGRITY_SUITES_BY_DATA_INTEGRITY_SUITE_CLASS = new HashMap<>();
+		for (DataIntegritySuite dataIntegritySuite : DATA_INTEGRITY_SUITES) {
+			Class<? extends DataIntegritySuite> dataIntegritySuiteClass = dataIntegritySuite.getClass();
+			DATA_INTEGRITY_SUITES_BY_DATA_INTEGRITY_SUITE_CLASS.put(dataIntegritySuiteClass, dataIntegritySuite);
+		}
+	}
+
+	static {
+		DATA_INTEGRITY_SUITES_BY_TERM = new HashMap<>();
+		for (DataIntegritySuite dataIntegritySuite : DATA_INTEGRITY_SUITES) {
+			String cryptographicSuiteTerm = dataIntegritySuite.getTerm();
+			DATA_INTEGRITY_SUITES_BY_TERM.put(cryptographicSuiteTerm, dataIntegritySuite);
+		}
+	}
+
+	static {
+		DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME = new HashMap<>();
+		for (DataIntegritySuite dataIntegritySuite : DATA_INTEGRITY_SUITES) {
+			List<KeyTypeName> keyTypeNames = dataIntegritySuite.getKeyTypeNames();
+			for (KeyTypeName keyTypeName : keyTypeNames) {
+                List<DataIntegritySuite> dataIntegritySuitesList = DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.computeIfAbsent(keyTypeName, k -> new ArrayList<>());
+                dataIntegritySuitesList.add(dataIntegritySuite);
+			}
+		}
+	}
+
+	public static DataIntegritySuite findDataIntegritySuiteByClass(Class<? extends DataIntegritySuite> clazz) {
+		return DATA_INTEGRITY_SUITES_BY_DATA_INTEGRITY_SUITE_CLASS.get(clazz);
+	}
+
+	public static DataIntegritySuite findSignatureSuiteByTerm(String cryptographicSuiteTerm) {
+		return DATA_INTEGRITY_SUITES_BY_TERM.get(cryptographicSuiteTerm);
+	}
+
+	public static List<DataIntegritySuite> findSignatureSuitesByKeyTypeName(KeyTypeName keyTypeName) {
+		return DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.get(keyTypeName);
+	}
+
+	public static DataIntegritySuite findDefaultSignatureSuiteByKeyTypeName(KeyTypeName keyTypeName) {
+		List<DataIntegritySuite> foundDataIntegritySuitesByKeyTypeName = findSignatureSuitesByKeyTypeName(keyTypeName);
+		return foundDataIntegritySuitesByKeyTypeName == null ? null : foundDataIntegritySuitesByKeyTypeName.get(0);
+	}
+}
