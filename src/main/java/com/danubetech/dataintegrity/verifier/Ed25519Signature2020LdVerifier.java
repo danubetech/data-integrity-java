@@ -1,12 +1,13 @@
 package com.danubetech.dataintegrity.verifier;
 
+import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.suites.Ed25519Signature2020DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import com.danubetech.dataintegrity.DataIntegrityProof;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
-import com.danubetech.dataintegrity.suites.Ed25519Signature2020DataIntegritySuite;
-import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
@@ -14,18 +15,19 @@ import java.security.GeneralSecurityException;
 public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2020DataIntegritySuite> {
 
     public Ed25519Signature2020LdVerifier(ByteVerifier verifier) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020, verifier, new URDNA2015Canonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020, verifier);
     }
 
     public Ed25519Signature2020LdVerifier(byte[] publicKey) {
-
         this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
     }
 
     public Ed25519Signature2020LdVerifier() {
-
         this((ByteVerifier) null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return URDNA2015Canonicalizer.getInstance();
     }
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {

@@ -1,6 +1,8 @@
 package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
@@ -15,18 +17,19 @@ import java.security.GeneralSecurityException;
 public class JcsEcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<JcsEcdsaSecp256K1Signature2019DataIntegritySuite> {
 
     public JcsEcdsaSecp256k1Signature2019LdVerifier(ByteVerifier verifier) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019, verifier, new JCSCanonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019, verifier);
     }
 
     public JcsEcdsaSecp256k1Signature2019LdVerifier(ECKey publicKey) {
-
         this(new secp256k1_ES256K_PublicKeyVerifier(publicKey));
     }
 
     public JcsEcdsaSecp256k1Signature2019LdVerifier() {
-
         this((ByteVerifier) null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return JCSCanonicalizer.getInstance();
     }
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {

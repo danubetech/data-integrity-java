@@ -2,7 +2,8 @@ package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.RDFC10Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.JWSUtil;
@@ -18,13 +19,15 @@ import java.text.ParseException;
 public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofDataIntegritySuite> {
 
     public DataIntegrityProofLdVerifier(ByteVerifier verifier) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF, verifier, new URDNA2015Canonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF, verifier);
     }
 
     public DataIntegrityProofLdVerifier() {
-
         this(null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return RDFC10Canonicalizer.getInstance();
     }
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {

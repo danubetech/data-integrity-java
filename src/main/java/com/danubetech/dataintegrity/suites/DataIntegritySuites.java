@@ -72,12 +72,12 @@ public class DataIntegritySuites {
 		return DATA_INTEGRITY_SUITES_BY_TERM.get(dataIntegritySuiteTerm);
 	}
 
-	public static List<DataIntegritySuite> findDataIntegrityByKeyTypeName(KeyTypeName keyTypeName) {
+	public static List<DataIntegritySuite> findDataIntegritySuitesByKeyTypeName(KeyTypeName keyTypeName) {
 		return DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.get(keyTypeName);
 	}
 
-	public static DataIntegritySuite findDefaultDataIntegrityByKeyTypeName(KeyTypeName keyTypeName) {
-		List<DataIntegritySuite> foundDataIntegritySuitesByKeyTypeName = findDataIntegrityByKeyTypeName(keyTypeName);
+	public static DataIntegritySuite findDefaultDataIntegritySuiteByKeyTypeName(KeyTypeName keyTypeName) {
+		List<DataIntegritySuite> foundDataIntegritySuitesByKeyTypeName = findDataIntegritySuitesByKeyTypeName(keyTypeName);
 		return foundDataIntegritySuitesByKeyTypeName == null ? null : foundDataIntegritySuitesByKeyTypeName.get(0);
 	}
 }

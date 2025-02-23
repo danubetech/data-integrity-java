@@ -1,6 +1,7 @@
 package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
@@ -14,18 +15,19 @@ import java.security.GeneralSecurityException;
 public class JcsEd25519Signature2020LdVerifier extends LdVerifier<JcsEd25519Signature2020DataIntegritySuite> {
 
     public JcsEd25519Signature2020LdVerifier(ByteVerifier verifier) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSED25519SIGNATURE2020, verifier, new JCSCanonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSED25519SIGNATURE2020, verifier);
     }
 
     public JcsEd25519Signature2020LdVerifier(byte[] publicKey) {
-
         this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
     }
 
     public JcsEd25519Signature2020LdVerifier() {
-
         this((ByteVerifier) null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return JCSCanonicalizer.getInstance();
     }
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {

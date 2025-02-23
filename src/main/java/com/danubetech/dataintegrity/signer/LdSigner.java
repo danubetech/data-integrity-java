@@ -19,7 +19,6 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
     private final DATAINTEGRITYSUITE dataIntegritySuite;
 
     private ByteSigner signer;
-    private Canonicalizer canonicalizer;
 
     private String cryptosuite;
     private Date created;
@@ -31,16 +30,14 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
     private String proofPurpose;
     private String previousProof;
 
-    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, Canonicalizer canonicalizer) {
+    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer) {
         this.dataIntegritySuite = dataIntegritySuite;
         this.signer = signer;
-        this.canonicalizer = canonicalizer;
     }
 
-    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, Canonicalizer canonicalizer, String cryptosuite, Date created, Date expires, String domain, String challenge, String nonce, URI verificationMethod, String proofPurpose, String previousProof) {
+    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, String cryptosuite, Date created, Date expires, String domain, String challenge, String nonce, URI verificationMethod, String proofPurpose, String previousProof) {
         this.dataIntegritySuite = dataIntegritySuite;
         this.signer = signer;
-        this.canonicalizer = canonicalizer;
         this.cryptosuite = cryptosuite;
         this.created = created;
         this.expires = expires;
@@ -114,8 +111,8 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
     }
 
     private void loadMissingContext(JsonLDObject jsonLDObject){
-        if (this.getDataIntegritySuite().getSupportedJsonLDContexts().stream().noneMatch(jsonLDObject.getContexts()::contains)){
-            URI missingJsonLDContext = this.dataIntegritySuite.getDefaultSupportedJsonLDContext();
+        if (this.getDataIntegritySuite().getSupportedJsonLDContexts().stream().noneMatch(jsonLDObject.getContexts()::contains)) {
+            URI missingJsonLDContext = this.getDataIntegritySuite().getDefaultSupportedJsonLDContext();
             if (missingJsonLDContext != null) {
                 JsonLDUtils.jsonLdAddAsJsonArray(jsonLDObject, Keywords.CONTEXT, JsonLDUtils.uriToString(missingJsonLDContext));
             }
@@ -130,6 +127,8 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         return this.dataIntegritySuite;
     }
 
+    public abstract Canonicalizer getCanonicalizer();
+
     /*
      * Getters and setters
      */
@@ -140,14 +139,6 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
     public void setSigner(ByteSigner signer) {
         this.signer = signer;
-    }
-
-    public Canonicalizer getCanonicalizer() {
-        return canonicalizer;
-    }
-
-    public void setCanonicalizer(Canonicalizer canonicalizer) {
-        this.canonicalizer = canonicalizer;
     }
 
     public String getCryptosuite() {

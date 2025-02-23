@@ -8,11 +8,9 @@ import java.nio.charset.StandardCharsets;
 public class JWSUtil {
 
 	private JWSUtil() {
-
 	}
 
 	public static byte[] getJwsSigningInput(JWSHeader header, byte[] signingInput) {
-
 		byte[] encodedHeader;
 
 		if (header.getParsedBase64URL() != null)
@@ -29,7 +27,6 @@ public class JWSUtil {
 	}
 
 	public static String serializeDetachedJws(JWSHeader jwsHeader, Base64URL signature) {
-
 		return jwsHeader.toBase64URL().toString() + '.' + '.' + signature.toString();
 	}
 }

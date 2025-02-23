@@ -1,6 +1,8 @@
 package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -19,13 +21,15 @@ import java.util.Collections;
 public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020DataIntegritySuite> {
 
     public JsonWebSignature2020LdSigner(ByteSigner signer) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020, signer, new URDNA2015Canonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020, signer);
     }
 
     public JsonWebSignature2020LdSigner() {
-
         this(null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return URDNA2015Canonicalizer.getInstance();
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {

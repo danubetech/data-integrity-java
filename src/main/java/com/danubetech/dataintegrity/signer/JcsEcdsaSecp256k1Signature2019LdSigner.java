@@ -1,5 +1,7 @@
 package com.danubetech.dataintegrity.signer;
 
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
@@ -16,18 +18,19 @@ import java.util.Map;
 public class JcsEcdsaSecp256k1Signature2019LdSigner extends LdSigner<JcsEcdsaSecp256K1Signature2019DataIntegritySuite> {
 
     public JcsEcdsaSecp256k1Signature2019LdSigner(ByteSigner signer) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019, signer, new JCSCanonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019, signer);
     }
 
     public JcsEcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
-
         this(new secp256k1_ES256K_PrivateKeySigner(privateKey));
     }
 
     public JcsEcdsaSecp256k1Signature2019LdSigner() {
-
         this((ByteSigner) null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return JCSCanonicalizer.getInstance();
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {

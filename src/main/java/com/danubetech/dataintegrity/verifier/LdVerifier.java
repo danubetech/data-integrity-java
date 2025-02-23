@@ -15,12 +15,10 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
     private final DATAINTEGRITYSUITE dataIntegritySuite;
 
     private ByteVerifier verifier;
-    private Canonicalizer canonicalizer;
 
-    protected LdVerifier(DATAINTEGRITYSUITE dataIntegritySuite, ByteVerifier verifier, Canonicalizer canonicalizer) {
+    protected LdVerifier(DATAINTEGRITYSUITE dataIntegritySuite, ByteVerifier verifier) {
         this.dataIntegritySuite = dataIntegritySuite;
         this.verifier = verifier;
-        this.canonicalizer = canonicalizer;
     }
 
     /**
@@ -79,6 +77,8 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
         return this.dataIntegritySuite;
     }
 
+    public abstract Canonicalizer getCanonicalizer();
+
     /*
      * Getters and setters
      */
@@ -89,13 +89,5 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 
     public void setVerifier(ByteVerifier verifier) {
         this.verifier = verifier;
-    }
-
-    public Canonicalizer getCanonicalizer() {
-        return canonicalizer;
-    }
-
-    public void setCanonicalizer(Canonicalizer canonicalizer) {
-        this.canonicalizer = canonicalizer;
     }
 }

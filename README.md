@@ -28,8 +28,8 @@ Dependency:
 	</repositories>
 
 	<dependency>
-		<groupId>info.weboftrust</groupId>
-		<artifactId>ld-signatures-java</artifactId>
+		<groupId>com.danubetech</groupId>
+		<artifactId>data-integrity-java</artifactId>
 		<version>1.6.0</version>
 	</dependency>
 
@@ -81,12 +81,12 @@ Example Linked Data Proof:
 
 Danube Tech - https://danubetech.com/
 
-<img align="left" src="https://raw.githubusercontent.com/WebOfTrustInfo/ld-signatures-java/main/docs/logo-wot.png">
+<img align="left" src="https://raw.githubusercontent.com/danubetech/data-integrity-java/main/docs/logo-wot.png">
 
 Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
 
 <br clear="left" />
 
-<img align="left" height="70" src="https://raw.githubusercontent.com/WebOfTrustInfo/ld-signatures-java/main/docs/logo-ngi-essiflab.png">
+<img align="left" height="70" src="https://raw.githubusercontent.com/danubetech/data-integrity-java/main/docs/logo-ngi-essiflab.png">
 
 This software library is part of a project that has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 871932

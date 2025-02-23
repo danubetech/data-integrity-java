@@ -1,6 +1,8 @@
 package com.danubetech.dataintegrity.canonicalizer;
 
 import com.apicatalog.rdf.RdfDataset;
+import com.apicatalog.rdf.RdfNQuad;
+import com.apicatalog.rdf.canon.RdfCanonicalizer;
 import com.apicatalog.rdf.io.nquad.NQuadsWriter;
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.util.SHAUtil;
@@ -12,17 +14,18 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.List;
 
-public class URDNA2015Canonicalizer extends Canonicalizer {
+public class RDFC10Canonicalizer extends Canonicalizer {
 
-    public static final URDNA2015Canonicalizer INSTANCE = new URDNA2015Canonicalizer();
+    private static final RDFC10Canonicalizer INSTANCE = new RDFC10Canonicalizer();
 
-    public URDNA2015Canonicalizer() {
+    public RDFC10Canonicalizer() {
         super(List.of("urdna2015"));
     }
 
-    public static URDNA2015Canonicalizer getInstance() {
+    public static RDFC10Canonicalizer getInstance() {
         return INSTANCE;
     }
 
@@ -59,12 +62,12 @@ public class URDNA2015Canonicalizer extends Canonicalizer {
         return canonicalizationResult;
     }
 
-    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException, NoSuchAlgorithmException {
+    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
         RdfDataset rdfDataset = jsonLDObject.toDataset();
-        rdfDataset = RdfNormalize.normalize(rdfDataset, "urdna2015");
+        Collection<RdfNQuad> rdfNQuads = RdfCanonicalizer.canonicalize(rdfDataset.toList());
         StringWriter stringWriter = new StringWriter();
         NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
-        nQuadsWriter.write(rdfDataset);
+        for (RdfNQuad rdfNQuad : rdfNQuads) nQuadsWriter.write(rdfNQuad);
         return stringWriter.getBuffer().toString();
     }
 }

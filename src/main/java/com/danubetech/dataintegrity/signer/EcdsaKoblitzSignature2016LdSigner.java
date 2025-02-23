@@ -1,6 +1,7 @@
 package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import com.nimbusds.jose.JOSEException;
@@ -21,18 +22,19 @@ import java.util.Collections;
 public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSignature2016DataIntegritySuite> {
 
     public EcdsaKoblitzSignature2016LdSigner(ByteSigner signer) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016, signer, new URDNA2015Canonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016, signer);
     }
 
     public EcdsaKoblitzSignature2016LdSigner(ECKey privateKey) {
-
         this(new secp256k1_ES256K_PrivateKeySigner(privateKey));
     }
 
     public EcdsaKoblitzSignature2016LdSigner() {
-
         this((ByteSigner) null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return URDNA2015Canonicalizer.getInstance();
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {

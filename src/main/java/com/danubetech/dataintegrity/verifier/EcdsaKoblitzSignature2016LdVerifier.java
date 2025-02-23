@@ -1,6 +1,7 @@
 package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
 import com.nimbusds.jose.JOSEException;
@@ -20,18 +21,19 @@ import java.text.ParseException;
 public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitzSignature2016DataIntegritySuite> {
 
     public EcdsaKoblitzSignature2016LdVerifier(ByteVerifier verifier) {
-
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016, verifier, new URDNA2015Canonicalizer());
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016, verifier);
     }
 
     public EcdsaKoblitzSignature2016LdVerifier(ECKey publicKey) {
-
         this(new secp256k1_ES256K_PublicKeyVerifier(publicKey));
     }
 
     public EcdsaKoblitzSignature2016LdVerifier() {
-
         this((ByteVerifier) null);
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return URDNA2015Canonicalizer.getInstance();
     }
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {

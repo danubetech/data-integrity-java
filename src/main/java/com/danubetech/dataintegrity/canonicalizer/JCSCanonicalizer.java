@@ -1,9 +1,9 @@
 package com.danubetech.dataintegrity.canonicalizer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.util.SHAUtil;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
-import com.danubetech.dataintegrity.util.SHAUtil;
 import org.erdtman.jcs.JsonCanonicalizer;
 
 import java.io.IOException;
@@ -12,9 +12,14 @@ import java.util.List;
 
 public class JCSCanonicalizer extends Canonicalizer {
 
-    public JCSCanonicalizer() {
+    private static final JCSCanonicalizer INSTANCE = new JCSCanonicalizer();
 
+    public JCSCanonicalizer() {
         super(List.of("jcs"));
+    }
+
+    public static JCSCanonicalizer getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -39,11 +44,15 @@ public class JCSCanonicalizer extends Canonicalizer {
 
         // canonicalize the LD object
 
-        String canonicalizedJsonLdObjectWithProofWithoutProofValues = new JsonCanonicalizer(jsonLdObjectWithProofWithoutProofValues.toJson()).getEncodedString();
+        String canonicalizedJsonLdObjectWithProofWithoutProofValues = this.canonicalize(jsonLdObjectWithProofWithoutProofValues);
 
         // construct the canonicalization result
 
         byte[] canonicalizationResult = SHAUtil.sha256(canonicalizedJsonLdObjectWithProofWithoutProofValues);
         return canonicalizationResult;
+    }
+
+    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
+        return new JsonCanonicalizer(jsonLDObject.toJson()).getEncodedString();
     }
 }
