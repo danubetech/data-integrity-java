@@ -11,14 +11,9 @@ import java.util.Map;
 public class RsaSignature2018DataIntegritySuite extends DataIntegritySuite {
 
 	RsaSignature2018DataIntegritySuite() {
-
 		super(
 				"RsaSignature2018",
 				URI.create("https://w3id.org/security#RsaSignature2018"),
-				URI.create("https://w3id.org/security#GCA2015"),
-				URI.create("https://registry.ietf.org/ietf-digest-algorithms#SHA256"),
-				URI.create("https://registry.ietf.org/ietf-jose-jws-algorithms#RS256"),
-				List.of(KeyTypeName.RSA),
 				Map.of(KeyTypeName.RSA, List.of(JWSAlgorithm.RS256)),
 				List.of(URI.create("https://www.w3.org/2018/credentials/v1"), LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}

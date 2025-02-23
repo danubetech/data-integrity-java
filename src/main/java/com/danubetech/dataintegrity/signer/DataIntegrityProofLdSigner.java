@@ -49,7 +49,6 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
 
     @Override
     public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
-
         sign(ldProofBuilder, signingInput, this.getSigner());
     }
 }

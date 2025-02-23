@@ -23,6 +23,12 @@ public class JCSCanonicalizer extends Canonicalizer {
     }
 
     @Override
+    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
+
+        return new JsonCanonicalizer(jsonLDObject.toJson()).getEncodedString();
+    }
+
+    @Override
     public byte[] canonicalize(DataIntegrityProof dataIntegrityProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
         // construct the LD proof without proof values
@@ -50,9 +56,5 @@ public class JCSCanonicalizer extends Canonicalizer {
 
         byte[] canonicalizationResult = SHAUtil.sha256(canonicalizedJsonLdObjectWithProofWithoutProofValues);
         return canonicalizationResult;
-    }
-
-    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
-        return new JsonCanonicalizer(jsonLDObject.toJson()).getEncodedString();
     }
 }

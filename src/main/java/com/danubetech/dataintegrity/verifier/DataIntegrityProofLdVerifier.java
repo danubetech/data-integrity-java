@@ -58,7 +58,6 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
 
     @Override
     public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
-
         return verify(signingInput, dataIntegrityProof, this.getVerifier());
     }
 }

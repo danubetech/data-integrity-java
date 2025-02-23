@@ -11,14 +11,9 @@ import java.util.Map;
 public class EcdsaSecp256K1Signature2019DataIntegritySuite extends DataIntegritySuite {
 
 	EcdsaSecp256K1Signature2019DataIntegritySuite() {
-
 		super(
 				"EcdsaSecp256k1Signature2019",
 				URI.create("https://w3id.org/security#EcdsaSecp256k1Signature2019"),
-				URI.create("https://w3id.org/security#URDNA2015"),
-				URI.create("http://w3id.org/digests#sha256"),
-				URI.create("http://w3id.org/security#secp256k1"),
-				List.of(KeyTypeName.secp256k1),
 				Map.of(KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K)),
 				List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1, URI.create("https://www.w3.org/2018/credentials/v1"), LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}

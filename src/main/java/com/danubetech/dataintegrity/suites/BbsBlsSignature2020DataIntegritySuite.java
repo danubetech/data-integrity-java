@@ -11,15 +11,9 @@ import java.util.Map;
 public class BbsBlsSignature2020DataIntegritySuite extends DataIntegritySuite {
 
 	BbsBlsSignature2020DataIntegritySuite() {
-
 		super(
 				"BbsBlsSignature2020",
 				URI.create("https://w3id.org/security#BbsBlsSignature2020"),
-				URI.create("https://w3id.org/security#URDNA2015"),
-				URI.create("https://www.blake2.net/"),
-				URI.create("https://electriccoin.co/blog/new-snark-curve/"),
-				List.of(KeyTypeName.Bls12381G1,
-						KeyTypeName.Bls12381G2),
 				Map.of(KeyTypeName.Bls12381G1, List.of(JWSAlgorithm.BBSPlus),
 						KeyTypeName.Bls12381G2, List.of(JWSAlgorithm.BBSPlus)),
 				List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));

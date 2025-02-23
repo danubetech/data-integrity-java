@@ -8,12 +8,10 @@ import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.util.SHAUtil;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
-import io.setl.rdf.normalization.RdfNormalize;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,6 +25,17 @@ public class RDFC10Canonicalizer extends Canonicalizer {
 
     public static RDFC10Canonicalizer getInstance() {
         return INSTANCE;
+    }
+
+    @Override
+    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
+
+        RdfDataset rdfDataset = jsonLDObject.toDataset();
+        Collection<RdfNQuad> rdfNQuads = RdfCanonicalizer.canonicalize(rdfDataset.toList());
+        StringWriter stringWriter = new StringWriter();
+        NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
+        for (RdfNQuad rdfNQuad : rdfNQuads) nQuadsWriter.write(rdfNQuad);
+        return stringWriter.getBuffer().toString();
     }
 
     @Override
@@ -60,14 +69,5 @@ public class RDFC10Canonicalizer extends Canonicalizer {
         System.arraycopy(SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof), 0, canonicalizationResult, 32, 32);
 
         return canonicalizationResult;
-    }
-
-    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
-        RdfDataset rdfDataset = jsonLDObject.toDataset();
-        Collection<RdfNQuad> rdfNQuads = RdfCanonicalizer.canonicalize(rdfDataset.toList());
-        StringWriter stringWriter = new StringWriter();
-        NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
-        for (RdfNQuad rdfNQuad : rdfNQuads) nQuadsWriter.write(rdfNQuad);
-        return stringWriter.getBuffer().toString();
     }
 }

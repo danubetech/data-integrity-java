@@ -27,6 +27,17 @@ public class URDNA2015Canonicalizer extends Canonicalizer {
     }
 
     @Override
+    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException, NoSuchAlgorithmException {
+
+        RdfDataset rdfDataset = jsonLDObject.toDataset();
+        rdfDataset = RdfNormalize.normalize(rdfDataset, "urdna2015");
+        StringWriter stringWriter = new StringWriter();
+        NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
+        nQuadsWriter.write(rdfDataset);
+        return stringWriter.getBuffer().toString();
+    }
+
+    @Override
     public byte[] canonicalize(DataIntegrityProof dataIntegrityProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
         // construct the LD proof without proof values
@@ -57,14 +68,5 @@ public class URDNA2015Canonicalizer extends Canonicalizer {
         System.arraycopy(SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof), 0, canonicalizationResult, 32, 32);
 
         return canonicalizationResult;
-    }
-
-    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException, NoSuchAlgorithmException {
-        RdfDataset rdfDataset = jsonLDObject.toDataset();
-        rdfDataset = RdfNormalize.normalize(rdfDataset, "urdna2015");
-        StringWriter stringWriter = new StringWriter();
-        NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
-        nQuadsWriter.write(rdfDataset);
-        return stringWriter.getBuffer().toString();
     }
 }

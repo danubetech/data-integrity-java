@@ -2,10 +2,7 @@ package com.danubetech.dataintegrity.suites;
 
 import com.danubetech.keyformats.jose.KeyTypeName;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataIntegritySuites {
 
@@ -56,7 +53,7 @@ public class DataIntegritySuites {
 	static {
 		DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME = new HashMap<>();
 		for (DataIntegritySuite dataIntegritySuite : DATA_INTEGRITY_SUITES) {
-			List<KeyTypeName> keyTypeNames = dataIntegritySuite.getKeyTypeNames();
+			Set<KeyTypeName> keyTypeNames = dataIntegritySuite.getKeyTypeNamesAndJwsAlgorithms().keySet();
 			for (KeyTypeName keyTypeName : keyTypeNames) {
                 List<DataIntegritySuite> dataIntegritySuitesList = DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.computeIfAbsent(keyTypeName, k -> new ArrayList<>());
                 dataIntegritySuitesList.add(dataIntegritySuite);

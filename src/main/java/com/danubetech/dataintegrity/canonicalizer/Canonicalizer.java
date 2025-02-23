@@ -1,8 +1,8 @@
 package com.danubetech.dataintegrity.canonicalizer;
 
+import com.danubetech.dataintegrity.DataIntegrityProof;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
-import com.danubetech.dataintegrity.DataIntegrityProof;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -13,6 +13,7 @@ public abstract class Canonicalizer {
 
     private final List<String> algorithms;
 
+    public abstract String canonicalize(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException;
     public abstract byte[] canonicalize(DataIntegrityProof dataIntegrityProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException;
 
     public Canonicalizer(List<String> algorithms) {

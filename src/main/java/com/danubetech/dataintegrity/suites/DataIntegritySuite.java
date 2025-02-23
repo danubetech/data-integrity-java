@@ -14,27 +14,19 @@ public abstract class DataIntegritySuite {
 	private final String term;
 	private final URI id;
 	private final URI type;
-	private final URI canonicalizationAlgorithm;
-	private final URI digestAlgorithm;
-	private final URI proofAlgorithm;
-	private final List<KeyTypeName> keyTypeNames;
-	private final Map<KeyTypeName, List<String>> jwsAlgorithmsForKeyTypeName;
+	private final Map<KeyTypeName, List<String>> keyTypeNamesAndJwsAlgorithms;
 	private final List<URI> supportedJsonLDContexts;
 
-	public DataIntegritySuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmsForKeyTypeName, List<URI> supportedJsonLDContexts) {
+	public DataIntegritySuite(String term, URI id, Map<KeyTypeName, List<String>> keyTypeNamesAndJwsAlgorithms, List<URI> supportedJsonLDContexts) {
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
-		this.canonicalizationAlgorithm = canonicalizationAlgorithm;
-		this.digestAlgorithm = digestAlgorithm;
-		this.proofAlgorithm = proofAlgorithm;
-		this.keyTypeNames = keyTypeNames;
-		this.jwsAlgorithmsForKeyTypeName = jwsAlgorithmsForKeyTypeName;
+		this.keyTypeNamesAndJwsAlgorithms = keyTypeNamesAndJwsAlgorithms;
 		this.supportedJsonLDContexts = supportedJsonLDContexts;
 	}
 
 	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
-		return this.getJwsAlgorithmsForKeyTypeName().get(keyTypeName);
+		return this.getKeyTypeNamesAndJwsAlgorithms().get(keyTypeName);
 	}
 
 	public String findDefaultJwsAlgorithmForKeyTypeName(KeyTypeName keyTypeName) {
@@ -59,24 +51,8 @@ public abstract class DataIntegritySuite {
 		return type;
 	}
 
-	public URI getCanonicalizationAlgorithm() {
-		return canonicalizationAlgorithm;
-	}
-
-	public URI getDigestAlgorithm() {
-		return digestAlgorithm;
-	}
-
-	public URI getProofAlgorithm() {
-		return proofAlgorithm;
-	}
-
-	public List<KeyTypeName> getKeyTypeNames() {
-		return keyTypeNames;
-	}
-
-	public Map<KeyTypeName, List<String>> getJwsAlgorithmsForKeyTypeName() {
-		return jwsAlgorithmsForKeyTypeName;
+	public Map<KeyTypeName, List<String>> getKeyTypeNamesAndJwsAlgorithms() {
+		return keyTypeNamesAndJwsAlgorithms;
 	}
 
 	public List<URI> getSupportedJsonLDContexts() {
@@ -88,12 +64,12 @@ public abstract class DataIntegritySuite {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		DataIntegritySuite that = (DataIntegritySuite) o;
-		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(canonicalizationAlgorithm, that.canonicalizationAlgorithm) && Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(proofAlgorithm, that.proofAlgorithm) && Objects.equals(keyTypeNames, that.keyTypeNames) && Objects.equals(jwsAlgorithmsForKeyTypeName, that.jwsAlgorithmsForKeyTypeName) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
+		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(keyTypeNamesAndJwsAlgorithms, that.keyTypeNamesAndJwsAlgorithms) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(term, id, type, canonicalizationAlgorithm, digestAlgorithm, proofAlgorithm, keyTypeNames, jwsAlgorithmsForKeyTypeName, supportedJsonLDContexts);
+		return Objects.hash(term, id, type, keyTypeNamesAndJwsAlgorithms, supportedJsonLDContexts);
 	}
 
 	@Override
@@ -102,11 +78,7 @@ public abstract class DataIntegritySuite {
 				"term='" + term + '\'' +
 				", id=" + id +
 				", type=" + type +
-				", canonicalizationAlgorithm=" + canonicalizationAlgorithm +
-				", digestAlgorithm=" + digestAlgorithm +
-				", proofAlgorithm=" + proofAlgorithm +
-				", keyTypeNames=" + keyTypeNames +
-				", jwsAlgorithmForKeyTypeName=" + jwsAlgorithmsForKeyTypeName +
+				", keyTypeNamesAndJwsAlgorithms=" + keyTypeNamesAndJwsAlgorithms +
 				", supportedJsonLDContexts=" + supportedJsonLDContexts +
 				'}';
 	}
