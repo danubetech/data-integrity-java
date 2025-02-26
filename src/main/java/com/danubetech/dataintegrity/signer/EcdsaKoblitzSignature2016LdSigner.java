@@ -33,7 +33,7 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

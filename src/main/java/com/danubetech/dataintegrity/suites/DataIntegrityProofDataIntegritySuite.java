@@ -20,25 +20,13 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 			"eddsa-jcs-2022", JCSCanonicalizer.getInstance()
 	);
 
-	private static final Map<String, Map<KeyTypeName, String>> JWS_ALGORITHM_BY_CRYPTOSUITE_AND_KEY_TYPE_NAME = Map.of(
-			"ecdsa-rdfc-2019", Map.of(
-					KeyTypeName.secp256k1, JWSAlgorithm.ES256K,
-					KeyTypeName.P_256, JWSAlgorithm.ES256,
-					KeyTypeName.P_384, JWSAlgorithm.ES384,
-					KeyTypeName.P_521, JWSAlgorithm.ES512
-			),
-			"ecdsa-jcs-2019", Map.of(
-					KeyTypeName.Ed25519, JWSAlgorithm.EdDSA
-			),
-			"eddsa-rdfc-2022", Map.of(
-					KeyTypeName.secp256k1, JWSAlgorithm.ES256K,
-					KeyTypeName.P_256, JWSAlgorithm.ES256,
-					KeyTypeName.P_384, JWSAlgorithm.ES384,
-					KeyTypeName.P_521, JWSAlgorithm.ES512
-			),
-			"eddsa-jcs-2022", Map.of(
-					KeyTypeName.Ed25519, JWSAlgorithm.EdDSA
-			)
+	private static final Map<String, List<String>> CRYPTOSUITES_BY_JWS_ALGORITHM = Map.of(
+			JWSAlgorithm.EdDSA, List.of("eddsa-rdfc-2022", "eddsa-jcs-2022"),
+			JWSAlgorithm.ES256K, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
+			JWSAlgorithm.ES256KS, List.of("schnorr-secp256k1-rdfc-2025", "schnorr-secp256k1-jcs-2025"),
+			JWSAlgorithm.ES256, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
+			JWSAlgorithm.ES384, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
+			JWSAlgorithm.ES512, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019")
 	);
 
 	DataIntegrityProofDataIntegritySuite() {
@@ -51,5 +39,18 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 						KeyTypeName.P_384, List.of(JWSAlgorithm.ES384),
 						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512)),
                 List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2));
+	}
+
+	public static Canonicalizer findCanonicalizerByCryptosuite(String cryptosuite) {
+		return CANONICALIZERS_BY_CRYPTOSUITE.get(cryptosuite);
+	}
+
+	public static List<String> findCryptosuitesByJwsAlgorithm(String jwsAlgorithm) {
+		return CRYPTOSUITES_BY_JWS_ALGORITHM.get(jwsAlgorithm);
+	}
+
+	public static String findDefaultCryptosuiteByJwsAlgorithm(String jwsAlgorithm) {
+		List<String> foundCryptosuiteByJwsAlgorithm = findCryptosuitesByJwsAlgorithm(jwsAlgorithm);
+		return foundCryptosuiteByJwsAlgorithm == null ? null : foundCryptosuiteByJwsAlgorithm.get(0);
 	}
 }

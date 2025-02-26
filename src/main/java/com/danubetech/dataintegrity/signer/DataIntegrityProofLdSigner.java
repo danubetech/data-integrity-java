@@ -2,15 +2,11 @@ package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
 import com.danubetech.dataintegrity.canonicalizer.RDFC10Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
-import com.danubetech.dataintegrity.suites.Ed25519Signature2020DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
-import com.danubetech.keyformats.jose.JWSAlgorithm;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
@@ -29,17 +25,35 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
-        return RDFC10Canonicalizer.getInstance();
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+        String cryptosuite = dataIntegrityProof.getCryptosuite();
+        if (cryptosuite == null) return RDFC10Canonicalizer.getInstance();
+        return DataIntegrityProofDataIntegritySuite.findCanonicalizerByCryptosuite(cryptosuite);
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+
+        // determine algorithm and cryptosuite
+
+        String algorithm;
+        String cryptosuite;
+
+        algorithm = signer.getAlgorithm();
+        cryptosuite = ldProofBuilder.build().getCryptosuite();
+        if (cryptosuite != null) {
+            if (! DataIntegrityProofDataIntegritySuite.findCryptosuitesByJwsAlgorithm(algorithm).contains(cryptosuite)) {
+                throw new GeneralSecurityException("Algorithm " + algorithm + " is not supported by cryptosuite " + cryptosuite);
+            }
+        } else {
+            cryptosuite = DataIntegrityProofDataIntegritySuite.findDefaultCryptosuiteByJwsAlgorithm(algorithm);
+            ldProofBuilder.cryptosuite(cryptosuite);
+        }
 
         // sign
 
         String proofValue;
 
-        byte[] bytes = signer.sign(signingInput, signer.getAlgorithm());
+        byte[] bytes = signer.sign(signingInput, algorithm);
         proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
 
         // done

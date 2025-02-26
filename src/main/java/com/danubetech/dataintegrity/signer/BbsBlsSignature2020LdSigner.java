@@ -27,7 +27,7 @@ public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020Dat
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

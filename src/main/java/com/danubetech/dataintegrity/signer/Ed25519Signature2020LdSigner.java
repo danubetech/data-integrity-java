@@ -26,7 +26,7 @@ public class Ed25519Signature2020LdSigner extends LdSigner<Ed25519Signature2020D
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

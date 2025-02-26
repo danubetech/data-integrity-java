@@ -33,7 +33,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018DataInteg
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

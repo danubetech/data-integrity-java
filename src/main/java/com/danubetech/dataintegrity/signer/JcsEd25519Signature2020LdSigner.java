@@ -27,7 +27,7 @@ public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signatur
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return JCSCanonicalizer.getInstance();
     }
 
