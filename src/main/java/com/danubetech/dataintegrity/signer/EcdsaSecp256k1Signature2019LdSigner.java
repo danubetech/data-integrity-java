@@ -14,7 +14,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
-import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.ECKey;
 
 import java.security.GeneralSecurityException;
 import java.util.Collections;

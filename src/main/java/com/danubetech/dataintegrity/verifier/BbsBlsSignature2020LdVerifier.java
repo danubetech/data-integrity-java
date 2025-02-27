@@ -27,7 +27,7 @@ public class BbsBlsSignature2020LdVerifier extends LdVerifier<BbsBlsSignature202
         this((ByteVerifier) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

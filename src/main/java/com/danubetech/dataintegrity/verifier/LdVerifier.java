@@ -50,7 +50,7 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 
         // obtain the canonicalized document
 
-        byte[] canonicalizationResult = this.getCanonicalizer().canonicalize(dataIntegrityProof, jsonLdObject);
+        byte[] canonicalizationResult = this.getCanonicalizer(dataIntegrityProof).canonicalize(dataIntegrityProof, jsonLdObject);
 
         // verify
 
@@ -77,7 +77,7 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
         return this.dataIntegritySuite;
     }
 
-    public abstract Canonicalizer getCanonicalizer();
+    public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
 
     /*
      * Getters and setters

@@ -13,7 +13,7 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.ECKey;
 
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -32,7 +32,7 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
         this((ByteVerifier) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

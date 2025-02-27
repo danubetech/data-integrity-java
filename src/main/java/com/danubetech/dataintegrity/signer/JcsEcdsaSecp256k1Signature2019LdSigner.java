@@ -10,7 +10,7 @@ import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
 import com.danubetech.dataintegrity.suites.JcsEcdsaSecp256K1Signature2019DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import io.ipfs.multibase.Base58;
-import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.ECKey;
 
 import java.security.GeneralSecurityException;
 import java.util.Map;

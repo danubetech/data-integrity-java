@@ -14,7 +14,7 @@ import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.dataintegrity.suites.EcdsaKoblitzSignature2016DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.JWSUtil;
-import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.ECKey;
 
 import java.security.GeneralSecurityException;
 import java.util.Collections;

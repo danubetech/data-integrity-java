@@ -31,7 +31,7 @@ public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2
         this((ByteVerifier) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

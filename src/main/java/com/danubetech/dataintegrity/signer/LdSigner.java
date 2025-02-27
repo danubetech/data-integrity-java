@@ -87,6 +87,10 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
                 .previousProof(this.getPreviousProof())
                 .build();
 
+        // add missing context(s)
+
+        loadMissingContext(jsonLdObject);
+
         // obtain the canonicalized document
 
         byte[] canonicalizationResult = this.getCanonicalizer(dataIntegrityProof).canonicalize(dataIntegrityProof, jsonLdObject);
@@ -103,7 +107,6 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         // add proof to JSON-LD
 
         if (addToJsonLdObject) dataIntegrityProof.addToJsonLDObject(jsonLdObject);
-        loadMissingContext(jsonLdObject);
 
         // done
 

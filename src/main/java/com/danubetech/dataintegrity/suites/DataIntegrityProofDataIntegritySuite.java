@@ -14,10 +14,12 @@ import java.util.Map;
 public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 
 	private static final Map<String, Canonicalizer> CANONICALIZERS_BY_CRYPTOSUITE = Map.of(
+			"eddsa-rdfc-2022", RDFC10Canonicalizer.getInstance(),
+			"eddsa-jcs-2022", JCSCanonicalizer.getInstance(),
 			"ecdsa-rdfc-2019", RDFC10Canonicalizer.getInstance(),
 			"ecdsa-jcs-2019", JCSCanonicalizer.getInstance(),
-			"eddsa-rdfc-2022", RDFC10Canonicalizer.getInstance(),
-			"eddsa-jcs-2022", JCSCanonicalizer.getInstance()
+			"schnorr-secp256k1-rdfc-2025", RDFC10Canonicalizer.getInstance(),
+			"schnorr-secp256k1-jcs-2025", JCSCanonicalizer.getInstance()
 	);
 
 	private static final Map<String, List<String>> CRYPTOSUITES_BY_JWS_ALGORITHM = Map.of(

@@ -2,7 +2,7 @@ package com.danubetech.dataintegrity;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
-import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.ECKey;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

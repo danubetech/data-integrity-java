@@ -32,7 +32,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018DataI
         this((ByteVerifier) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return URDNA2015Canonicalizer.getInstance();
     }
 

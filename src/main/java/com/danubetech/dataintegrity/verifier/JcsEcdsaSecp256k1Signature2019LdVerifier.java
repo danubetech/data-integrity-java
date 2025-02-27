@@ -10,7 +10,7 @@ import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
 import com.danubetech.dataintegrity.suites.JcsEcdsaSecp256K1Signature2019DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import io.ipfs.multibase.Base58;
-import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.ECKey;
 
 import java.security.GeneralSecurityException;
 
@@ -28,7 +28,7 @@ public class JcsEcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<JcsEcds
         this((ByteVerifier) null);
     }
 
-    public Canonicalizer getCanonicalizer() {
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         return JCSCanonicalizer.getInstance();
     }
 
