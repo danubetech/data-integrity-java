@@ -20,7 +20,7 @@ public class RDFC10Canonicalizer extends Canonicalizer {
     private static final RDFC10Canonicalizer INSTANCE = new RDFC10Canonicalizer();
 
     public RDFC10Canonicalizer() {
-        super(List.of("urdna2015"));
+        super(List.of("RDFC-1.0"));
     }
 
     public static RDFC10Canonicalizer getInstance() {
