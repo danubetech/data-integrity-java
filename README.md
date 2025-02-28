@@ -2,7 +2,7 @@
 
 ## Information
 
-This library is a direct continuation of our earlier library [ld-signatures-java](https://github.com/weboftrustinfo/ld-signatures-java).
+**This library is a direct continuation of our earlier library [ld-signatures-java](https://github.com/weboftrustinfo/ld-signatures-java).**
 
 It provides an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
 
