@@ -29,8 +29,17 @@ public abstract class DataIntegritySuite {
 		return this.getKeyTypeNamesAndJwsAlgorithms().get(keyTypeName);
 	}
 
+	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName, String cryptosuite) {
+		return this.findJwsAlgorithmsForKeyTypeName(keyTypeName);
+	}
+
 	public String findDefaultJwsAlgorithmForKeyTypeName(KeyTypeName keyTypeName) {
 		List<String> foundAlgorithmsForKeyTypeName = this.findJwsAlgorithmsForKeyTypeName(keyTypeName);
+		return (foundAlgorithmsForKeyTypeName == null || foundAlgorithmsForKeyTypeName.isEmpty()) ? null : foundAlgorithmsForKeyTypeName.get(0);
+	}
+
+	public String findDefaultJwsAlgorithmForKeyTypeName(KeyTypeName keyTypeName, String cryptosuite) {
+		List<String> foundAlgorithmsForKeyTypeName = this.findJwsAlgorithmsForKeyTypeName(keyTypeName, cryptosuite);
 		return (foundAlgorithmsForKeyTypeName == null || foundAlgorithmsForKeyTypeName.isEmpty()) ? null : foundAlgorithmsForKeyTypeName.get(0);
 	}
 
@@ -40,23 +49,23 @@ public abstract class DataIntegritySuite {
 	}
 
 	public String getTerm() {
-		return term;
+		return this.term;
 	}
 
 	public URI getId() {
-		return id;
+		return this.id;
 	}
 
 	public URI getType() {
-		return type;
+		return this.type;
 	}
 
 	public Map<KeyTypeName, List<String>> getKeyTypeNamesAndJwsAlgorithms() {
-		return keyTypeNamesAndJwsAlgorithms;
+		return this.keyTypeNamesAndJwsAlgorithms;
 	}
 
 	public List<URI> getSupportedJsonLDContexts() {
-		return supportedJsonLDContexts;
+		return this.supportedJsonLDContexts;
 	}
 
 	@Override

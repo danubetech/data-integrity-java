@@ -27,7 +27,7 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
     public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
         String cryptosuite = dataIntegrityProof.getCryptosuite();
         if (cryptosuite == null) return RDFC10Canonicalizer.getInstance();
-        Canonicalizer canonicalizer = DataIntegrityProofDataIntegritySuite.findCanonicalizerByCryptosuite(cryptosuite);
+        Canonicalizer canonicalizer = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCanonicalizerByCryptosuite(cryptosuite);
         if (canonicalizer == null) throw new IllegalArgumentException("Unknown cryptosuite: " + cryptosuite);
         return canonicalizer;
     }
@@ -42,7 +42,7 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
         String algorithm;
 
         algorithm = verifier.getAlgorithm();
-        if (! DataIntegrityProofDataIntegritySuite.findCryptosuitesByJwsAlgorithm(algorithm).contains(cryptosuite)) {
+        if (! DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCryptosuitesByJwsAlgorithm(algorithm).contains(cryptosuite)) {
             throw new GeneralSecurityException("Algorithm " + algorithm + " is not supported by cryptosuite " + cryptosuite);
         }
         if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);

@@ -10,6 +10,7 @@ import com.danubetech.keyformats.jose.KeyTypeName;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 
@@ -36,22 +37,29 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 				"DataIntegrityProof",
 				URI.create("https://w3id.org/security#DataIntegrityProof"),
 				Map.of(KeyTypeName.Ed25519, List.of(JWSAlgorithm.EdDSA),
-						KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K),
+						KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K, JWSAlgorithm.ES256KS),
 						KeyTypeName.P_256, List.of(JWSAlgorithm.ES256),
 						KeyTypeName.P_384, List.of(JWSAlgorithm.ES384),
 						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512)),
                 List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2));
 	}
 
-	public static Canonicalizer findCanonicalizerByCryptosuite(String cryptosuite) {
+	@Override
+	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName, String cryptosuite) {
+		List<String> jwsAlgorithms = super.findJwsAlgorithmsForKeyTypeName(keyTypeName, cryptosuite);
+		if (cryptosuite != null) jwsAlgorithms = jwsAlgorithms.stream().filter(jwsAlgorithm -> this.findCryptosuitesByJwsAlgorithm(jwsAlgorithm).contains(cryptosuite)).collect(Collectors.toList());
+		return jwsAlgorithms;
+	}
+
+	public Canonicalizer findCanonicalizerByCryptosuite(String cryptosuite) {
 		return CANONICALIZERS_BY_CRYPTOSUITE.get(cryptosuite);
 	}
 
-	public static List<String> findCryptosuitesByJwsAlgorithm(String jwsAlgorithm) {
+	public List<String> findCryptosuitesByJwsAlgorithm(String jwsAlgorithm) {
 		return CRYPTOSUITES_BY_JWS_ALGORITHM.get(jwsAlgorithm);
 	}
 
-	public static String findDefaultCryptosuiteByJwsAlgorithm(String jwsAlgorithm) {
+	public String findDefaultCryptosuiteByJwsAlgorithm(String jwsAlgorithm) {
 		List<String> foundCryptosuiteByJwsAlgorithm = findCryptosuitesByJwsAlgorithm(jwsAlgorithm);
 		return foundCryptosuiteByJwsAlgorithm == null ? null : foundCryptosuiteByJwsAlgorithm.get(0);
 	}

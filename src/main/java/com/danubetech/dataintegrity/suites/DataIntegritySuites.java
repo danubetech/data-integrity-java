@@ -1,10 +1,14 @@
 package com.danubetech.dataintegrity.suites;
 
 import com.danubetech.keyformats.jose.KeyTypeName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class DataIntegritySuites {
+
+	private static final Logger log = LoggerFactory.getLogger(DataIntegritySuites.class);
 
 	public static final RsaSignature2018DataIntegritySuite DATA_INTEGRITY_SUITE_RSASIGNATURE2018 = new RsaSignature2018DataIntegritySuite();
 	public static final Ed25519Signature2018DataIntegritySuite DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018 = new Ed25519Signature2018DataIntegritySuite();
@@ -75,6 +79,8 @@ public class DataIntegritySuites {
 
 	public static DataIntegritySuite findDefaultDataIntegritySuiteByKeyTypeName(KeyTypeName keyTypeName) {
 		List<DataIntegritySuite> foundDataIntegritySuitesByKeyTypeName = findDataIntegritySuitesByKeyTypeName(keyTypeName);
-		return foundDataIntegritySuitesByKeyTypeName == null ? null : foundDataIntegritySuitesByKeyTypeName.get(0);
+		DataIntegritySuite dataIntegritySuite = foundDataIntegritySuitesByKeyTypeName == null ? null : foundDataIntegritySuitesByKeyTypeName.get(0);
+		if (log.isDebugEnabled()) log.debug("Found default data integrity suite for key type " + keyTypeName.getValue() + ": " + dataIntegritySuite);
+		return dataIntegritySuite;
 	}
 }

@@ -2,6 +2,8 @@ package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LdSignerRegistry {
+
+    private static final Logger log = LoggerFactory.getLogger(LdSignerRegistry.class);
 
     public static final List<Class<? extends LdSigner<? extends DataIntegritySuite>>> LD_SIGNERS = List.of(
             RsaSignature2018LdSigner.class,
@@ -44,6 +48,7 @@ public class LdSignerRegistry {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         }
+        if (log.isDebugEnabled()) log.debug("Found LD signer " + ldSigner.getClass() + " for data integrity suite " + dataIntegritySuiteTerm);
         return ldSigner;
     }
 

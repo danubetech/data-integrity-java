@@ -135,7 +135,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         return this.sign(jsonLdObject, true, false);
     }
 
-    public DataIntegritySuite getDataIntegritySuite() {
+    public DATAINTEGRITYSUITE getDataIntegritySuite() {
         return this.dataIntegritySuite;
     }
 

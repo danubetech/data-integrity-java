@@ -1,7 +1,10 @@
 package com.danubetech.dataintegrity.verifier;
 
+import com.danubetech.dataintegrity.signer.LdSignerRegistry;
 import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -10,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LdVerifierRegistry {
+
+    private static final Logger log = LoggerFactory.getLogger(LdVerifierRegistry.class);
 
     public static final List<Class<? extends LdVerifier<? extends DataIntegritySuite>>> LD_VERIFIERS = List.of(
             RsaSignature2018LdVerifier.class,
@@ -35,8 +40,8 @@ public class LdVerifierRegistry {
         }
     }
 
-    public static LdVerifier<? extends DataIntegritySuite> getLdVerifierByDataIntegritySuiteTerm(String dataInegritySuiteTerm) {
-        Class<? extends LdVerifier<? extends DataIntegritySuite>> ldVerifierClass = LD_VERIFIERS_BY_DATA_INTEGRITY_SUITE_TERM.get(dataInegritySuiteTerm);
+    public static LdVerifier<? extends DataIntegritySuite> getLdVerifierByDataIntegritySuiteTerm(String dataIntegritySuiteTerm) {
+        Class<? extends LdVerifier<? extends DataIntegritySuite>> ldVerifierClass = LD_VERIFIERS_BY_DATA_INTEGRITY_SUITE_TERM.get(dataIntegritySuiteTerm);
         if (ldVerifierClass == null) throw new IllegalArgumentException();
         LdVerifier<? extends DataIntegritySuite> ldVerifier;
         try {
@@ -44,6 +49,7 @@ public class LdVerifierRegistry {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         }
+        if (log.isDebugEnabled()) log.debug("Found LD verifier " + ldVerifier.getClass() + " for data integrity suite " + dataIntegritySuiteTerm);
         return ldVerifier;
     }
 

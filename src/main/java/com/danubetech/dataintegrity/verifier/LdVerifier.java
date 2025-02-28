@@ -81,7 +81,7 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
         return this.verify(jsonLdObject, dataIntegrityProof);
     }
 
-    public DataIntegritySuite getDataIntegritySuite() {
+    public DATAINTEGRITYSUITE getDataIntegritySuite() {
         return this.dataIntegritySuite;
     }
 
