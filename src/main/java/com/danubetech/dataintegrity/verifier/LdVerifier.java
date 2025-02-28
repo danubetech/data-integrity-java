@@ -6,11 +6,16 @@ import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
+import org.apache.commons.codec.binary.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> {
+
+    private static final Logger log = LoggerFactory.getLogger(LdVerifier.class);
 
     private final DATAINTEGRITYSUITE dataIntegritySuite;
 
@@ -50,11 +55,14 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 
         // obtain the canonicalized document
 
+        Canonicalizer canonicalizer = this.getCanonicalizer(dataIntegrityProof);
         byte[] canonicalizationResult = this.getCanonicalizer(dataIntegrityProof).canonicalize(dataIntegrityProof, jsonLdObject);
+        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHex(canonicalizationResult));
 
         // verify
 
         boolean verify = this.verify(canonicalizationResult, dataIntegrityProof);
+        if (log.isDebugEnabled()) log.debug("Verified data integrity proof: {} --> {}", dataIntegrityProof, verify);
 
         // done
 

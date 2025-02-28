@@ -8,6 +8,9 @@ import com.danubetech.keyformats.crypto.ByteSigner;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
+import org.apache.commons.codec.binary.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,6 +18,8 @@ import java.security.GeneralSecurityException;
 import java.util.Date;
 
 public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
+
+    private static final Logger log = LoggerFactory.getLogger(LdSigner.class);
 
     private final DATAINTEGRITYSUITE dataIntegritySuite;
 
@@ -86,6 +91,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
                 .proofPurpose(this.getProofPurpose())
                 .previousProof(this.getPreviousProof())
                 .build();
+        if (log.isDebugEnabled()) log.debug("Constructed data integrity proof: {}", dataIntegrityProof);
 
         // add missing context(s)
 
@@ -93,7 +99,9 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
         // obtain the canonicalized document
 
-        byte[] canonicalizationResult = this.getCanonicalizer(dataIntegrityProof).canonicalize(dataIntegrityProof, jsonLdObject);
+        Canonicalizer canonicalizer = this.getCanonicalizer(dataIntegrityProof);
+        byte[] canonicalizationResult = canonicalizer.canonicalize(dataIntegrityProof, jsonLdObject);
+        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHex(canonicalizationResult));
 
         // sign
 
@@ -103,6 +111,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         this.sign(ldProofBuilder, canonicalizationResult);
 
         dataIntegrityProof = ldProofBuilder.build();
+        if (log.isDebugEnabled()) log.debug("Signed data integrity proof: {}", dataIntegrityProof);
 
         // add proof to JSON-LD
 

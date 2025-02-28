@@ -7,10 +7,14 @@ import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import io.ipfs.multibase.Multibase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.GeneralSecurityException;
 
 public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataIntegritySuite> {
+
+    private static final Logger log = LoggerFactory.getLogger(DataIntegrityProofLdSigner.class);
 
     public DataIntegrityProofLdSigner(ByteSigner signer) {
         super(DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF, signer);
@@ -43,6 +47,7 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
             cryptosuite = DataIntegrityProofDataIntegritySuite.findDefaultCryptosuiteByJwsAlgorithm(algorithm);
             ldProofBuilder.cryptosuite(cryptosuite);
         }
+        if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);
 
         // sign
 

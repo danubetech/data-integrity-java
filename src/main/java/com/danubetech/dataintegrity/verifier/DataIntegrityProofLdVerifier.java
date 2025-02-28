@@ -7,10 +7,14 @@ import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import io.ipfs.multibase.Multibase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.GeneralSecurityException;
 
 public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofDataIntegritySuite> {
+
+    private static final Logger log = LoggerFactory.getLogger(DataIntegrityProofLdVerifier.class);
 
     public DataIntegrityProofLdVerifier(ByteVerifier verifier) {
         super(DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF, verifier);
@@ -41,6 +45,7 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
         if (! DataIntegrityProofDataIntegritySuite.findCryptosuitesByJwsAlgorithm(algorithm).contains(cryptosuite)) {
             throw new GeneralSecurityException("Algorithm " + algorithm + " is not supported by cryptosuite " + cryptosuite);
         }
+        if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);
 
         // verify
 
