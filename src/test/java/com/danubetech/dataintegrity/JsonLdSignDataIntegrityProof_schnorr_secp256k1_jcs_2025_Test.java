@@ -64,7 +64,7 @@ public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_jcs_2025_Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("zidNqaV722DHBUwVXkyjVPgatDMoih29cQM6HayA9K1vePD7QMXZtsg3SNEuMxsKnsKCN8UbAajhE8qiowu658sx", dataIntegrityProof.getProofValue());
+		assertEquals("z4E9fbySL17LW8kVkQYnJcUFhXMTfyz9r767qN2HcLkEvnnf8pKdU9fNR2X1xtJqX2jMKapymcPqoEp9YcciYjyUr", dataIntegrityProof.getProofValue());
 
 		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestUtil.testSecp256k1PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
