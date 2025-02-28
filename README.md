@@ -2,13 +2,16 @@
 
 ## Information
 
-This is an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
+This library is a direct continuation of our earlier library [ld-signatures-java](https://github.com/weboftrustinfo/ld-signatures-java).
 
+It provides an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
+
+ - [DataIntegrityProof](https://w3c.github.io/vc-data-integrity/)
+ - [JsonWebSignature2020](https://w3c-ccg.github.io/lds-jws2020/)
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
- - [Ed25519Signature2020](https://w3c-ccg.github.io/lds-ed25519-2020/)
+ - [Ed25519Signature2020](https://www.w3.org/community/reports/credentials/CG-FINAL-di-eddsa-2020-20220724/)
  - [EcdsaSecp256k1Signature2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019/)
  - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
- - [JsonWebSignature2020](https://w3c-ccg.github.io/lds-jws2020/)
  - [JcsEd25519Signature2020](https://identity.foundation/JcsEd25519Signature2020/)
  - JcsEcdsaSecp256k1Signature2019
 
@@ -30,7 +33,7 @@ Dependency:
 	<dependency>
 		<groupId>com.danubetech</groupId>
 		<artifactId>data-integrity-java</artifactId>
-		<version>1.6.0</version>
+		<version>1.21-SNAPSHOT</version>
 	</dependency>
 
 ## Example
