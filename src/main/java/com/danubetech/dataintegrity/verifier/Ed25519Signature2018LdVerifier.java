@@ -1,18 +1,18 @@
 package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.suites.Ed25519Signature2018DataIntegritySuite;
+import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
-import com.danubetech.dataintegrity.suites.Ed25519Signature2018DataIntegritySuite;
-import com.danubetech.dataintegrity.suites.DataIntegritySuites;
-import com.danubetech.dataintegrity.util.JWSUtil;
 
 import java.security.GeneralSecurityException;
 import java.text.ParseException;

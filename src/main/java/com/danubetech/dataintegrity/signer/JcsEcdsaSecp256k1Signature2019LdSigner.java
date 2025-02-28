@@ -1,14 +1,13 @@
 package com.danubetech.dataintegrity.signer;
 
+import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.suites.JcsEcdsaSecp256K1Signature2019DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import com.danubetech.dataintegrity.DataIntegrityProof;
-import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
-import com.danubetech.dataintegrity.suites.JcsEcdsaSecp256K1Signature2019DataIntegritySuite;
-import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import io.ipfs.multibase.Base58;
 import org.bitcoinj.crypto.ECKey;
 

@@ -3,12 +3,12 @@ package com.danubetech.dataintegrity.signer;
 import bbs.signatures.KeyPair;
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.keyformats.crypto.ByteSigner;
-import com.danubetech.keyformats.crypto.impl.Bls12381G2_BBSPlus_PrivateKeySigner;
-import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.dataintegrity.suites.BbsBlsSignature2020DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.keyformats.crypto.ByteSigner;
+import com.danubetech.keyformats.crypto.impl.Bls12381G2_BBSPlus_PrivateKeySigner;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;

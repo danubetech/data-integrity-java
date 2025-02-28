@@ -1,18 +1,18 @@
 package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.suites.EcdsaKoblitzSignature2016DataIntegritySuite;
+import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
-import com.danubetech.dataintegrity.suites.EcdsaKoblitzSignature2016DataIntegritySuite;
-import com.danubetech.dataintegrity.suites.DataIntegritySuites;
-import com.danubetech.dataintegrity.util.JWSUtil;
 import org.bitcoinj.crypto.ECKey;
 
 import java.security.GeneralSecurityException;

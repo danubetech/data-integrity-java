@@ -2,12 +2,12 @@ package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.suites.JcsEd25519Signature2020DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
-import com.danubetech.dataintegrity.suites.JcsEd25519Signature2020DataIntegritySuite;
-import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import io.ipfs.multibase.Base58;
 
 import java.security.GeneralSecurityException;

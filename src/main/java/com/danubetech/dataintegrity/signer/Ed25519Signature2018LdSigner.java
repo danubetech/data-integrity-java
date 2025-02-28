@@ -1,7 +1,12 @@
 package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
+import com.danubetech.dataintegrity.adapter.JWSSignerAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.suites.Ed25519Signature2018DataIntegritySuite;
+import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import com.nimbusds.jose.JOSEException;
@@ -9,11 +14,6 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
-import com.danubetech.dataintegrity.adapter.JWSSignerAdapter;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
-import com.danubetech.dataintegrity.suites.Ed25519Signature2018DataIntegritySuite;
-import com.danubetech.dataintegrity.suites.DataIntegritySuites;
-import com.danubetech.dataintegrity.util.JWSUtil;
 
 import java.security.GeneralSecurityException;
 import java.util.Collections;
