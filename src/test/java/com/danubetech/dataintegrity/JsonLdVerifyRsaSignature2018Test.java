@@ -1,7 +1,7 @@
 package com.danubetech.dataintegrity;
 
 import foundation.identity.jsonld.JsonLDObject;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.verifier.RsaSignature2018LdVerifier;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ public class JsonLdVerifyRsaSignature2018Test {
 	public void testVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.good.RsaSignature2018.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
@@ -31,7 +31,7 @@ public class JsonLdVerifyRsaSignature2018Test {
 	public void testBadVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.bad.RsaSignature2018.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject);

@@ -7,7 +7,7 @@ import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaSHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
 import foundation.identity.jsonld.JsonLDObject;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.verifier.JcsEd25519Signature2020LdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class JsonLdVerifyJcsEd25519Signature2020Test {
 	public void testVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyJcsEd25519Signature2020Test.class.getResourceAsStream("signed.good.JcsEd25519Signature2020.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
@@ -45,7 +45,7 @@ public class JsonLdVerifyJcsEd25519Signature2020Test {
 	public void testBadVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyJcsEd25519Signature2020Test.class.getResourceAsStream("signed.bad.JcsEd25519Signature2020.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);

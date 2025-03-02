@@ -1,8 +1,8 @@
 package com.danubetech.dataintegrity;
 
 import com.apicatalog.jsonld.loader.DocumentLoader;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
-import com.danubetech.dataintegrity.jsonld.LDSecurityKeywords;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityKeywords;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
@@ -15,10 +15,10 @@ import java.util.Map;
 
 public class DataIntegrityProof extends JsonLDObject {
 
-	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3 };
+	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { DataIntegrityContexts.JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2 };
 	public static final String[] DEFAULT_JSONLD_TYPES = { };
-	public static final String DEFAULT_JSONLD_PREDICATE = LDSecurityKeywords.JSONLD_TERM_PROOF;
-	public static final DocumentLoader DEFAULT_DOCUMENT_LOADER = LDSecurityContexts.DOCUMENT_LOADER;
+	public static final String DEFAULT_JSONLD_PREDICATE = DataIntegrityKeywords.JSONLD_TERM_PROOF;
+	public static final DocumentLoader DEFAULT_DOCUMENT_LOADER = DataIntegrityContexts.DOCUMENT_LOADER;
 
 	@JsonCreator
 	public DataIntegrityProof() {
@@ -57,17 +57,17 @@ public class DataIntegrityProof extends JsonLDObject {
 			super.build();
 
 			// add JSON-LD properties
-			if (this.cryptosuite != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CRYPTOSUITE, this.cryptosuite);
-			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
-			if (this.expires != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_EXPIRES, JsonLDUtils.dateToString(this.expires));
-			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
-			if (this.challenge != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CHALLENGE, this.challenge);
-			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
-			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.previousProof != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PREVIOUSPROOF, this.previousProof);
-			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
-			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
+			if (this.cryptosuite != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CRYPTOSUITE, this.cryptosuite);
+			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
+			if (this.expires != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_EXPIRES, JsonLDUtils.dateToString(this.expires));
+			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			if (this.challenge != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CHALLENGE, this.challenge);
+			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_NONCE, this.nonce);
+			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
+			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
+			if (this.previousProof != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PREVIOUSPROOF, this.previousProof);
+			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
+			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_JWS, this.jws);
 
 			return (DataIntegrityProof) this.jsonLdObject;
 		}
@@ -171,8 +171,8 @@ public class DataIntegrityProof extends JsonLDObject {
 	 */
 
 	public static void removeLdProofValues(JsonLDObject jsonLdObject) {
-		JsonLDUtils.jsonLdRemove(jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE);
-		JsonLDUtils.jsonLdRemove(jsonLdObject, LDSecurityKeywords.JSONLD_TERM_JWS);
+		JsonLDUtils.jsonLdRemove(jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFVALUE);
+		JsonLDUtils.jsonLdRemove(jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_JWS);
 		JsonLDUtils.jsonLdRemove(jsonLdObject, "signatureValue");
 	}
 
@@ -181,46 +181,46 @@ public class DataIntegrityProof extends JsonLDObject {
 	 */
 
 	public String getCryptosuite() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_CRYPTOSUITE);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_CRYPTOSUITE);
 	}
 
 	public Date getCreated() {
-		return JsonLDUtils.stringToDate(JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_CREATED));
+		return JsonLDUtils.stringToDate(JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_CREATED));
 	}
 
 	public Date getExpires() {
-		return JsonLDUtils.stringToDate(JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_EXPIRES));
+		return JsonLDUtils.stringToDate(JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_EXPIRES));
 	}
 
 	public String getDomain() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_DOMAIN);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_DOMAIN);
 	}
 
 	public String getChallenge() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_CHALLENGE);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_CHALLENGE);
 	}
 
 	public String getNonce() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_NONCE);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_NONCE);
 	}
 
 	public URI getVerificationMethod() {
-		return JsonLDUtils.stringToUri(JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD));
+		return JsonLDUtils.stringToUri(JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_VERIFICATIONMETHOD));
 	}
 
 	public String getProofPurpose() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_PROOFPURPOSE);
 	}
 
 	public String getPreviousProof() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_PREVIOUSPROOF);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_PREVIOUSPROOF);
 	}
 
 	public String getProofValue() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_PROOFVALUE);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_PROOFVALUE);
 	}
 
 	public String getJws() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_JWS);
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_JWS);
 	}
 }

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class LDSecurityContexts {
+public class DataIntegrityContexts {
 
     public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V1 = URI.create("https://w3id.org/security/v1");
     public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V2 = URI.create("https://w3id.org/security/v2");
@@ -35,27 +35,27 @@ public class LDSecurityContexts {
             CONTEXTS = new HashMap<>();
 
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-v1.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v1.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V2,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-v2.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v2.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V3,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-v3-unstable.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v3-unstable.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-bbs-v1.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-bbs-v1.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-suites-secp256k1-2019.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-secp256k1-2019.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2018_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-suites-ed25519-2018.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-ed25519-2018.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2020_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-suites-ed25519-2020.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-ed25519-2020.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_X25519_2019_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-suites-x25519-2019.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-x25519-2019.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("security-suites-jws-2020.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-jws-2020.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("dataintegrity-v1.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("dataintegrity-v1.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(LDSecurityContexts.class.getResourceAsStream("dataintegrity-v2.jsonld"))));
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("dataintegrity-v2.jsonld"))));
 
             for (Map.Entry<URI, JsonDocument> context : CONTEXTS.entrySet()) {
                 context.getValue().setDocumentUrl(context.getKey());

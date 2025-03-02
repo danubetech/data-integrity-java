@@ -1,6 +1,6 @@
 package com.danubetech.dataintegrity.jsonld;
 
-public class LDSecurityKeywords {
+public class DataIntegrityKeywords {
 
     /*
      * https://w3id.org/security/v2

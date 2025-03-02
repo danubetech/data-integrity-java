@@ -3,7 +3,7 @@ package com.danubetech.dataintegrity.suites;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
 import com.danubetech.dataintegrity.canonicalizer.RDFC10Canonicalizer;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
 
@@ -41,7 +41,7 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 						KeyTypeName.P_256, List.of(JWSAlgorithm.ES256),
 						KeyTypeName.P_384, List.of(JWSAlgorithm.ES384),
 						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512)),
-                List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2));
+                List.of(DataIntegrityContexts.JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2));
 	}
 
 	@Override

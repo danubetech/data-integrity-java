@@ -1,7 +1,7 @@
 package com.danubetech.dataintegrity;
 
 import foundation.identity.jsonld.JsonLDObject;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.verifier.JcsEcdsaSecp256k1Signature2019LdVerifier;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ public class JsonLdVerifyJcsEcdsaSecp256k1Signature2019Test {
 	public void testVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyJcsEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("signed.good.JcsEcdsaSecp256k1Signature2019.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		JcsEcdsaSecp256k1Signature2019LdVerifier verifier = new JcsEcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
@@ -31,7 +31,7 @@ public class JsonLdVerifyJcsEcdsaSecp256k1Signature2019Test {
 	public void testBadVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyJcsEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("signed.bad.JcsEcdsaSecp256k1Signature2019.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		JcsEcdsaSecp256k1Signature2019LdVerifier verifier = new JcsEcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);

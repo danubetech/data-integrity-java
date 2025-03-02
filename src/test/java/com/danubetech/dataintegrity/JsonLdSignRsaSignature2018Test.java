@@ -2,14 +2,13 @@ package com.danubetech.dataintegrity;
 
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.RsaSignature2018LdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.verifier.RsaSignature2018LdVerifier;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ public class JsonLdSignRsaSignature2018Test {
 	public void testSign() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignRsaSignature2018Test.class.getResourceAsStream("input.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
 		Date expires = JsonLDUtils.DATE_FORMAT.parse("2027-10-24T05:33:31Z");

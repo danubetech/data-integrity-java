@@ -1,6 +1,6 @@
 package com.danubetech.dataintegrity;
 
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
@@ -43,7 +43,7 @@ public class JsonLdSignDataIntegrityProof_eddsa_rdfc_2022_Test {
 	public void testSign() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_eddsa_rdfc_2022_Test.class.getResourceAsStream("input.jsonld"))));
-		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
 		Date expires = JsonLDUtils.DATE_FORMAT.parse("2027-10-24T05:33:31Z");

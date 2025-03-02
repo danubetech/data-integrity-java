@@ -1,6 +1,6 @@
 package com.danubetech.dataintegrity.suites;
 
-import com.danubetech.dataintegrity.jsonld.LDSecurityContexts;
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
 
@@ -20,6 +20,6 @@ public class JsonWebSignature2020DataIntegritySuite extends DataIntegritySuite {
 						KeyTypeName.P_256, List.of(JWSAlgorithm.ES256),
 						KeyTypeName.P_384, List.of(JWSAlgorithm.ES384),
 						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512)),
-				List.of(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				List.of(DataIntegrityContexts.JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1, DataIntegrityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }
