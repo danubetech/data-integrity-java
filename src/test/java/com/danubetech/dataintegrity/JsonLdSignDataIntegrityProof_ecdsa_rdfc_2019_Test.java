@@ -64,7 +64,7 @@ public class JsonLdSignDataIntegrityProof_ecdsa_rdfc_2019_Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("z2NyrYspPjjRVEEExohfgmb779e7dcu2RiM12ENRE876zDW5sFrHSdgAS85dwzEabnM2Zpyg2eGfP9fcjUNo5nANn", dataIntegrityProof.getProofValue());
+		assertEquals("z4zCVr1T7hMvPKwmJWBK7LibjdxhK9EAr7vwZERq1jTNuJzArxz7trqd2jGnFp79QqN27hMs7h9LUyBamTxPXtfLH", dataIntegrityProof.getProofValue());
 
 		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256K, TestUtil.testSecp256k1PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
