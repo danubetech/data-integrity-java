@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class DataIntegrityProof extends JsonLDObject {
 
-	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { DataIntegrityContexts.JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2 };
+	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { };
 	public static final String[] DEFAULT_JSONLD_TYPES = { };
 	public static final String DEFAULT_JSONLD_PREDICATE = DataIntegrityKeywords.JSONLD_TERM_PROOF;
 	public static final DocumentLoader DEFAULT_DOCUMENT_LOADER = DataIntegrityContexts.DOCUMENT_LOADER;

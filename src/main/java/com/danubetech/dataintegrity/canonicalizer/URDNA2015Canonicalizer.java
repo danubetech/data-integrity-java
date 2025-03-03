@@ -44,7 +44,8 @@ public class URDNA2015Canonicalizer extends Canonicalizer {
 
         DataIntegrityProof dataIntegrityProofWithoutProofValues = DataIntegrityProof.builder()
                 .base(dataIntegrityProof)
-                .defaultContexts(true)
+                .defaultContexts(false)
+                .contexts(jsonLdObject.getContexts())
                 .build();
         DataIntegrityProof.removeLdProofValues(dataIntegrityProofWithoutProofValues);
 
