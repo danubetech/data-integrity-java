@@ -4,7 +4,6 @@ import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -30,7 +29,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_rdfc_2025_Test {
+public class JsonLdSignDataIntegrityProof_bip340_rdfc_2025_Test {
 
 	@BeforeEach
 	public void before() {
@@ -44,7 +43,7 @@ public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_rdfc_2025_Test {
 	@SuppressWarnings("unchecked")
 	public void testSign() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_schnorr_secp256k1_rdfc_2025_Test.class.getResourceAsStream("input.jsonld"))));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_bip340_rdfc_2025_Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
@@ -54,7 +53,7 @@ public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_rdfc_2025_Test {
 
 		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestKeys.testSecp256k1PrivateKey);
 		DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
-		signer.setCryptosuite("schnorr-secp256k1-rdfc-2025");
+		signer.setCryptosuite("bip340-rdfc-2025");
 		signer.setCreated(created);
 		signer.setExpires(expires);
 		signer.setDomain(domain);
@@ -66,7 +65,7 @@ public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_rdfc_2025_Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("z3vajFqAUAEw6o5BXXNPevSKM14ZXdg6uFz9vND3TQkhmb678QFxAwzu4udPzrYUdmgLqm9Z8esP57TRkb9SdKCt7", dataIntegrityProof.getProofValue());
+		assertEquals("z2urDk4xts5xTrivYbHRdgFA7S5iA1et8jLqGjj7sVCcXpfHbykpWJoF6Vzr2yyxxjUE7UmTxdADKUoBEE3LcX1TX", dataIntegrityProof.getProofValue());
 
 		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestKeys.testSecp256k1PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);

@@ -31,10 +31,10 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 					JWSAlgorithm.ES384, JCSSHA384Canonicalizer.getInstance(),
 					JWSAlgorithm.ES512, JCSSHA512Canonicalizer.getInstance()
 			),
-			"schnorr-secp256k1-rdfc-2025", Map.of(
+			"bip340-rdfc-2025", Map.of(
 					JWSAlgorithm.ES256KS, RDFC10SHA256Canonicalizer.getInstance()
 			),
-			"schnorr-secp256k1-jcs-2025", Map.of(
+			"bip340-jcs-2025", Map.of(
 					JWSAlgorithm.ES256KS, JCSSHA256Canonicalizer.getInstance()
 			)
 	);
@@ -42,7 +42,7 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 	private static final Map<String, List<String>> CRYPTOSUITES_BY_JWS_ALGORITHM = Map.of(
 			JWSAlgorithm.EdDSA, List.of("eddsa-rdfc-2022", "eddsa-jcs-2022"),
 			JWSAlgorithm.ES256K, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
-			JWSAlgorithm.ES256KS, List.of("schnorr-secp256k1-rdfc-2025", "schnorr-secp256k1-jcs-2025"),
+			JWSAlgorithm.ES256KS, List.of("bip340-rdfc-2025", "bip340-jcs-2025"),
 			JWSAlgorithm.ES256, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
 			JWSAlgorithm.ES384, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
 			JWSAlgorithm.ES512, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019")
