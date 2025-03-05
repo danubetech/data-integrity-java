@@ -3,6 +3,7 @@ package com.danubetech.dataintegrity;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.util.TestKeys;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -50,7 +51,7 @@ public class JsonLdSignDataIntegrityProof_ecdsa_rdfc_2019_Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256K, TestUtil.testSecp256k1PrivateKey);
+		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256K, TestKeys.testSecp256k1PrivateKey);
 		DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
 		signer.setCryptosuite("ecdsa-rdfc-2019");
 		signer.setCreated(created);
@@ -66,7 +67,7 @@ public class JsonLdSignDataIntegrityProof_ecdsa_rdfc_2019_Test {
 		assertEquals(nonce, dataIntegrityProof.getNonce());
 		assertEquals("z1GF27K4rsJkrBfzdAdnuzUPgU69RdWrhEqHQWGYFtDkqXBKg5e6QRphSRpL1EocAC95n8EqcdsgeyqnD5i1UtnR", dataIntegrityProof.getProofValue());
 
-		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256K, TestUtil.testSecp256k1PublicKey);
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256K, TestKeys.testSecp256k1PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);

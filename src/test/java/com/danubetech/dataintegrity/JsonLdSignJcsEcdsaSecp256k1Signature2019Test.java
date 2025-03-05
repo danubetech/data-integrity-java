@@ -1,5 +1,7 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
@@ -29,7 +31,7 @@ public class JsonLdSignJcsEcdsaSecp256k1Signature2019Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		JcsEcdsaSecp256k1Signature2019LdSigner signer = new JcsEcdsaSecp256k1Signature2019LdSigner(TestUtil.testSecp256k1PrivateKey);
+		JcsEcdsaSecp256k1Signature2019LdSigner signer = new JcsEcdsaSecp256k1Signature2019LdSigner(TestKeys.testSecp256k1PrivateKey);
 		signer.setCreated(created);
 		signer.setExpires(expires);
 		signer.setDomain(domain);
@@ -41,9 +43,9 @@ public class JsonLdSignJcsEcdsaSecp256k1Signature2019Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("27gsxfhvpgJZofBNnNiaAqseyKvnfzviXjCuaoYKbR2U3GVxbthZHiuPpRf52LGF3uRo7K6MQvBrjMrzfNhNfzPW", dataIntegrityProof.getJsonObject().get("signatureValue"));
+		assertEquals("Dbh9kg6ZpccsfztsBJDS4yMU1KjoHJBGZkQk7jtzRA7oLwgRRFZcMfdCDFD73auAwp3q7C76ag6XhKnfwAbgcCy", dataIntegrityProof.getJsonObject().get("signatureValue"));
 
-		JcsEcdsaSecp256k1Signature2019LdVerifier verifier = new JcsEcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);
+		JcsEcdsaSecp256k1Signature2019LdVerifier verifier = new JcsEcdsaSecp256k1Signature2019LdVerifier(TestKeys.testSecp256k1PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);
 	}

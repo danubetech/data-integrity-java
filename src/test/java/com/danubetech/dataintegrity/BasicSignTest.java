@@ -1,5 +1,6 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.util.TestKeys;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class BasicSignTest {
 
 		JWSObject jwsObject = new JWSObject(jwsHeader, payload);
 
-		JWSSigner jwsSigner = new RSASSASigner(TestUtil.testRSAPrivateKey.getPrivate());
+		JWSSigner jwsSigner = new RSASSASigner(TestKeys.testRSAPrivateKey.getPrivate());
 		jwsObject.sign(jwsSigner);
 		signatureValue = jwsObject.serialize(true);
 

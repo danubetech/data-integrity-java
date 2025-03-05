@@ -1,5 +1,7 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
@@ -35,7 +37,7 @@ public class JsonLdVerifyJcsEd25519Signature2020Test {
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyJcsEd25519Signature2020Test.class.getResourceAsStream("signed.good.JcsEd25519Signature2020.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
-		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
+		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestKeys.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
 		assertTrue(verify);
 	}
@@ -47,7 +49,7 @@ public class JsonLdVerifyJcsEd25519Signature2020Test {
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyJcsEd25519Signature2020Test.class.getResourceAsStream("signed.bad.JcsEd25519Signature2020.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
-		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
+		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestKeys.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
 		assertFalse(verify);
 	}

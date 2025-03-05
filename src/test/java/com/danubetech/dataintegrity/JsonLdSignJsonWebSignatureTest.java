@@ -3,6 +3,8 @@ package com.danubetech.dataintegrity;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.JsonWebSignature2020LdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.JsonWebSignature2020LdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -50,7 +52,7 @@ public class JsonLdSignJsonWebSignatureTest {
 		String domain = "example.com";
 		String nonce = null;
 
-		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestUtil.testEd25519PrivateKey);
+		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestKeys.testEd25519PrivateKey);
 		JsonWebSignature2020LdSigner signer = new JsonWebSignature2020LdSigner(privateKeySigner);
 		signer.setCreated(created);
 		signer.setExpires(expires);
@@ -65,7 +67,7 @@ public class JsonLdSignJsonWebSignatureTest {
 		assertEquals(nonce, dataIntegrityProof.getNonce());
 		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..Xmc-e78h7VdiibJOHCQWRLZMq7IsD-h3h8syB748Tl3VYvCHFeyF2IrAeGD8-1_GEk_UqWi-gmQhR_Wr22n3Dw", dataIntegrityProof.getJws());
 
-		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestUtil.testEd25519PublicKey);
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestKeys.testEd25519PublicKey);
 		JsonWebSignature2020LdVerifier verifier = new JsonWebSignature2020LdVerifier(publicKeyVerifier);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);

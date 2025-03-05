@@ -3,6 +3,8 @@ package com.danubetech.dataintegrity;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -50,7 +52,7 @@ public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_jcs_2025_Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestUtil.testSecp256k1PrivateKey);
+		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestKeys.testSecp256k1PrivateKey);
 		DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
 		signer.setCryptosuite("schnorr-secp256k1-jcs-2025");
 		signer.setCreated(created);
@@ -64,9 +66,9 @@ public class JsonLdSignDataIntegrityProof_schnorr_secp256k1_jcs_2025_Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("z2tMApeiRGsdPrcZZ8aFRjcoj6ihyFpUtKnVd9r3QqvqXcU3dnmWiY2X77pWLsgkm21NgZ44ZDXRdo9EZKFm8oPJS", dataIntegrityProof.getProofValue());
+		assertEquals("z58KqoFzyJUKe1m3nLZJrpcncoH963sHVvpnBdbhEhmU1UGewiko16o7oUbVPhzycv33b3EAYkNvBtdQWZqD5so7c", dataIntegrityProof.getProofValue());
 
-		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestUtil.testSecp256k1PublicKey);
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestKeys.testSecp256k1PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);

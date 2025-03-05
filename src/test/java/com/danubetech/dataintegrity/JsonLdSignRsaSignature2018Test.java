@@ -1,5 +1,7 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
@@ -29,7 +31,7 @@ public class JsonLdSignRsaSignature2018Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		RsaSignature2018LdSigner signer = new RsaSignature2018LdSigner(TestUtil.testRSAPrivateKey);
+		RsaSignature2018LdSigner signer = new RsaSignature2018LdSigner(TestKeys.testRSAPrivateKey);
 		signer.setCreated(created);
 		signer.setExpires(expires);
 		signer.setDomain(domain);
@@ -43,7 +45,7 @@ public class JsonLdSignRsaSignature2018Test {
 		assertEquals(nonce, dataIntegrityProof.getNonce());
 		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..IjvsJZgMV8-H2AgXsXI5yVgWb4Y4jHE7c2TdDJ-yp1mDn9A9gvM-nTlr2HjgKvJuMmJqshMOM-inKNj63dbRMoviU2iDTyjUc0Jg85XxcOXjQYZ1eCvxkOo1yC1Zka9sMZG7-SlERrNPktHlAZ_nBvWqb_6d-wd1roHHI4dWLgBr2qhxyZNSilsCh0eTGNqROvnCNAxKNFbSF0-gnuDYZZiyMe3aqcrCf0JhDIAEsUB3AUeko8TnRGZ5NBY9FLj-EGgr3YugIU4KKKeiEgxYITL3mKErOGfJxyrVeEX8o9hCWkUkfEtYggtpYdOkA9_CmVKIq_oiynemah-3D8ZMXw", dataIntegrityProof.getJws());
 
-		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
+		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestKeys.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);
 	}

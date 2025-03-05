@@ -7,6 +7,9 @@ import com.danubetech.dataintegrity.util.SHAUtil;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import io.setl.rdf.normalization.RdfNormalize;
+import org.apache.commons.codec.binary.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -15,6 +18,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class URDNA2015Canonicalizer extends Canonicalizer {
+
+    private static final Logger log = LoggerFactory.getLogger(RDFC10Canonicalizer.class);
 
     public static final URDNA2015Canonicalizer INSTANCE = new URDNA2015Canonicalizer();
 
@@ -61,14 +66,15 @@ public class URDNA2015Canonicalizer extends Canonicalizer {
 
         jsonLdObjectWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
         String canonicalizedJsonLdObjectWithoutProof = this.canonicalize(jsonLdObjectWithoutProof);
+        byte[] canonicalizedJsonLdObjectWithoutProofHash = SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof);
+        if (log.isDebugEnabled()) log.debug("Canonicalized LD object without proof: {}", canonicalizedJsonLdObjectWithoutProof);
+        if (log.isDebugEnabled()) log.debug("Hashed canonicalized LD object without proof: {}", Hex.encodeHexString(canonicalizedJsonLdObjectWithoutProofHash));
 
         dataIntegrityProofWithoutProofValues.setDocumentLoader(jsonLdObject.getDocumentLoader());
         String canonicalizedLdProofWithoutProofValues = this.canonicalize(dataIntegrityProofWithoutProofValues);
-
-        // hashing
-
-        byte[] canonicalizedJsonLdObjectWithoutProofHash = SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof);
         byte[] canonicalizedLdProofWithoutProofValuesHash = SHAUtil.sha256(canonicalizedLdProofWithoutProofValues);
+        if (log.isDebugEnabled()) log.debug("Canonicalized LD proof without proof value: {}", canonicalizedLdProofWithoutProofValues);
+        if (log.isDebugEnabled()) log.debug("Hashed canonicalized LD proof without proof value: {}", Hex.encodeHexString(canonicalizedLdProofWithoutProofValuesHash));
 
         // construct the canonicalization result
 

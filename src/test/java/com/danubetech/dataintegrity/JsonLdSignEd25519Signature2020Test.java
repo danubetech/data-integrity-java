@@ -1,5 +1,7 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
@@ -44,7 +46,7 @@ public class JsonLdSignEd25519Signature2020Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		Ed25519Signature2020LdSigner signer = new Ed25519Signature2020LdSigner(TestUtil.testEd25519PrivateKey);
+		Ed25519Signature2020LdSigner signer = new Ed25519Signature2020LdSigner(TestKeys.testEd25519PrivateKey);
 		signer.setCreated(created);
 		signer.setExpires(expires);
 		signer.setDomain(domain);
@@ -58,7 +60,7 @@ public class JsonLdSignEd25519Signature2020Test {
 		assertEquals(nonce, dataIntegrityProof.getNonce());
 		assertEquals("z4zhuzqtRyNoAi7iFdaxECAyb3oMybLb3c9YfmgsoFB9bx9CEcatNo6sLZB9DzHiQDaxFVj6btEmR3AaYsxagF7KY", dataIntegrityProof.getProofValue());
 
-		Ed25519Signature2020LdVerifier verifier = new Ed25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
+		Ed25519Signature2020LdVerifier verifier = new Ed25519Signature2020LdVerifier(TestKeys.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);
 	}

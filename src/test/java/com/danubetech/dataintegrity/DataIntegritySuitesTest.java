@@ -12,13 +12,13 @@ public class DataIntegritySuitesTest {
 	@Test
 	public void testDataIntegritySuites() throws Exception {
 
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.RSA).size(), 2);
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.secp256k1).size(), 5);
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Ed25519).size(), 5);
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_256).size(), 2);
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_384).size(), 2);
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Bls12381G1).size(), 1);
-		assertEquals(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Bls12381G2).size(), 1);
+		assertEquals(2, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.RSA).size());
+		assertEquals(5, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.secp256k1).size());
+		assertEquals(5, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Ed25519).size());
+		assertEquals(2, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_256).size());
+		assertEquals(2, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_384).size());
+		assertEquals(1, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Bls12381G1).size());
+		assertEquals(1, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Bls12381G2).size());
 
 		assertTrue(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.RSA).contains(DataIntegritySuites.DATA_INTEGRITY_SUITE_RSASIGNATURE2018));
 		assertTrue(DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.secp256k1).contains(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016));

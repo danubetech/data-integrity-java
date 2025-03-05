@@ -13,7 +13,7 @@ public class JCSSHA512Canonicalizer extends JCSCanonicalizer {
     }
 
     public int hashLength() {
-        return 48;
+        return 64;
     }
 
     public byte[] hash(byte[] input) throws GeneralSecurityException {

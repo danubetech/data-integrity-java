@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
+import java.util.Objects;
 
 public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
@@ -106,7 +107,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         // add LD contexts to LD proof options if missing
 
         if (dataIntegrityProof.getContexts() == null || dataIntegrityProof.getContexts().isEmpty()) {
-            JsonLDUtils.jsonLdAdd(dataIntegrityProof, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).toList());
+            JsonLDUtils.jsonLdAdd(dataIntegrityProof, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
         }
 
         // obtain the canonicalized document

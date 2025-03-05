@@ -4,6 +4,7 @@ import com.apicatalog.jsonld.JsonLdError;
 import com.apicatalog.jsonld.document.JsonDocument;
 import com.apicatalog.jsonld.http.media.MediaType;
 import com.apicatalog.jsonld.loader.DocumentLoader;
+import com.danubetech.dataintegrity.util.TestUtil;
 import foundation.identity.jsonld.ConfigurableDocumentLoader;
 import foundation.identity.jsonld.JsonLDObject;
 import org.junit.jupiter.api.Test;

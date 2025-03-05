@@ -50,6 +50,7 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
         if (algorithm == null) throw new IllegalStateException("No algorithm: " + this.getSigner());
         Canonicalizer canonicalizer = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCanonicalizerForCryptosuiteAndAlgorithm(cryptosuite, algorithm);
         if (canonicalizer == null) throw new IllegalArgumentException("No canonicalizer for cryptosuite " + cryptosuite + " and algorithm " + algorithm + ": " + canonicalizer);
+        if (log.isDebugEnabled()) log.debug("Determined canonicalizer for algorithm {} and cryptosuite {}: {}", algorithm, cryptosuite, canonicalizer.getClass().getSimpleName());
         return canonicalizer;
     }
 

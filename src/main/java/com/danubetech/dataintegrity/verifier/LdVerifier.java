@@ -1,17 +1,20 @@
 package com.danubetech.dataintegrity.verifier;
 
+import com.apicatalog.jsonld.lang.Keywords;
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
@@ -55,10 +58,16 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 
         this.initialize(dataIntegrityProof);
 
+        // add LD contexts to LD proof options if missing
+
+        if (dataIntegrityProof.getContexts() == null || dataIntegrityProof.getContexts().isEmpty()) {
+            JsonLDUtils.jsonLdAdd(dataIntegrityProof, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
+        }
+
         // obtain the canonicalized document
 
         Canonicalizer canonicalizer = this.getCanonicalizer(dataIntegrityProof);
-        byte[] canonicalizationResult = this.getCanonicalizer(dataIntegrityProof).canonicalize(dataIntegrityProof, jsonLdObject);
+        byte[] canonicalizationResult = canonicalizer.canonicalize(dataIntegrityProof, jsonLdObject);
         if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHexString(canonicalizationResult));
 
         // verify

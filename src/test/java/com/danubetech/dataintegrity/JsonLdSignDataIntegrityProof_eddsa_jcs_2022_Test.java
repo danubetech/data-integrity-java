@@ -3,6 +3,8 @@ package com.danubetech.dataintegrity;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.util.TestKeys;
+import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -50,7 +52,7 @@ public class JsonLdSignDataIntegrityProof_eddsa_jcs_2022_Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestUtil.testEd25519PrivateKey);
+		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestKeys.testEd25519PrivateKey);
 		DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
 		signer.setCryptosuite("eddsa-jcs-2022");
 		signer.setCreated(created);
@@ -64,9 +66,9 @@ public class JsonLdSignDataIntegrityProof_eddsa_jcs_2022_Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("z4gxdzftYoe1dagH38eUYCDzkUjNpV1tsxjb361myizqteMfK4b2yaQhYFFJ22HHbW97ij8iBTQUia5LfN9Z7SD7x", dataIntegrityProof.getProofValue());
+		assertEquals("z4ZujDx63qCtAbTgLHK1brJuutprt9QTGPNkeybZKEnQTTHmrcso6RpqH5My8gYfUc5zD3cZozzP1kFHBtLDxwWQR", dataIntegrityProof.getProofValue());
 
-		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestUtil.testEd25519PublicKey);
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestKeys.testEd25519PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);

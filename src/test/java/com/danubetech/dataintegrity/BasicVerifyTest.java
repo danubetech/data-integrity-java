@@ -1,9 +1,10 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.util.DetachedJWSObject;
+import com.danubetech.dataintegrity.util.TestKeys;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
-import com.danubetech.dataintegrity.util.DetachedJWSObject;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -29,7 +30,7 @@ public class BasicVerifyTest {
 
 		DetachedJWSObject jwsObject = DetachedJWSObject.parse(signatureValue, jwsPayload);
 
-		JWSVerifier jwsVerifier = new RSASSAVerifier(TestUtil.testRSAPublicKey, Collections.singleton("b64"));
+		JWSVerifier jwsVerifier = new RSASSAVerifier(TestKeys.testRSAPublicKey, Collections.singleton("b64"));
 		verify = jwsVerifier.verify(jwsObject.getHeader(), jwsObject.getSigningInput(), jwsObject.getParsedSignature());
 
 		// done
