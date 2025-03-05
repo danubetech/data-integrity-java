@@ -2,7 +2,6 @@ package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.RDFC10Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteSigner;
@@ -24,45 +23,53 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
         this((ByteSigner) null);
     }
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        String cryptosuite = dataIntegrityProof.getCryptosuite();
-        if (cryptosuite == null) return RDFC10Canonicalizer.getInstance();
-        Canonicalizer canonicalizer = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCanonicalizerByCryptosuite(cryptosuite);
-        if (canonicalizer == null) throw new IllegalArgumentException("Unknown cryptosuite: " + cryptosuite);
-        return canonicalizer;
-    }
-
-    public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer, String cryptosuite) throws GeneralSecurityException {
+    @Override
+    public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder) throws GeneralSecurityException {
 
         // determine algorithm and cryptosuite
 
-        String algorithm;
+        String algorithm = this.getSigner().getAlgorithm();
+        String cryptosuite = this.getCryptosuite();
 
-        algorithm = signer.getAlgorithm();
         if (cryptosuite != null) {
-            if (! DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCryptosuitesByJwsAlgorithm(algorithm).contains(cryptosuite)) {
+            if (! DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCryptosuitesForJwsAlgorithm(algorithm).contains(cryptosuite)) {
                 throw new GeneralSecurityException("Algorithm " + algorithm + " is not supported by cryptosuite " + cryptosuite);
             }
         } else {
-            cryptosuite = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findDefaultCryptosuiteByJwsAlgorithm(algorithm);
+            cryptosuite = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findDefaultCryptosuiteForJwsAlgorithm(algorithm);
             ldProofBuilder.cryptosuite(cryptosuite);
         }
         if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);
+    }
+
+    @Override
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+        String cryptosuite = dataIntegrityProof.getCryptosuite();
+        if (cryptosuite == null) throw new IllegalStateException("No cryptosuite: " + dataIntegrityProof);
+        String algorithm = this.getSigner().getAlgorithm();
+        if (algorithm == null) throw new IllegalStateException("No algorithm: " + this.getSigner());
+        Canonicalizer canonicalizer = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCanonicalizerForCryptosuiteAndAlgorithm(cryptosuite, algorithm);
+        if (canonicalizer == null) throw new IllegalArgumentException("No canonicalizer for cryptosuite " + cryptosuite + " and algorithm " + algorithm + ": " + canonicalizer);
+        return canonicalizer;
+    }
+
+    @Override
+    public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+
+        sign(ldProofBuilder, signingInput, this.getSigner());
+    }
+
+    public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // sign
 
         String proofValue;
 
-        byte[] bytes = signer.sign(signingInput, algorithm);
+        byte[] bytes = signer.sign(signingInput, signer.getAlgorithm());
         proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
 
         // done
 
         ldProofBuilder.proofValue(proofValue);
-    }
-
-    @Override
-    public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
-        sign(ldProofBuilder, signingInput, this.getSigner(), this.getCryptosuite());
     }
 }

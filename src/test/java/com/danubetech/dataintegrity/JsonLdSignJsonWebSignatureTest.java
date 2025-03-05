@@ -63,7 +63,7 @@ public class JsonLdSignJsonWebSignatureTest {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..wV8UigAtT7xfn5p0DMiZuvPVvi00OrL1p9PbnbmgT4lbFeSwYYcsPHT922OAvcx21y77m8oUuEr3tzvOzLJGDg", dataIntegrityProof.getJws());
+		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..Xmc-e78h7VdiibJOHCQWRLZMq7IsD-h3h8syB748Tl3VYvCHFeyF2IrAeGD8-1_GEk_UqWi-gmQhR_Wr22n3Dw", dataIntegrityProof.getJws());
 
 		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.Ed25519, JWSAlgorithm.EdDSA, TestUtil.testEd25519PublicKey);
 		JsonWebSignature2020LdVerifier verifier = new JsonWebSignature2020LdVerifier(publicKeyVerifier);

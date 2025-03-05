@@ -56,7 +56,7 @@ public class JsonLdSignEd25519Signature2020Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("z2t1d6DoKkj8GvUuEXoB1UJhBYrYuf3DR47rgGUnkMbsGBnotT8HeG2RCF9WYtsP2SVtyABHvZSZmU5UejVairfbb", dataIntegrityProof.getProofValue());
+		assertEquals("z4zhuzqtRyNoAi7iFdaxECAyb3oMybLb3c9YfmgsoFB9bx9CEcatNo6sLZB9DzHiQDaxFVj6btEmR3AaYsxagF7KY", dataIntegrityProof.getProofValue());
 
 		Ed25519Signature2020LdVerifier verifier = new Ed25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);

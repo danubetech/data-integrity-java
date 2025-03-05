@@ -2,7 +2,6 @@ package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.RDFC10Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteVerifier;
@@ -24,28 +23,39 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
         this(null);
     }
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        String cryptosuite = dataIntegrityProof.getCryptosuite();
-        if (cryptosuite == null) return RDFC10Canonicalizer.getInstance();
-        Canonicalizer canonicalizer = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCanonicalizerByCryptosuite(cryptosuite);
-        if (canonicalizer == null) throw new IllegalArgumentException("Unknown cryptosuite: " + cryptosuite);
-        return canonicalizer;
-    }
-
-    public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
+    @Override
+    public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
 
         // determine algorithm and cryptosuite
 
+        String algorithm = this.getVerifier().getAlgorithm();;
         String cryptosuite = dataIntegrityProof.getCryptosuite();
+
         if (cryptosuite == null) throw new GeneralSecurityException("No cryptosuite in data integrity proof: " + dataIntegrityProof);
-
-        String algorithm;
-
-        algorithm = verifier.getAlgorithm();
-        if (! DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCryptosuitesByJwsAlgorithm(algorithm).contains(cryptosuite)) {
+        if (! DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCryptosuitesForJwsAlgorithm(algorithm).contains(cryptosuite)) {
             throw new GeneralSecurityException("Algorithm " + algorithm + " is not supported by cryptosuite " + cryptosuite);
         }
         if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);
+    }
+
+    @Override
+    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+        String cryptosuite = dataIntegrityProof.getCryptosuite();
+        if (cryptosuite == null) throw new IllegalStateException("No cryptosuite: " + dataIntegrityProof);
+        String algorithm = this.getVerifier().getAlgorithm();
+        if (algorithm == null) throw new IllegalStateException("No algorithm: " + this.getVerifier());
+        Canonicalizer canonicalizer = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findCanonicalizerForCryptosuiteAndAlgorithm(cryptosuite, algorithm);
+        if (canonicalizer == null) throw new IllegalArgumentException("No canonicalizer for cryptosuite " + cryptosuite + " and algorithm " + algorithm + ": " + canonicalizer);
+        return canonicalizer;
+    }
+
+    @Override
+    public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+
+        return verify(signingInput, dataIntegrityProof, this.getVerifier());
+    }
+
+    public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
 
         // verify
 
@@ -55,15 +65,10 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
         boolean verify;
 
         byte[] bytes = Multibase.decode(proofValue);
-        verify = verifier.verify(signingInput, bytes, algorithm);
+        verify = verifier.verify(signingInput, bytes, verifier.getAlgorithm());
 
         // done
 
         return verify;
-    }
-
-    @Override
-    public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
-        return verify(signingInput, dataIntegrityProof, this.getVerifier());
     }
 }

@@ -1,18 +1,14 @@
 {
   "@context" : [ {
-    "schema" : "http://schema.org/",
-    "name" : "schema:name",
-    "homepage" : "schema:url",
-    "image" : "schema:image"
-  }, "https://w3id.org/security/v3" ],
-  "name" : "Manu Sporny",
-  "homepage" : "https://manu.sporny.org/",
-  "image" : "https://manu.sporny.org/images/manu.png",
+    "myWebsite" : "https://vocabulary.example/myWebsite"
+  }, "https://w3id.org/security/suites/ed25519-2018/v1" ],
+  "myWebsite" : "https://hello.world.example/",
   "proof" : {
     "type" : "Ed25519Signature2018",
-    "creator": "did:sov:WRfXPg8dantKVubE3HX8pw",
     "created" : "2017-10-24T05:33:31Z",
+    "expires" : "2027-10-24T05:33:31Z",
     "domain" : "example.com",
-    "jws" : "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..5VI99nGh5wrAJRub5likTa5lLQ2Dmfiv-ByTRfd1D4WmnOSo3N1eSLemCYlXG95VY6Na-FuEHpjofI8iz8iPBQ"
+    "@context" : [ null, "https://w3id.org/security/suites/ed25519-2018/v1" ],
+    "jws" : "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..X2P9E2H3smM4SXzpadVDOgRv4eg5GopSFGa5DMR0OJCWaYdrGwmrwCL_gkdBlFDbde-uWgjFAl8oxU1RA_G6Dw"
   }
 }

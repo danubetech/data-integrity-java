@@ -44,8 +44,6 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
         return LdVerifierRegistry.getLdVerifierByDataIntegritySuite(dataIntegritySuite);
     }
 
-    public abstract boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException;
-
     public boolean verify(JsonLDObject jsonLdObject, DataIntegrityProof dataIntegrityProof) throws IOException, GeneralSecurityException, JsonLDException {
 
         // check the proof object
@@ -53,11 +51,15 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
         if (! this.getDataIntegritySuite().getTerm().equals(dataIntegrityProof.getType()))
             throw new GeneralSecurityException("Unexpected signature type: " + dataIntegrityProof.getType() + " is not " + this.getDataIntegritySuite().getTerm());
 
+        // initialize
+
+        this.initialize(dataIntegrityProof);
+
         // obtain the canonicalized document
 
         Canonicalizer canonicalizer = this.getCanonicalizer(dataIntegrityProof);
         byte[] canonicalizationResult = this.getCanonicalizer(dataIntegrityProof).canonicalize(dataIntegrityProof, jsonLdObject);
-        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHex(canonicalizationResult));
+        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHexString(canonicalizationResult));
 
         // verify
 
@@ -81,15 +83,21 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
         return this.verify(jsonLdObject, dataIntegrityProof);
     }
 
-    public DATAINTEGRITYSUITE getDataIntegritySuite() {
-        return this.dataIntegritySuite;
+    public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+
     }
+
+    public abstract boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException;
 
     public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
 
     /*
      * Getters and setters
      */
+
+    public DATAINTEGRITYSUITE getDataIntegritySuite() {
+        return this.dataIntegritySuite;
+    }
 
     public ByteVerifier getVerifier() {
         return this.verifier;

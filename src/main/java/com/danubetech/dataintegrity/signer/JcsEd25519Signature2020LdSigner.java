@@ -2,7 +2,7 @@ package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.JCSCanonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.JCSSHA256Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.suites.JcsEd25519Signature2020DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteSigner;
@@ -28,7 +28,7 @@ public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signatur
     }
 
     public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return JCSCanonicalizer.getInstance();
+        return JCSSHA256Canonicalizer.getInstance();
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {

@@ -71,8 +71,6 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         return LdSignerRegistry.getLdSignerByDataIntegritySuite(dataIntegritySuite);
     }
 
-    public abstract void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;
-
     public DataIntegrityProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
         // build the base proof object
@@ -93,21 +91,32 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
                 .build();
         if (log.isDebugEnabled()) log.debug("Constructed data integrity proof: {}", dataIntegrityProof);
 
+        // initialize
+
+        DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder = DataIntegrityProof.builder()
+                .base(dataIntegrityProof)
+                .defaultContexts(defaultContexts);
+
+        this.initialize(ldProofBuilder);
+
         // add missing context(s)
 
-        loadMissingContext(jsonLdObject);
+        this.loadMissingContext(jsonLdObject);
+
+        // add LD contexts to LD proof options if missing
+
+        if (dataIntegrityProof.getContexts() == null || dataIntegrityProof.getContexts().isEmpty()) {
+            JsonLDUtils.jsonLdAdd(dataIntegrityProof, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).toList());
+        }
 
         // obtain the canonicalized document
 
         Canonicalizer canonicalizer = this.getCanonicalizer(dataIntegrityProof);
         byte[] canonicalizationResult = canonicalizer.canonicalize(dataIntegrityProof, jsonLdObject);
-        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHex(canonicalizationResult));
+        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHexString(canonicalizationResult));
 
         // sign
 
-        DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder = DataIntegrityProof.builder()
-                .base(dataIntegrityProof)
-                .defaultContexts(defaultContexts);
         this.sign(ldProofBuilder, canonicalizationResult);
 
         dataIntegrityProof = ldProofBuilder.build();
@@ -122,6 +131,23 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         return dataIntegrityProof;
     }
 
+    public DataIntegrityProof sign(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
+
+        return this.sign(jsonLdObject, true, false);
+    }
+
+    public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder) throws GeneralSecurityException {
+
+    }
+
+    public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
+
+    public abstract void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;
+
+    /*
+     * Helper methods
+     */
+
     private void loadMissingContext(JsonLDObject jsonLDObject){
         if (this.getDataIntegritySuite().getSupportedJsonLDContexts().stream().noneMatch(jsonLDObject.getContexts()::contains)) {
             URI missingJsonLDContext = this.getDataIntegritySuite().getDefaultSupportedJsonLDContext();
@@ -131,19 +157,13 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         }
     }
 
-    public DataIntegrityProof sign(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
-        return this.sign(jsonLdObject, true, false);
-    }
+    /*
+     * Getters and setters
+     */
 
     public DATAINTEGRITYSUITE getDataIntegritySuite() {
         return this.dataIntegritySuite;
     }
-
-    public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
-
-    /*
-     * Getters and setters
-     */
 
     public ByteSigner getSigner() {
         return this.signer;

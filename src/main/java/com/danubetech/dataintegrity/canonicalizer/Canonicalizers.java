@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Canonicalizers {
 
-	public static final JCSCanonicalizer CANONICALIZER_JCSCANONICALIZER = new JCSCanonicalizer();
+	public static final JCSSHA256Canonicalizer CANONICALIZER_JCSCANONICALIZER = new JCSSHA256Canonicalizer();
 	public static final URDNA2015Canonicalizer CANONICALIZER_URDNA2015CANONICALIZER = new URDNA2015Canonicalizer();
 
 	public static final List<? extends Canonicalizer> CANONICALIZERS = List.of(

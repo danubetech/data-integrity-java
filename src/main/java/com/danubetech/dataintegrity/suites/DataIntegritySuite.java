@@ -14,19 +14,19 @@ public abstract class DataIntegritySuite {
 	private final String term;
 	private final URI id;
 	private final URI type;
-	private final Map<KeyTypeName, List<String>> keyTypeNamesAndJwsAlgorithms;
+	private final Map<KeyTypeName, List<String>> jwsAlgorithmsByKeyTypeName;
 	private final List<URI> supportedJsonLDContexts;
 
-	public DataIntegritySuite(String term, URI id, Map<KeyTypeName, List<String>> keyTypeNamesAndJwsAlgorithms, List<URI> supportedJsonLDContexts) {
+	public DataIntegritySuite(String term, URI id, Map<KeyTypeName, List<String>> jwsAlgorithmsByKeyTypeName, List<URI> supportedJsonLDContexts) {
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
-		this.keyTypeNamesAndJwsAlgorithms = keyTypeNamesAndJwsAlgorithms;
+		this.jwsAlgorithmsByKeyTypeName = jwsAlgorithmsByKeyTypeName;
 		this.supportedJsonLDContexts = supportedJsonLDContexts;
 	}
 
 	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
-		return this.getKeyTypeNamesAndJwsAlgorithms().get(keyTypeName);
+		return this.getJwsAlgorithmsByKeyTypeName().get(keyTypeName);
 	}
 
 	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName, String cryptosuite) {
@@ -60,8 +60,8 @@ public abstract class DataIntegritySuite {
 		return this.type;
 	}
 
-	public Map<KeyTypeName, List<String>> getKeyTypeNamesAndJwsAlgorithms() {
-		return this.keyTypeNamesAndJwsAlgorithms;
+	public Map<KeyTypeName, List<String>> getJwsAlgorithmsByKeyTypeName() {
+		return this.jwsAlgorithmsByKeyTypeName;
 	}
 
 	public List<URI> getSupportedJsonLDContexts() {
@@ -70,15 +70,14 @@ public abstract class DataIntegritySuite {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		DataIntegritySuite that = (DataIntegritySuite) o;
-		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(keyTypeNamesAndJwsAlgorithms, that.keyTypeNamesAndJwsAlgorithms) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
+		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(jwsAlgorithmsByKeyTypeName, that.jwsAlgorithmsByKeyTypeName) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(term, id, type, keyTypeNamesAndJwsAlgorithms, supportedJsonLDContexts);
+		return Objects.hash(term, id, type, jwsAlgorithmsByKeyTypeName, supportedJsonLDContexts);
 	}
 
 	@Override
@@ -87,7 +86,7 @@ public abstract class DataIntegritySuite {
 				"term='" + term + '\'' +
 				", id=" + id +
 				", type=" + type +
-				", keyTypeNamesAndJwsAlgorithms=" + keyTypeNamesAndJwsAlgorithms +
+				", keyTypeNamesAndJwsAlgorithms=" + jwsAlgorithmsByKeyTypeName +
 				", supportedJsonLDContexts=" + supportedJsonLDContexts +
 				'}';
 	}
