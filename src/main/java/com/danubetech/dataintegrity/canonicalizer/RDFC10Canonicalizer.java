@@ -34,7 +34,7 @@ public abstract class RDFC10Canonicalizer extends Canonicalizer {
     public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
 
         RdfDataset rdfDataset = jsonLDObject.toDataset();
-        RdfCanonicalizer rdfCanonicalizer = RdfCanonicalizer.newInstance(rdfDataset.toList());
+        RdfCanonicalizer rdfCanonicalizer = RdfCanonicalizer.newInstance(rdfDataset.toList(), this.hashAlgorithm());
         Collection<RdfNQuad> rdfNQuads = rdfCanonicalizer.canonicalize();
         StringWriter stringWriter = new StringWriter();
         NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
