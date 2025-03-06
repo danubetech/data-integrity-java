@@ -26,6 +26,7 @@ public abstract class RDFC10Canonicalizer extends Canonicalizer {
         super(List.of("RDFC-1.0"));
     }
 
+    public abstract String hashAlgorithm();
     public abstract int hashLength();
     public abstract byte[] hash(byte[] input) throws GeneralSecurityException;
 
@@ -33,7 +34,8 @@ public abstract class RDFC10Canonicalizer extends Canonicalizer {
     public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
 
         RdfDataset rdfDataset = jsonLDObject.toDataset();
-        Collection<RdfNQuad> rdfNQuads = RdfCanonicalizer.canonicalize(rdfDataset.toList());
+        RdfCanonicalizer rdfCanonicalizer = RdfCanonicalizer.newInstance(rdfDataset.toList());
+        Collection<RdfNQuad> rdfNQuads = rdfCanonicalizer.canonicalize();
         StringWriter stringWriter = new StringWriter();
         NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
         for (RdfNQuad rdfNQuad : rdfNQuads) nQuadsWriter.write(rdfNQuad);

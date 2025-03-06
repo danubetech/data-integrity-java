@@ -13,6 +13,11 @@ public class RDFC10SHA512Canonicalizer extends RDFC10Canonicalizer {
     }
 
     @Override
+    public String hashAlgorithm() {
+        return "SHA-512";
+    }
+
+    @Override
     public int hashLength() {
         return 64;
     }

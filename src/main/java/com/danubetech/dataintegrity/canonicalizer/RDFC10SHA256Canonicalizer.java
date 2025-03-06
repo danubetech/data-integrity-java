@@ -13,6 +13,11 @@ public class RDFC10SHA256Canonicalizer extends RDFC10Canonicalizer {
     }
 
     @Override
+    public String hashAlgorithm() {
+        return "SHA-256";
+    }
+
+    @Override
     public int hashLength() {
         return 32;
     }
