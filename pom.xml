@@ -170,24 +170,24 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>5.15.2</version>
+			<version>5.16.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>5.15.2</version>
+			<version>5.16.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>decentralized-identity</groupId>
 			<artifactId>jsonld-common-java</artifactId>
-			<version>1.13-SNAPSHOT</version>
+			<version>1.13.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.danubetech</groupId>
 			<artifactId>key-formats-java</artifactId>
-			<version>1.21-SNAPSHOT</version>
+			<version>1.21.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.setl</groupId>
