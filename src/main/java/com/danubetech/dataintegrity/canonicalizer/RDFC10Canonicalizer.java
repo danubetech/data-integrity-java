@@ -1,9 +1,10 @@
 package com.danubetech.dataintegrity.canonicalizer;
 
-import com.apicatalog.rdf.RdfDataset;
-import com.apicatalog.rdf.RdfNQuad;
-import com.apicatalog.rdf.canon.RdfCanonicalizer;
-import com.apicatalog.rdf.io.nquad.NQuadsWriter;
+import com.apicatalog.jsonld.JsonLdError;
+import com.apicatalog.rdf.api.RdfConsumerException;
+import com.apicatalog.rdf.api.RdfQuadConsumer;
+import com.apicatalog.rdf.canon.RdfCanon;
+import com.apicatalog.rdf.nquads.NQuadsWriter;
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
-import java.util.Collection;
 import java.util.List;
 
 public abstract class RDFC10Canonicalizer extends Canonicalizer {
@@ -32,13 +32,19 @@ public abstract class RDFC10Canonicalizer extends Canonicalizer {
 
     @Override
     public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException {
-
-        RdfDataset rdfDataset = jsonLDObject.toDataset();
-        RdfCanonicalizer rdfCanonicalizer = RdfCanonicalizer.newInstance(rdfDataset.toList(), this.hashAlgorithm());
-        Collection<RdfNQuad> rdfNQuads = rdfCanonicalizer.canonicalize();
+        RdfCanon rdfCanon = RdfCanon.create(this.hashAlgorithm());
         StringWriter stringWriter = new StringWriter();
-        NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
-        for (RdfNQuad rdfNQuad : rdfNQuads) nQuadsWriter.write(rdfNQuad);
+        RdfQuadConsumer nQuadsWriter = new NQuadsWriter(stringWriter);
+
+        try {
+            jsonLDObject.toRdfApi().provide(rdfCanon);
+            rdfCanon.provide(nQuadsWriter);
+        } catch (RdfConsumerException ex) {
+            throw new IOException("Cannot consume RDF: " + ex.getMessage(), ex);
+        } catch (JsonLdError ex) {
+            throw new JsonLDException(ex);
+        }
+
         return stringWriter.getBuffer().toString();
     }
 
