@@ -104,16 +104,17 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
         this.loadMissingContext(jsonLdObject);
 
-        // add LD contexts to LD proof options if missing
+        // construct LD proof options
 
-        if (dataIntegrityProof.getContexts() == null || dataIntegrityProof.getContexts().isEmpty()) {
-            JsonLDUtils.jsonLdAdd(dataIntegrityProof, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
+        DataIntegrityProof ldProofOptions = DataIntegrityProof.fromJson(dataIntegrityProof.toJson());
+        if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
+            JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
         }
 
         // obtain the canonicalized document
 
-        Canonicalizer canonicalizer = this.getCanonicalizer(dataIntegrityProof);
-        byte[] canonicalizationResult = canonicalizer.canonicalize(dataIntegrityProof, jsonLdObject);
+        Canonicalizer canonicalizer = this.getCanonicalizer(ldProofOptions);
+        byte[] canonicalizationResult = canonicalizer.canonicalize(ldProofOptions, jsonLdObject);
         if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHexString(canonicalizationResult));
 
         // sign
