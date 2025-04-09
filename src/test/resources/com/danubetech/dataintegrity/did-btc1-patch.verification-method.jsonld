@@ -1,0 +1,6 @@
+{
+    "id": "did:btc1:k1qgpmay0qswqklpth58vdhattea5dnu9jej25t3kl2gnjykznnylquxc2gnd4c##initialKey",
+    "type": "Multikey",
+    "controller": "did:btc1:k1qgpmay0qswqklpth58vdhattea5dnu9jej25t3kl2gnjykznnylquxc2gnd4c",
+    "publicKeyMultibase": "zQ3shsU1bzwDEU6nBAVRLfyo5ZvDrzHKs4ZXYxP13dksA7NRx"
+}
