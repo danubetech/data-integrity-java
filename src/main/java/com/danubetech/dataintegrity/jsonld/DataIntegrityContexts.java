@@ -24,6 +24,8 @@ public class DataIntegrityContexts {
     public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1 = URI.create("https://w3id.org/security/suites/jws-2020/v1");
     public static final URI JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V1 = URI.create("https://w3id.org/data-integrity/v1");
     public static final URI JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2 = URI.create("https://w3id.org/data-integrity/v2");
+    public static final URI JSONLD_CONTEXT_W3ID_ZCAP_V1 = URI.create("https://w3id.org/zcap/v1");
+    public static final URI JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1 = URI.create("https://w3id.org/json-ld-patch/v1");
     public static final URI JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1 = URI.create("https://www.w3.org/2018/credentials/v1");
     public static final URI JSONLD_CONTEXT_W3C_CREDENTIALS_V2 = URI.create("https://www.w3.org/ns/credentials/v2");
 
@@ -58,6 +60,10 @@ public class DataIntegrityContexts {
                     JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("dataintegrity-v1.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3ID_DATAINTEGRITY_V2,
                     JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("dataintegrity-v2.jsonld"))));
+            CONTEXTS.put(JSONLD_CONTEXT_W3ID_ZCAP_V1,
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("zcap-v1.jsonld"))));
+            CONTEXTS.put(JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1,
+                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("json-ld-patch-v1.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1,
                     JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v1.jsonld"))));
             CONTEXTS.put(JSONLD_CONTEXT_W3C_CREDENTIALS_V2,
