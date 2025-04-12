@@ -1,6 +1,6 @@
 {
-    "id": "did:btc1:k1qgpmay0qswqklpth58vdhattea5dnu9jej25t3kl2gnjykznnylquxc2gnd4c##initialKey",
+    "id": "did:btc1:k1qgpmay0qswqklpth58vdhattea5dnu9jej25t3kl2gnjykznnylquxc2gnd4c#initialKey",
     "type": "Multikey",
-    "controller": "did:btc1:k1qgpmay0qswqklpth58vdhattea5dnu9jej25t3kl2gnjykznnylquxc2gnd4c",
+    "controller": "did:btc1:k1qgp8lpuyxprky2kh24hdxlycrcyk56lkqmnuelpw70d3ay2gej6vhwgfqurtz",
     "publicKeyMultibase": "zQ3shsU1bzwDEU6nBAVRLfyo5ZvDrzHKs4ZXYxP13dksA7NRx"
 }
