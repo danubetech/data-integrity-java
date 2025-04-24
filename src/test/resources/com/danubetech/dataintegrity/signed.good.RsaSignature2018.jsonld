@@ -1,14 +1,16 @@
 {
-  "@context" : [ {
-    "myWebsite" : "https://vocabulary.example/myWebsite"
-  }, "https://w3id.org/security/v3" ],
-  "myWebsite" : "https://hello.world.example/",
-  "proof" : {
-    "type" : "RsaSignature2018",
-    "created" : "2017-10-24T05:33:31Z",
-    "expires" : "2027-10-24T05:33:31Z",
-    "domain" : "example.com",
-    "@context" : [ null, "https://w3id.org/security/v3" ],
-    "jws" : "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..IjvsJZgMV8-H2AgXsXI5yVgWb4Y4jHE7c2TdDJ-yp1mDn9A9gvM-nTlr2HjgKvJuMmJqshMOM-inKNj63dbRMoviU2iDTyjUc0Jg85XxcOXjQYZ1eCvxkOo1yC1Zka9sMZG7-SlERrNPktHlAZ_nBvWqb_6d-wd1roHHI4dWLgBr2qhxyZNSilsCh0eTGNqROvnCNAxKNFbSF0-gnuDYZZiyMe3aqcrCf0JhDIAEsUB3AUeko8TnRGZ5NBY9FLj-EGgr3YugIU4KKKeiEgxYITL3mKErOGfJxyrVeEX8o9hCWkUkfEtYggtpYdOkA9_CmVKIq_oiynemah-3D8ZMXw"
-  }
+    "@context": [
+        {
+            "myWebsite": "https://vocabulary.example/myWebsite"
+        },
+        "https://w3id.org/security/v3"
+    ],
+    "myWebsite": "https://hello.world.example/",
+    "proof": {
+        "type": "RsaSignature2018",
+        "created": "2017-10-24T05:33:31Z",
+        "expires": "2027-10-24T05:33:31Z",
+        "domain": "example.com",
+        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..IjvsJZgMV8-H2AgXsXI5yVgWb4Y4jHE7c2TdDJ-yp1mDn9A9gvM-nTlr2HjgKvJuMmJqshMOM-inKNj63dbRMoviU2iDTyjUc0Jg85XxcOXjQYZ1eCvxkOo1yC1Zka9sMZG7-SlERrNPktHlAZ_nBvWqb_6d-wd1roHHI4dWLgBr2qhxyZNSilsCh0eTGNqROvnCNAxKNFbSF0-gnuDYZZiyMe3aqcrCf0JhDIAEsUB3AUeko8TnRGZ5NBY9FLj-EGgr3YugIU4KKKeiEgxYITL3mKErOGfJxyrVeEX8o9hCWkUkfEtYggtpYdOkA9_CmVKIq_oiynemah-3D8ZMXw"
+    }
 }

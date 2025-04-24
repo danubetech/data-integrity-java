@@ -1,5 +1,7 @@
 package com.danubetech.dataintegrity.util;
 
+import com.danubetech.keyformats.PrivateKeyBytes;
+import com.danubetech.keyformats.PublicKeyBytes;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.bitcoinj.base.Base58;
@@ -7,6 +9,8 @@ import org.bitcoinj.crypto.ECKey;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;
+import java.security.interfaces.ECPrivateKey;
+import java.security.interfaces.ECPublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -14,7 +18,7 @@ import java.security.spec.X509EncodedKeySpec;
 public class TestKeys {
 
 	public static final String testEd25519PrivateKeyString =
-			"43bt2CEvmvm538bQ6YAnpfWTq5xisAB5Kqz7uiob9sabHsZp2HtFEFXRPGa5Mvdhw5xPEABrLduxFu5vt3AViEgF";
+			"BFVcBZTsRtYK5zNMC2DsDVv7hJCFnfE48SKdhScWiX9q";
 
 	public static final String testEd25519PublicKeyString =
 			"FyfKP2HvTKqDZQzvyL38yXH7bExmwofxHf2NR5BrcGf1";
@@ -24,6 +28,12 @@ public class TestKeys {
 
 	public static final String testSecp256k1PublicKeyString =
 			"0343f9455cd248e24c262b1341bbe37cea360e1c5ce526e5d1a71373ba6e557018";
+
+	public static final String testP256PrivateKeyString =
+			"76e19702f6cfcdf01ca1e2ea9578df91f5770eab0e76ce6a8bebb08d5d670fe0";
+
+	public static final String testP256PublicKeyString =
+			"0334d2aae49413879d66e2819128b6645f0e379fcf9cda9c29b4eaeb6d44b082d6";
 
 	public static final String testRSAPrivateKeyString =
                     """
@@ -74,6 +84,8 @@ public class TestKeys {
 	public static final byte[] testEd25519PublicKey;
 	public static final ECKey testSecp256k1PrivateKey;
 	public static final ECKey testSecp256k1PublicKey;
+	public static final ECPrivateKey testP256PrivateKey;
+	public static final ECPublicKey testP256PublicKey;
 	public static final KeyPair testRSAPrivateKey;
 	public static final RSAPublicKey testRSAPublicKey;
 
@@ -81,11 +93,14 @@ public class TestKeys {
 
 		try {
 
-			testEd25519PrivateKey = Base58.decode(testEd25519PrivateKeyString);
-			testEd25519PublicKey = Base58.decode(testEd25519PublicKeyString);
+			testEd25519PrivateKey = PrivateKeyBytes.bytes_to_Ed25519PrivateKey(Base58.decode(testEd25519PrivateKeyString));
+			testEd25519PublicKey = PublicKeyBytes.bytes_to_Ed25519PublicKey(Base58.decode(testEd25519PublicKeyString));
 
-			testSecp256k1PrivateKey = ECKey.fromPrivate(Hex.decodeHex(testSecp256k1PrivateKeyString.toCharArray()));
-			testSecp256k1PublicKey = ECKey.fromPublicOnly(Hex.decodeHex(testSecp256k1PublicKeyString.toCharArray()));
+			testSecp256k1PrivateKey = PrivateKeyBytes.bytes_to_secp256k1PrivateKey(Hex.decodeHex(testSecp256k1PrivateKeyString));
+			testSecp256k1PublicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(Hex.decodeHex(testSecp256k1PublicKeyString));
+
+			testP256PrivateKey = PrivateKeyBytes.bytes_to_P_256PrivateKey(Hex.decodeHex(testP256PrivateKeyString));
+			testP256PublicKey = PublicKeyBytes.bytes_to_P_256PublicKey(Hex.decodeHex(testP256PublicKeyString));
 
 			String testRSAPublicKeyPEM = testRSAPublicKeyString;
 			testRSAPublicKeyPEM = testRSAPublicKeyPEM.replace("-----BEGIN PUBLIC KEY-----", "").replace("\n", "");

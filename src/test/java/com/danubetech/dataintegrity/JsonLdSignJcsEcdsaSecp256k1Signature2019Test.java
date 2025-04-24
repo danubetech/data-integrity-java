@@ -1,13 +1,12 @@
 package com.danubetech.dataintegrity;
 
-import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
-import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.JcsEcdsaSecp256k1Signature2019LdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
+import com.danubetech.dataintegrity.util.TestKeys;
 import com.danubetech.dataintegrity.verifier.JcsEcdsaSecp256k1Signature2019LdVerifier;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;

@@ -3,14 +3,14 @@
         {
             "myWebsite": "https://vocabulary.example/myWebsite"
         },
-        "https://w3id.org/security/suites/secp256k1-2019/v1"
+        "https://w3id.org/security/suites/jws-2020/v1"
     ],
     "myWebsite": "https://byebye.world.example/",
     "proof": {
-        "type": "EcdsaSecp256k1Signature2019",
+        "type": "JsonWebSignature2020",
         "created": "2017-10-24T05:33:31Z",
         "expires": "2027-10-24T05:33:31Z",
         "domain": "example.com",
-        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFUzI1NksifQ..q4QPtrQvkkpY0SnRdjDjsJErLiZB7Eppi74GOlFXW-FrbGcBc21j4QLCWm_VTz65as8ugcpvudsm2qg8aAFsJA"
+        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..Xmc-e78h7VdiibJOHCQWRLZMq7IsD-h3h8syB748Tl3VYvCHFeyF2IrAeGD8-1_GEk_UqWi-gmQhR_Wr22n3Dw"
     }
 }

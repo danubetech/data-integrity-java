@@ -4,7 +4,6 @@ import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.Ed25519Signature2018LdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.Ed25519Signature2018LdVerifier;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;

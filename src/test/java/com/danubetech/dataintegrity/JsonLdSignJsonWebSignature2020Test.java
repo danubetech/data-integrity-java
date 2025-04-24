@@ -4,7 +4,6 @@ import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.JsonWebSignature2020LdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.JsonWebSignature2020LdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -30,7 +29,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonLdSignJsonWebSignatureTest {
+public class JsonLdSignJsonWebSignature2020Test {
 
 	@BeforeEach
 	public void before() {
@@ -44,7 +43,7 @@ public class JsonLdSignJsonWebSignatureTest {
 	@SuppressWarnings("unchecked")
 	public void testSign() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignJsonWebSignatureTest.class.getResourceAsStream("input.jsonld"))));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignJsonWebSignature2020Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");

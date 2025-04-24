@@ -1,6 +1,5 @@
 package com.danubetech.dataintegrity.verifier;
 
-import com.danubetech.dataintegrity.signer.LdSignerRegistry;
 import com.danubetech.dataintegrity.suites.DataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import org.slf4j.Logger;
@@ -22,6 +21,7 @@ public class LdVerifierRegistry {
             Ed25519Signature2020LdVerifier.class,
             JcsEd25519Signature2020LdVerifier.class,
             EcdsaSecp256k1Signature2019LdVerifier.class,
+            EcdsaSecp256r1Signature2019LdVerifier.class,
             EcdsaKoblitzSignature2016LdVerifier.class,
             JcsEcdsaSecp256k1Signature2019LdVerifier.class,
             BbsBlsSignature2020LdVerifier.class,

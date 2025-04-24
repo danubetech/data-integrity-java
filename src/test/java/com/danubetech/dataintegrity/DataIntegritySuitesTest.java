@@ -15,7 +15,7 @@ public class DataIntegritySuitesTest {
 		assertEquals(2, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.RSA).size());
 		assertEquals(5, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.secp256k1).size());
 		assertEquals(5, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Ed25519).size());
-		assertEquals(2, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_256).size());
+		assertEquals(3, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_256).size());
 		assertEquals(2, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.P_384).size());
 		assertEquals(1, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Bls12381G1).size());
 		assertEquals(1, DataIntegritySuites.findDataIntegritySuitesByKeyTypeName(KeyTypeName.Bls12381G2).size());

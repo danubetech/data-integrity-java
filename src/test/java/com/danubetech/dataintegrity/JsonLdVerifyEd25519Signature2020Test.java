@@ -1,7 +1,8 @@
 package com.danubetech.dataintegrity;
 
+import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
+import com.danubetech.dataintegrity.verifier.Ed25519Signature2020LdVerifier;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
@@ -9,8 +10,6 @@ import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaSHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
 import foundation.identity.jsonld.JsonLDObject;
-import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
-import com.danubetech.dataintegrity.verifier.Ed25519Signature2020LdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
