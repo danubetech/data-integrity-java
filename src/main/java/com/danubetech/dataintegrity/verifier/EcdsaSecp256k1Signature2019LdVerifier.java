@@ -5,7 +5,7 @@ import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
-import com.danubetech.dataintegrity.suites.EcdsaSecp256K1Signature2019DataIntegritySuite;
+import com.danubetech.dataintegrity.suites.EcdsaSecp256k1Signature2019DataIntegritySuite;
 import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
@@ -18,10 +18,10 @@ import org.bitcoinj.crypto.ECKey;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
 
-public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp256K1Signature2019DataIntegritySuite> {
+public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp256k1Signature2019DataIntegritySuite> {
 
     public EcdsaSecp256k1Signature2019LdVerifier(ByteVerifier verifier) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSASECP256L1SIGNATURE2019, verifier);
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSASECP256K1SIGNATURE2019, verifier);
     }
 
     public EcdsaSecp256k1Signature2019LdVerifier(ECKey publicKey) {

@@ -1,7 +1,6 @@
 package com.danubetech.dataintegrity;
 
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
@@ -38,7 +37,7 @@ public class JsonLdSignEcdsaSecp256k1Signature2019Test {
 		signer.setNonce(nonce);
 		DataIntegrityProof dataIntegrityProof = signer.sign(jsonLdObject);
 
-		assertEquals(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm(), dataIntegrityProof.getType());
+		assertEquals(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSASECP256K1SIGNATURE2019.getTerm(), dataIntegrityProof.getType());
 		assertEquals(created, dataIntegrityProof.getCreated());
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());

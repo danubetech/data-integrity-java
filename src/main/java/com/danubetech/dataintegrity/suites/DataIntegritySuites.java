@@ -14,7 +14,7 @@ public class DataIntegritySuites {
 	public static final Ed25519Signature2018DataIntegritySuite DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018 = new Ed25519Signature2018DataIntegritySuite();
 	public static final Ed25519Signature2020DataIntegritySuite DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020 = new Ed25519Signature2020DataIntegritySuite();
 	public static final JcsEd25519Signature2020DataIntegritySuite DATA_INTEGRITY_SUITE_JCSED25519SIGNATURE2020 = new JcsEd25519Signature2020DataIntegritySuite();
-	public static final EcdsaSecp256K1Signature2019DataIntegritySuite DATA_INTEGRITY_SUITE_ECDSASECP256L1SIGNATURE2019 = new EcdsaSecp256K1Signature2019DataIntegritySuite();
+	public static final EcdsaSecp256k1Signature2019DataIntegritySuite DATA_INTEGRITY_SUITE_ECDSASECP256K1SIGNATURE2019 = new EcdsaSecp256k1Signature2019DataIntegritySuite();
 	public static final EcdsaKoblitzSignature2016DataIntegritySuite DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016 = new EcdsaKoblitzSignature2016DataIntegritySuite();
 	public static final JcsEcdsaSecp256K1Signature2019DataIntegritySuite DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019 = new JcsEcdsaSecp256K1Signature2019DataIntegritySuite();
 	public static final BbsBlsSignature2020DataIntegritySuite DATA_INTEGRITY_SUITE_BBSBLSSIGNATURE2020 = new BbsBlsSignature2020DataIntegritySuite();
@@ -26,7 +26,7 @@ public class DataIntegritySuites {
 			DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018,
 			DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020,
 			DATA_INTEGRITY_SUITE_JCSED25519SIGNATURE2020,
-			DATA_INTEGRITY_SUITE_ECDSASECP256L1SIGNATURE2019,
+			DATA_INTEGRITY_SUITE_ECDSASECP256K1SIGNATURE2019,
 			DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016,
 			DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019,
 			DATA_INTEGRITY_SUITE_BBSBLSSIGNATURE2020,
