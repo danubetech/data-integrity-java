@@ -8,9 +8,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-public class JcsEcdsaSecp256K1Signature2019DataIntegritySuite extends DataIntegritySuite {
+public class JcsEcdsaSecp256k1Signature2019DataIntegritySuite extends DataIntegritySuite {
 
-	JcsEcdsaSecp256K1Signature2019DataIntegritySuite() {
+	JcsEcdsaSecp256k1Signature2019DataIntegritySuite() {
 		super(
 				"JcsEcdsaSecp256k1Signature2019",
 				URI.create("https://w3id.org/security#JcsEcdsaSecp256k1Signature2019"),
