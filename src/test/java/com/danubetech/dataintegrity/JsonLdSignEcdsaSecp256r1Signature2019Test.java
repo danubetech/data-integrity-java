@@ -43,8 +43,6 @@ public class JsonLdSignEcdsaSecp256r1Signature2019Test {
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
 
-		System.out.println(jsonLdObject.toJson());
-
 		EcdsaSecp256r1Signature2019LdVerifier verifier = new EcdsaSecp256r1Signature2019LdVerifier(TestKeys.testP256PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);
