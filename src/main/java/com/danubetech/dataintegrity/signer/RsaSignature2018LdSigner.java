@@ -3,7 +3,7 @@ package com.danubetech.dataintegrity.signer;
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.adapter.JWSSignerAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015SHA256Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.suites.RsaSignature2018DataIntegritySuite;
 import com.danubetech.dataintegrity.util.JWSUtil;
@@ -34,7 +34,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018DataInteg
     }
 
     public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015Canonicalizer.getInstance();
+        return URDNA2015SHA256Canonicalizer.getInstance();
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {

@@ -64,7 +64,7 @@ public class CanonicalizerTest {
 		jsonLdObject.setDocumentLoader(documentLoader);
 		String normalizedDocument = TestUtil.read(CanonicalizerTest.class.getResourceAsStream("input.normalized"));
 
-		assertEquals(normalizedDocument, URDNA2015Canonicalizer.getInstance().canonicalize(jsonLdObject));
+		assertEquals(normalizedDocument, URDNA2015SHA256Canonicalizer.getInstance().canonicalize(jsonLdObject));
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class CanonicalizerTest {
 		jsonLdObject.setDocumentLoader(documentLoader);
 		String normalizedDocument = TestUtil.read(CanonicalizerTest.class.getResourceAsStream("signed.good.rsa.normalized"));
 
-		assertEquals(normalizedDocument, URDNA2015Canonicalizer.getInstance().canonicalize(jsonLdObject));
+		assertEquals(normalizedDocument, URDNA2015SHA256Canonicalizer.getInstance().canonicalize(jsonLdObject));
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class CanonicalizerTest {
 		jsonLdObject.setDocumentLoader(documentLoader);
 		String normalizedDocument = TestUtil.read(CanonicalizerTest.class.getResourceAsStream("input.vc.normalized"));
 
-		assertEquals(normalizedDocument, URDNA2015Canonicalizer.getInstance().canonicalize(jsonLdObject));
+		assertEquals(normalizedDocument, URDNA2015SHA256Canonicalizer.getInstance().canonicalize(jsonLdObject));
 	}
 
 	@Test
@@ -97,6 +97,6 @@ public class CanonicalizerTest {
 		jsonLdObject.setDocumentLoader(documentLoader);
 		String normalizedDocument = TestUtil.read(CanonicalizerTest.class.getResourceAsStream("input.vp.normalized"));
 
-		assertEquals(normalizedDocument, URDNA2015Canonicalizer.getInstance().canonicalize(jsonLdObject));
+		assertEquals(normalizedDocument, URDNA2015SHA256Canonicalizer.getInstance().canonicalize(jsonLdObject));
 	}
 }

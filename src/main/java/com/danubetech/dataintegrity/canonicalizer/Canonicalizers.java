@@ -8,11 +8,13 @@ import java.util.Map;
 public class Canonicalizers {
 
 	public static final JCSSHA256Canonicalizer CANONICALIZER_JCSCANONICALIZER = new JCSSHA256Canonicalizer();
-	public static final URDNA2015Canonicalizer CANONICALIZER_URDNA2015CANONICALIZER = new URDNA2015Canonicalizer();
+	public static final URDNA2015SHA256Canonicalizer CANONICALIZER_URDNA2015SHA256CANONICALIZER = new URDNA2015SHA256Canonicalizer();
+	public static final URDNA2015SHA384Canonicalizer CANONICALIZER_URDNA2015SHA384CANONICALIZER = new URDNA2015SHA384Canonicalizer();
 
 	public static final List<? extends Canonicalizer> CANONICALIZERS = List.of(
 			CANONICALIZER_JCSCANONICALIZER,
-			CANONICALIZER_URDNA2015CANONICALIZER
+			CANONICALIZER_URDNA2015SHA256CANONICALIZER,
+			CANONICALIZER_URDNA2015SHA384CANONICALIZER
 	);
 
 	private static final Map<Class<? extends Canonicalizer>, Canonicalizer> CANONICALIZERS_BY_CANONICALIZER_CLASS;

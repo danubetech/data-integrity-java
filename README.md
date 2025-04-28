@@ -11,7 +11,8 @@ It provides an implementation of the following cryptographic suites for [Linked 
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
  - [Ed25519Signature2020](https://www.w3.org/community/reports/credentials/CG-FINAL-di-eddsa-2020-20220724/)
  - [EcdsaSecp256k1Signature2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019/)
-- [EcdsaSecp256r1Signature2019](https://www.w3.org/community/reports/credentials/CG-FINAL-di-ecdsa-2019-20220724/)
+ - [EcdsaSecp256r1Signature2019](https://www.w3.org/community/reports/credentials/CG-FINAL-di-ecdsa-2019-20220724/)
+ - [EcdsaSecp384r1Signature2019](https://www.w3.org/community/reports/credentials/CG-FINAL-di-ecdsa-2019-20220724/)
  - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
  - [JcsEd25519Signature2020](https://identity.foundation/JcsEd25519Signature2020/)
  - JcsEcdsaSecp256k1Signature2019

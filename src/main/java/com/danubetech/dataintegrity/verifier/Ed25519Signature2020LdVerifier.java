@@ -2,7 +2,7 @@ package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015SHA256Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.suites.Ed25519Signature2020DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteVerifier;
@@ -27,7 +27,7 @@ public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2
     }
 
     public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015Canonicalizer.getInstance();
+        return URDNA2015SHA256Canonicalizer.getInstance();
     }
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {

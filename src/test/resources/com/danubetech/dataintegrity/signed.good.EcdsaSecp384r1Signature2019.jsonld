@@ -1,0 +1,16 @@
+{
+    "@context": [
+        {
+            "myWebsite": "https://vocabulary.example/myWebsite"
+        },
+        "https://w3id.org/security/v3"
+    ],
+    "myWebsite": "https://hello.world.example/",
+    "proof": {
+        "type": "EcdsaSecp384r1Signature2019",
+        "created": "2017-10-24T05:33:31Z",
+        "expires": "2027-10-24T05:33:31Z",
+        "domain": "example.com",
+        "proofValue": "zBBdksxx2jXRiqt6EGT4cjFXW7yVbvyoSUYK1EYZMRiD42jBR39vuGTFt9ibPhB6NRUBy1t8jfHDBT6XnoivR5kvrGaJ92G2AAjdWsfSXWmHA4wmwANDhaUjKFqW86GP3Ljq"
+    }
+}

@@ -35,6 +35,12 @@ public class TestKeys {
 	public static final String testP256PublicKeyString =
 			"0334d2aae49413879d66e2819128b6645f0e379fcf9cda9c29b4eaeb6d44b082d6";
 
+	public static final String testP384PrivateKeyString =
+			"37354f4d1b6bd8ce37f0a934d566431b17379834aaee1223d8c0b0e49206432d333768f90dc64ed305c83eee091c6fd5";
+
+	public static final String testP384PublicKeyString =
+			"02322d3be93a752fab4762659da7ac26b8d5c0da2c148211f33549f3cd4d983a56a84fc59ba72df21f37098d99500f3ef1";
+
 	public static final String testRSAPrivateKeyString =
                     """
                     -----BEGIN PRIVATE KEY-----
@@ -86,6 +92,8 @@ public class TestKeys {
 	public static final ECKey testSecp256k1PublicKey;
 	public static final ECPrivateKey testP256PrivateKey;
 	public static final ECPublicKey testP256PublicKey;
+	public static final ECPrivateKey testP384PrivateKey;
+	public static final ECPublicKey testP384PublicKey;
 	public static final KeyPair testRSAPrivateKey;
 	public static final RSAPublicKey testRSAPublicKey;
 
@@ -101,6 +109,9 @@ public class TestKeys {
 
 			testP256PrivateKey = PrivateKeyBytes.bytes_to_P_256PrivateKey(Hex.decodeHex(testP256PrivateKeyString));
 			testP256PublicKey = PublicKeyBytes.bytes_to_P_256PublicKey(Hex.decodeHex(testP256PublicKeyString));
+
+			testP384PrivateKey = PrivateKeyBytes.bytes_to_P_384PrivateKey(Hex.decodeHex(testP384PrivateKeyString));
+			testP384PublicKey = PublicKeyBytes.bytes_to_P_384PublicKey(Hex.decodeHex(testP384PublicKeyString));
 
 			String testRSAPublicKeyPEM = testRSAPublicKeyString;
 			testRSAPublicKeyPEM = testRSAPublicKeyPEM.replace("-----BEGIN PUBLIC KEY-----", "").replace("\n", "");

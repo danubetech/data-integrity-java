@@ -4,26 +4,26 @@ import com.danubetech.dataintegrity.DataIntegrityProof;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.canonicalizer.URDNA2015SHA256Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
-import com.danubetech.dataintegrity.suites.EcdsaSecp256r1Signature2019DataIntegritySuite;
+import com.danubetech.dataintegrity.suites.EcdsaSecp384r1Signature2019DataIntegritySuite;
 import com.danubetech.keyformats.crypto.ByteVerifier;
-import com.danubetech.keyformats.crypto.impl.P_256_ES256_PublicKeyVerifier;
+import com.danubetech.keyformats.crypto.impl.P_384_ES384_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPublicKey;
 
-public class EcdsaSecp256r1Signature2019LdVerifier extends LdVerifier<EcdsaSecp256r1Signature2019DataIntegritySuite> {
+public class EcdsaSecp384r1Signature2019LdVerifier extends LdVerifier<EcdsaSecp384r1Signature2019DataIntegritySuite> {
 
-    public EcdsaSecp256r1Signature2019LdVerifier(ByteVerifier verifier) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSASECP256R1SIGNATURE2019, verifier);
+    public EcdsaSecp384r1Signature2019LdVerifier(ByteVerifier verifier) {
+        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSASECP384R1SIGNATURE2019, verifier);
     }
 
-    public EcdsaSecp256r1Signature2019LdVerifier(ECPublicKey publicKey) {
-        this(new P_256_ES256_PublicKeyVerifier(publicKey));
+    public EcdsaSecp384r1Signature2019LdVerifier(ECPublicKey publicKey) {
+        this(new P_384_ES384_PublicKeyVerifier(publicKey));
     }
 
-    public EcdsaSecp256r1Signature2019LdVerifier() {
+    public EcdsaSecp384r1Signature2019LdVerifier() {
         this((ByteVerifier) null);
     }
 
@@ -41,7 +41,7 @@ public class EcdsaSecp256r1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
         boolean verify;
 
         byte[] bytes = Multibase.decode(proofValue);
-        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.ES256);
+        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.ES384);
 
         // done
 

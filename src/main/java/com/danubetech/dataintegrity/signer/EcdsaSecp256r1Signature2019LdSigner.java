@@ -1,24 +1,17 @@
 package com.danubetech.dataintegrity.signer;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
-import com.danubetech.dataintegrity.adapter.JWSSignerAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
-import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
+import com.danubetech.dataintegrity.canonicalizer.URDNA2015SHA256Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.suites.EcdsaSecp256r1Signature2019DataIntegritySuite;
-import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.P_256_ES256_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
-import com.nimbusds.jose.util.Base64URL;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPrivateKey;
-import java.util.Collections;
 
 public class EcdsaSecp256r1Signature2019LdSigner extends LdSigner<EcdsaSecp256r1Signature2019DataIntegritySuite> {
 
@@ -35,7 +28,7 @@ public class EcdsaSecp256r1Signature2019LdSigner extends LdSigner<EcdsaSecp256r1
     }
 
     public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015Canonicalizer.getInstance();
+        return URDNA2015SHA256Canonicalizer.getInstance();
     }
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {

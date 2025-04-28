@@ -22,6 +22,7 @@ public class LdSignerRegistry {
             JcsEd25519Signature2020LdSigner.class,
             EcdsaSecp256k1Signature2019LdSigner.class,
             EcdsaSecp256r1Signature2019LdSigner.class,
+            EcdsaSecp384r1Signature2019LdSigner.class,
             EcdsaKoblitzSignature2016LdSigner.class,
             JcsEcdsaSecp256k1Signature2019LdSigner.class,
             BbsBlsSignature2020LdSigner.class,

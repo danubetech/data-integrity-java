@@ -17,17 +17,17 @@ import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-public class URDNA2015Canonicalizer extends Canonicalizer {
+public class URDNA2015SHA256Canonicalizer extends Canonicalizer {
 
     private static final Logger log = LoggerFactory.getLogger(RDFC10Canonicalizer.class);
 
-    public static final URDNA2015Canonicalizer INSTANCE = new URDNA2015Canonicalizer();
+    public static final URDNA2015SHA256Canonicalizer INSTANCE = new URDNA2015SHA256Canonicalizer();
 
-    public URDNA2015Canonicalizer() {
+    public URDNA2015SHA256Canonicalizer() {
         super(List.of("urdna2015"));
     }
 
-    public static URDNA2015Canonicalizer getInstance() {
+    public static URDNA2015SHA256Canonicalizer getInstance() {
         return INSTANCE;
     }
 
