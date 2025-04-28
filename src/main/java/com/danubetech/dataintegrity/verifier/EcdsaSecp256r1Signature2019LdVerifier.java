@@ -1,22 +1,17 @@
 package com.danubetech.dataintegrity.verifier;
 
 import com.danubetech.dataintegrity.DataIntegrityProof;
-import com.danubetech.dataintegrity.adapter.JWSVerifierAdapter;
 import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.canonicalizer.URDNA2015Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.suites.EcdsaSecp256r1Signature2019DataIntegritySuite;
-import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.P_256_ES256_PublicKeyVerifier;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSObject;
-import com.nimbusds.jose.JWSVerifier;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
+import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPublicKey;
-import java.text.ParseException;
 
 public class EcdsaSecp256r1Signature2019LdVerifier extends LdVerifier<EcdsaSecp256r1Signature2019DataIntegritySuite> {
 
@@ -38,24 +33,15 @@ public class EcdsaSecp256r1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
 
     public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
 
-        // build the JWS and verify
+        // verify
 
-        String jws = dataIntegrityProof.getJws();
-        if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
+        String proofValue = dataIntegrityProof.getProofValue();
+        if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
 
         boolean verify;
 
-        try {
-
-            JWSObject detachedJwsObject = JWSObject.parse(jws);
-            byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
-
-            JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.ES256);
-            verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
-        } catch (JOSEException | ParseException ex) {
-
-            throw new GeneralSecurityException("JOSE verification problem: " + ex.getMessage(), ex);
-        }
+        byte[] bytes = Multibase.decode(proofValue);
+        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.ES256);
 
         // done
 

@@ -11,6 +11,6 @@
         "created": "2017-10-24T05:33:31Z",
         "expires": "2027-10-24T05:33:31Z",
         "domain": "example.com",
-        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFUzI1NiJ9..75Io3jKMviPqbX1CxfkxZohSEZ1LTY-MJ8u_a5Fr8PCVQvW46eSrAIt6ekP4ItZltwJazScn2MymZo9_vvj1ZA"
+        "proofValue": "z3J2bPbGmBtrHMWmzKiL4PmN6kokD3oZPXt5JjkqfkYXpjzoR6e3s6MM7YnsYTaTPr2HgeL5hJ77Ek3hm4Aq5ddh3"
     }
 }

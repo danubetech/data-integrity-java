@@ -9,11 +9,12 @@ import com.danubetech.dataintegrity.suites.EcdsaSecp256r1Signature2019DataIntegr
 import com.danubetech.dataintegrity.util.JWSUtil;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.P_256_ES256_PrivateKeySigner;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
+import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPrivateKey;
@@ -39,26 +40,16 @@ public class EcdsaSecp256r1Signature2019LdSigner extends LdSigner<EcdsaSecp256r1
 
     public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
-        // build the JWS and sign
+        // sign
 
-        String jws;
+        String proofValue;
 
-        try {
-
-            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.ES256).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
-            byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
-
-            JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.ES256);
-            Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
-            jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
-        } catch (JOSEException ex) {
-
-            throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
-        }
+        byte[] bytes = signer.sign(signingInput, JWSAlgorithm.ES256);
+        proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
 
         // done
 
-        ldProofBuilder.jws(jws);
+        ldProofBuilder.proofValue(proofValue);
     }
 
     @Override
