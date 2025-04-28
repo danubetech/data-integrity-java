@@ -41,7 +41,7 @@ public class JsonLdSignDataIntegrityProof_bip340_jcs_2025_Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testSign() throws Throwable {
+	public void testSignSecp256k1() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_bip340_jcs_2025_Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);

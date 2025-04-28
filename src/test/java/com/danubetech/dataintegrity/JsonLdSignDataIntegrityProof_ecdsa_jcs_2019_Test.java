@@ -4,7 +4,6 @@ import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -42,7 +41,7 @@ public class JsonLdSignDataIntegrityProof_ecdsa_jcs_2019_Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testSign() throws Throwable {
+	public void testSignSecp256k1() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_ecdsa_jcs_2019_Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
@@ -69,6 +68,39 @@ public class JsonLdSignDataIntegrityProof_ecdsa_jcs_2019_Test {
 		assertEquals("z29wkTrpAo4xBn5URSov7wPNWWtaNyaq2Rjhh8EDzWfn47DAW9ogjvpiFP5XBEqWkFRUhyBPeJyv5knXXzxmYwCwh", dataIntegrityProof.getProofValue());
 
 		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256K, TestKeys.testSecp256k1PublicKey);
+		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
+		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
+		assertTrue(verify);
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testSignP256() throws Throwable {
+
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_ecdsa_jcs_2019_Test.class.getResourceAsStream("input.jsonld"))));
+		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
+
+		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
+		Date expires = JsonLDUtils.DATE_FORMAT.parse("2027-10-24T05:33:31Z");
+		String domain = "example.com";
+		String nonce = null;
+
+		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.P_256, JWSAlgorithm.ES256, TestKeys.testP256PrivateKey);
+		DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
+		signer.setCryptosuite("ecdsa-jcs-2019");
+		signer.setCreated(created);
+		signer.setExpires(expires);
+		signer.setDomain(domain);
+		signer.setNonce(nonce);
+		DataIntegrityProof dataIntegrityProof = signer.sign(jsonLdObject);
+
+		assertEquals(DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.getTerm(), dataIntegrityProof.getType());
+		assertEquals(created, dataIntegrityProof.getCreated());
+		assertEquals(expires, dataIntegrityProof.getExpires());
+		assertEquals(domain, dataIntegrityProof.getDomain());
+		assertEquals(nonce, dataIntegrityProof.getNonce());
+
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.P_256, JWSAlgorithm.ES256, TestKeys.testP256PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);

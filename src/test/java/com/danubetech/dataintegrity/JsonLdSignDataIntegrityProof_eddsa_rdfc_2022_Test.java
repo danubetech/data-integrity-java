@@ -4,7 +4,6 @@ import com.danubetech.dataintegrity.jsonld.DataIntegrityContexts;
 import com.danubetech.dataintegrity.signer.DataIntegrityProofLdSigner;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.dataintegrity.util.TestKeys;
-import com.danubetech.dataintegrity.util.TestUtil;
 import com.danubetech.dataintegrity.verifier.DataIntegrityProofLdVerifier;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.crypto.PrivateKeySignerFactory;
@@ -42,7 +41,7 @@ public class JsonLdSignDataIntegrityProof_eddsa_rdfc_2022_Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testSign() throws Throwable {
+	public void testSignEd25519() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignDataIntegrityProof_eddsa_rdfc_2022_Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
