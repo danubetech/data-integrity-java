@@ -24,12 +24,48 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DidBtc1PatchTest {
 
     @Test
-    public void testPatch() throws JsonLDException, GeneralSecurityException, IOException {
+    public void testPatch1() throws JsonLDException, GeneralSecurityException, IOException {
 
-        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.jsonld"))));
+        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.1.jsonld"))));
         jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
 
-        JsonLDObject verificationMethod = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.verification-method.jsonld"))));
+        JsonLDObject verificationMethod = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.verification-method.1.jsonld"))));
+        String publicKeyMultibase = (String) verificationMethod.getJsonObject().get("publicKeyMultibase");
+        byte[] publicKeyBytes = Arrays.copyOfRange(Multibase.decode(publicKeyMultibase), 2, 35);
+        ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
+
+        PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
+        DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
+        boolean verify = verifier.verify(jsonLdObject);
+
+        assertTrue(verify);
+    }
+
+    @Test
+    public void testPatch2() throws JsonLDException, GeneralSecurityException, IOException {
+
+        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.2.jsonld"))));
+        jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
+
+        JsonLDObject verificationMethod = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.verification-method.2.jsonld"))));
+        String publicKeyMultibase = (String) verificationMethod.getJsonObject().get("publicKeyMultibase");
+        byte[] publicKeyBytes = Arrays.copyOfRange(Multibase.decode(publicKeyMultibase), 2, 35);
+        ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
+
+        PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
+        DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
+        boolean verify = verifier.verify(jsonLdObject);
+
+        assertTrue(verify);
+    }
+
+    @Test
+    public void testPatch3() throws JsonLDException, GeneralSecurityException, IOException {
+
+        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.3.jsonld"))));
+        jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
+
+        JsonLDObject verificationMethod = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.verification-method.3.jsonld"))));
         String publicKeyMultibase = (String) verificationMethod.getJsonObject().get("publicKeyMultibase");
         byte[] publicKeyBytes = Arrays.copyOfRange(Multibase.decode(publicKeyMultibase), 2, 35);
         ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
