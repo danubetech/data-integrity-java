@@ -76,4 +76,22 @@ public class DidBtc1PatchTest {
 
         assertTrue(verify);
     }
+
+    @Test
+    public void testPatch4() throws JsonLDException, GeneralSecurityException, IOException {
+
+        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.4.jsonld"))));
+        jsonLdObject.setDocumentLoader(DataIntegrityContexts.DOCUMENT_LOADER);
+
+        JsonLDObject verificationMethod = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(DidBtc1PatchTest.class.getResourceAsStream("did-btc1-patch.verification-method.4.jsonld"))));
+        String publicKeyMultibase = (String) verificationMethod.getJsonObject().get("publicKeyMultibase");
+        byte[] publicKeyBytes = Arrays.copyOfRange(Multibase.decode(publicKeyMultibase), 2, 35);
+        ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
+
+        PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
+        DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
+        boolean verify = verifier.verify(jsonLdObject);
+
+        assertTrue(verify);
+    }
 }
