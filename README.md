@@ -44,7 +44,7 @@ Dependency:
 	<dependency>
 		<groupId>com.danubetech</groupId>
 		<artifactId>data-integrity-java</artifactId>
-		<version>1.21-SNAPSHOT</version>
+		<version>1.18-SNAPSHOT</version>
 	</dependency>
 
 ## Example
@@ -71,11 +71,11 @@ Example code:
 
     Ed25519Signature2018LdSigner signer = new Ed25519Signature2018LdSigner(testEd25519PrivateKey);
     signer.setCreated(new Date());
-    signer.setProofPurpose(LDSecurityKeywords.JSONLD_TERM_ASSERTIONMETHOD);
+    signer.setProofPurpose(DataIntegrityKeywords.JSONLD_TERM_ASSERTIONMETHOD);
     signer.setVerificationMethod(URI.create("https://example.com/jdoe/keys/1"));
     signer.setDomain("example.com");
     signer.setNonce("343s$FSFDa-");
-    LdProof dataIntegrityProof = signer.sign(jsonLdObject);
+    DataIntegrityProof dataIntegrityProof = signer.sign(jsonLdObject);
 
     System.out.println(jsonLdObject.toJson(true));
 
