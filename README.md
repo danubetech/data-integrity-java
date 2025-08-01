@@ -4,9 +4,9 @@
 
 **This library is a direct continuation of our earlier library [ld-signatures-java](https://github.com/weboftrustinfo/ld-signatures-java).**
 
-It provides an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
+It provides an implementation of the following proof types for [Data Integrity](https://www.w3.org/TR/vc-data-integrity/):
 
- - [DataIntegrityProof](https://w3c.github.io/vc-data-integrity/)
+ - [DataIntegrityProof](https://www.w3.org/TR/vc-data-integrity/)
  - [JsonWebSignature2020](https://w3c-ccg.github.io/lds-jws2020/)
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
  - [Ed25519Signature2020](https://www.w3.org/community/reports/credentials/CG-FINAL-di-eddsa-2020-20220724/)
@@ -16,6 +16,15 @@ It provides an implementation of the following cryptographic suites for [Linked 
  - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
  - [JcsEd25519Signature2020](https://identity.foundation/JcsEd25519Signature2020/)
  - JcsEcdsaSecp256k1Signature2019
+
+For [DataIntegrityProof](https://www.w3.org/TR/vc-data-integrity/), this implementation supports the following cryptosuites:
+
+- [eddsa-rdfc-2022](https://www.w3.org/TR/vc-di-eddsa/)
+- [eddsa-jcs-2022](https://www.w3.org/TR/vc-di-eddsa/)
+- [ecdsa-rdfc-2019](https://www.w3.org/TR/vc-di-ecdsa/)
+- [ecdsa-jcs-2019](https://www.w3.org/TR/vc-di-ecdsa/)
+- [bip340-rdfc-2025](https://dcdpr.github.io/data-integrity-schnorr-secp256k1/)
+- [bip340-jcs-2025](https://dcdpr.github.io/data-integrity-schnorr-secp256k1/)
 
 ## Maven
 
