@@ -63,7 +63,7 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 	@Override
 	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName, String cryptosuite) {
 		List<String> jwsAlgorithms = super.findJwsAlgorithmsForKeyTypeName(keyTypeName, cryptosuite);
-		if (cryptosuite != null) jwsAlgorithms = jwsAlgorithms.stream().filter(jwsAlgorithm -> this.findCryptosuitesForJwsAlgorithm(jwsAlgorithm).contains(cryptosuite)).collect(Collectors.toList());
+		if (cryptosuite != null) jwsAlgorithms = jwsAlgorithms.stream().filter(jwsAlgorithm -> this.findCryptosuitesForJwsAlgorithm(jwsAlgorithm).contains(cryptosuite)).toList();
 		return jwsAlgorithms;
 	}
 
