@@ -44,6 +44,9 @@ public class DataIntegrityProof extends JsonLDObject {
 		private URI verificationMethod;
 		private String proofPurpose;
 		private String previousProof;
+		private URI capability;
+		private List<URI> capabilityChains;
+		private String capabilityAction;
 		private String proofValue;
 		private String jws;
 
@@ -57,17 +60,49 @@ public class DataIntegrityProof extends JsonLDObject {
 			super.build();
 
 			// add JSON-LD properties
-			if (this.cryptosuite != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CRYPTOSUITE, this.cryptosuite);
-			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
-			if (this.expires != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_EXPIRES, JsonLDUtils.dateToString(this.expires));
-			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_DOMAIN, this.domain);
-			if (this.challenge != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CHALLENGE, this.challenge);
-			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_NONCE, this.nonce);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
-			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.previousProof != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PREVIOUSPROOF, this.previousProof);
-			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
-			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_JWS, this.jws);
+
+			if (this.cryptosuite != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CRYPTOSUITE, this.cryptosuite);
+			}
+			if (this.created != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
+			}
+			if (this.expires != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_EXPIRES, JsonLDUtils.dateToString(this.expires));
+			}
+			if (this.domain != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			}
+			if (this.challenge != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CHALLENGE, this.challenge);
+			}
+			if (this.nonce != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_NONCE, this.nonce);
+			}
+			if (this.verificationMethod != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
+			}
+			if (this.proofPurpose != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
+			}
+			if (this.previousProof != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PREVIOUSPROOF, this.previousProof);
+			}
+			if (this.capability != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CAPABILITY, JsonLDUtils.uriToString(this.capability));
+			}
+			if (this.capabilityChains != null) {
+				JsonLDUtils.jsonLdAddAsJsonArray(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CAPABILITYCHAIN, this.capabilityChains.stream().map(JsonLDUtils::uriToString).toList());
+			}
+			if (this.capabilityAction != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_CAPABILITYACTION, this.capabilityAction);
+			}
+			if (this.proofValue != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
+			}
+			if (this.jws != null) {
+				JsonLDUtils.jsonLdAdd(this.jsonLdObject, DataIntegrityKeywords.JSONLD_TERM_JWS, this.jws);
+			}
 
 			return (DataIntegrityProof) this.jsonLdObject;
 		}
@@ -114,6 +149,21 @@ public class DataIntegrityProof extends JsonLDObject {
 
 		public B previousProof(String previousProof) {
 			this.previousProof = previousProof;
+			return (B) this;
+		}
+
+		public B capability(URI capability) {
+			this.capability = capability;
+			return (B) this;
+		}
+
+		public B capabilityChains(List<URI> capabilityChains) {
+			this.capabilityChains = capabilityChains;
+			return (B) this;
+		}
+
+		public B capabilityAction(String capabilityAction) {
+			this.capabilityAction = capabilityAction;
 			return (B) this;
 		}
 
@@ -214,6 +264,19 @@ public class DataIntegrityProof extends JsonLDObject {
 
 	public String getPreviousProof() {
 		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_PREVIOUSPROOF);
+	}
+
+	public URI getCapability() {
+		return JsonLDUtils.stringToUri(JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_CAPABILITY));
+	}
+
+	public List<URI> getCapabilityChains() {
+		List<Object> jsonArray = JsonLDUtils.jsonLdGetJsonArray(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_CAPABILITYCHAIN);
+		return jsonArray == null ? null : jsonArray.stream().map(String.class::cast).map(JsonLDUtils::stringToUri).toList();
+	}
+
+	public String getCapabilityAction() {
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), DataIntegrityKeywords.JSONLD_TERM_CAPABILITYACTION);
 	}
 
 	public String getProofValue() {

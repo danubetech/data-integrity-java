@@ -17,6 +17,9 @@ public class DataIntegrityKeywords {
     public static final String JSONLD_TERM_VERIFICATIONMETHOD = "verificationMethod";
     public static final String JSONLD_TERM_PROOFPURPOSE = "proofPurpose";
     public static final String JSONLD_TERM_PREVIOUSPROOF = "previousProof";
+    public static final String JSONLD_TERM_CAPABILITY = "capability";
+    public static final String JSONLD_TERM_CAPABILITYCHAIN = "capabilityChain";
+    public static final String JSONLD_TERM_CAPABILITYACTION = "capabilityAction";
     public static final String JSONLD_TERM_PROOFVALUE = "proofValue";
     public static final String JSONLD_TERM_JWS = "jws";
 

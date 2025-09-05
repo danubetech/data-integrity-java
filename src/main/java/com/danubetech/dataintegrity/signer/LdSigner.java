@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
@@ -35,13 +36,16 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
     private URI verificationMethod;
     private String proofPurpose;
     private String previousProof;
+    private URI capability;
+    private List<URI> capabilityChains;
+    private String capabilityAction;
 
     protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer) {
         this.dataIntegritySuite = dataIntegritySuite;
         this.signer = signer;
     }
 
-    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, String cryptosuite, Date created, Date expires, String domain, String challenge, String nonce, URI verificationMethod, String proofPurpose, String previousProof) {
+    protected LdSigner(DATAINTEGRITYSUITE dataIntegritySuite, ByteSigner signer, String cryptosuite, Date created, Date expires, String domain, String challenge, String nonce, URI verificationMethod, String proofPurpose, String previousProof, URI capability, List<URI> capabilityChains, String capabilityAction) {
         this.dataIntegritySuite = dataIntegritySuite;
         this.signer = signer;
         this.cryptosuite = cryptosuite;
@@ -52,6 +56,9 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
         this.nonce = nonce;
         this.verificationMethod = verificationMethod;
         this.proofPurpose = proofPurpose;
+        this.capability = capability;
+        this.capabilityChains = capabilityChains;
+        this.capabilityAction = capabilityAction;
     }
 
     /**
@@ -89,6 +96,9 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
                 .verificationMethod(this.getVerificationMethod())
                 .proofPurpose(this.getProofPurpose())
                 .previousProof(this.getPreviousProof())
+                .capability(this.getCapability())
+                .capabilityChains(this.getCapabilityChains())
+                .capabilityAction(this.getCapabilityAction())
                 .build();
         if (log.isDebugEnabled()) log.debug("Constructed data integrity proof: {}", dataIntegrityProof);
 
@@ -245,5 +255,29 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
     public void setPreviousProof(String previousProof) {
         this.previousProof = previousProof;
+    }
+
+    public URI getCapability() {
+        return capability;
+    }
+
+    public void setCapability(URI capability) {
+        this.capability = capability;
+    }
+
+    public List<URI> getCapabilityChains() {
+        return capabilityChains;
+    }
+
+    public void setCapabilityChains(List<URI> capabilityChains) {
+        this.capabilityChains = capabilityChains;
+    }
+
+    public String getCapabilityAction() {
+        return capabilityAction;
+    }
+
+    public void setCapabilityAction(String capabilityAction) {
+        this.capabilityAction = capabilityAction;
     }
 }
