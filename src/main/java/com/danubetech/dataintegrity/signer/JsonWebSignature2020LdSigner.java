@@ -19,49 +19,49 @@ import java.util.Collections;
 
 public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020DataIntegritySuite> {
 
-    public JsonWebSignature2020LdSigner(ByteSigner signer) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020, signer);
-    }
+	public JsonWebSignature2020LdSigner(ByteSigner signer) {
+		super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JSONWEBSIGNATURE2020, signer);
+	}
 
-    public JsonWebSignature2020LdSigner() {
-        this(null);
-    }
+	public JsonWebSignature2020LdSigner() {
+		this(null);
+	}
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015SHA256Canonicalizer.getInstance();
-    }
+	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+		return URDNA2015SHA256Canonicalizer.getInstance();
+	}
 
-    public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+	public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
-        // determine algorithm
+		// determine algorithm
 
-        String algorithm = signer.getAlgorithm();
+		String algorithm = signer.getAlgorithm();
 
-        // build the JWS and sign
+		// build the JWS and sign
 
-        String jws;
+		String jws;
 
-        try {
+		try {
 
-            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.parse(algorithm)).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
-            byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.parse(algorithm)).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
-            JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.parse(algorithm));
-            Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
-            jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
-        } catch (JOSEException ex) {
+			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.parse(algorithm));
+			Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
+			jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
+		} catch (JOSEException ex) {
 
-            throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
-        }
+			throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
+		}
 
-        // done
+		// done
 
-        ldProofBuilder.jws(jws);
-    }
+		ldProofBuilder.jws(jws);
+	}
 
-    @Override
-    public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+	@Override
+	public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
-        sign(ldProofBuilder, signingInput, this.getSigner());
-    }
+		sign(ldProofBuilder, signingInput, this.getSigner());
+	}
 }

@@ -33,8 +33,8 @@ public class Canonicalizers {
 		for (Canonicalizer canonicalizer : CANONICALIZERS) {
 			List<String> algorithms = canonicalizer.getAlgorithms();
 			for (String algorithm : algorithms) {
-                List<Canonicalizer> canonicalizersList = CANONICALIZERS_BY_ALGORITHM.computeIfAbsent(algorithm, k -> new ArrayList<>());
-                canonicalizersList.add(canonicalizer);
+				List<Canonicalizer> canonicalizersList = CANONICALIZERS_BY_ALGORITHM.computeIfAbsent(algorithm, k -> new ArrayList<>());
+				canonicalizersList.add(canonicalizer);
 			}
 		}
 	}

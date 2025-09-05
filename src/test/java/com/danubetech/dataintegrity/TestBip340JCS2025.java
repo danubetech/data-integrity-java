@@ -37,77 +37,77 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBip340JCS2025 {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+	private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
-    public void testSign() throws JsonLDException, GeneralSecurityException, IOException {
+	@Test
+	public void testSign() throws JsonLDException, GeneralSecurityException, IOException {
 
-        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.unsigned.json"))));
-        jsonLdObject.setDocumentLoader(DOCUMENT_LOADER);
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.unsigned.json"))));
+		jsonLdObject.setDocumentLoader(DOCUMENT_LOADER);
 
-        Map<String, Object> keypair = objectMapper.readValue(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.keypair.json"))), Map.class);
+		Map<String, Object> keypair = objectMapper.readValue(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.keypair.json"))), Map.class);
 
-        byte[] privateKeyMultibase = Multibase.decode((String) keypair.get("privateKeyMultibase"));
-        byte[] privateKeyBytes = Arrays.copyOfRange(privateKeyMultibase, 2, 34);
-        ECKey privateKey = PrivateKeyBytes.bytes_to_secp256k1PrivateKey(privateKeyBytes);
+		byte[] privateKeyMultibase = Multibase.decode((String) keypair.get("privateKeyMultibase"));
+		byte[] privateKeyBytes = Arrays.copyOfRange(privateKeyMultibase, 2, 34);
+		ECKey privateKey = PrivateKeyBytes.bytes_to_secp256k1PrivateKey(privateKeyBytes);
 
-        byte[] publicKeyMultibase = Multibase.decode((String) keypair.get("publicKeyMultibase"));
-        byte[] publicKeyBytes = Arrays.copyOfRange(publicKeyMultibase, 2, 35);
-        ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
+		byte[] publicKeyMultibase = Multibase.decode((String) keypair.get("publicKeyMultibase"));
+		byte[] publicKeyBytes = Arrays.copyOfRange(publicKeyMultibase, 2, 35);
+		ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
 
-        PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, privateKey);
-        DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
-        signer.setCryptosuite("bip340-jcs-2025");
-        signer.sign(jsonLdObject);
+		PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, privateKey);
+		DataIntegrityProofLdSigner signer = new DataIntegrityProofLdSigner(privateKeySigner);
+		signer.setCryptosuite("bip340-jcs-2025");
+		signer.sign(jsonLdObject);
 
-        PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
-        DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
-        boolean verify = verifier.verify(jsonLdObject);
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
+		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
+		boolean verify = verifier.verify(jsonLdObject);
 
-        assertTrue(verify);
-    }
+		assertTrue(verify);
+	}
 
-    @Test
-    public void testVerify() throws JsonLDException, GeneralSecurityException, IOException {
+	@Test
+	public void testVerify() throws JsonLDException, GeneralSecurityException, IOException {
 
-        JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.signed.json"))));
-        jsonLdObject.setDocumentLoader(DOCUMENT_LOADER);
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.signed.json"))));
+		jsonLdObject.setDocumentLoader(DOCUMENT_LOADER);
 
-        Map<String, Object> keypair = objectMapper.readValue(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.keypair.json"))), Map.class);
+		Map<String, Object> keypair = objectMapper.readValue(new InputStreamReader(Objects.requireNonNull(TestBip340JCS2025.class.getResourceAsStream("bip340-jcs-2025.keypair.json"))), Map.class);
 
-        byte[] publicKeyMultibase = Multibase.decode((String) keypair.get("publicKeyMultibase"));
-        byte[] publicKeyBytes = Arrays.copyOfRange(publicKeyMultibase, 2, 35);
-        ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
+		byte[] publicKeyMultibase = Multibase.decode((String) keypair.get("publicKeyMultibase"));
+		byte[] publicKeyBytes = Arrays.copyOfRange(publicKeyMultibase, 2, 35);
+		ECKey publicKey = PublicKeyBytes.bytes_to_secp256k1PublicKey(publicKeyBytes);
 
-        PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
-        DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
-        boolean verify = verifier.verify(jsonLdObject);
+		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, publicKey);
+		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);
+		boolean verify = verifier.verify(jsonLdObject);
 
-        assertTrue(verify);
-    }
+		assertTrue(verify);
+	}
 
-    public static final DocumentLoader DOCUMENT_LOADER;
+	public static final DocumentLoader DOCUMENT_LOADER;
 
-    static {
-        Map<URI, JsonDocument> CONTEXTS;
-        try {
-            CONTEXTS = new HashMap<>(DataIntegrityContexts.CONTEXTS);
-            CONTEXTS.put(URI.create("https://www.w3.org/ns/credentials/examples/v2"),
-                    JsonDocument.of(MediaType.JSON_LD, new StringReader(
-                            """
-                            {
-                              "@context": {
-                                "@vocab": "https://www.w3.org/ns/credentials/examples#"
-                              }
-                            }
-                            """
-                    )));
-            for (Map.Entry<URI, JsonDocument> context : CONTEXTS.entrySet()) {
-                context.getValue().setDocumentUrl(context.getKey());
-            }
-        } catch (JsonLdError ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-        DOCUMENT_LOADER = new ConfigurableDocumentLoader(CONTEXTS);
-    }
+	static {
+		Map<URI, JsonDocument> CONTEXTS;
+		try {
+			CONTEXTS = new HashMap<>(DataIntegrityContexts.CONTEXTS);
+			CONTEXTS.put(URI.create("https://www.w3.org/ns/credentials/examples/v2"),
+					JsonDocument.of(MediaType.JSON_LD, new StringReader(
+							"""
+							{
+							  "@context": {
+								"@vocab": "https://www.w3.org/ns/credentials/examples#"
+							  }
+							}
+							"""
+					)));
+			for (Map.Entry<URI, JsonDocument> context : CONTEXTS.entrySet()) {
+				context.getValue().setDocumentUrl(context.getKey());
+			}
+		} catch (JsonLdError ex) {
+			throw new ExceptionInInitializerError(ex);
+		}
+		DOCUMENT_LOADER = new ConfigurableDocumentLoader(CONTEXTS);
+	}
 }

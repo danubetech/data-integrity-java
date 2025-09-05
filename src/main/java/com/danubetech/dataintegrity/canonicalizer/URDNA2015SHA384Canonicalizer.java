@@ -19,69 +19,69 @@ import java.util.List;
 
 public class URDNA2015SHA384Canonicalizer extends Canonicalizer {
 
-    private static final Logger log = LoggerFactory.getLogger(RDFC10Canonicalizer.class);
+	private static final Logger log = LoggerFactory.getLogger(RDFC10Canonicalizer.class);
 
-    public static final URDNA2015SHA384Canonicalizer INSTANCE = new URDNA2015SHA384Canonicalizer();
+	public static final URDNA2015SHA384Canonicalizer INSTANCE = new URDNA2015SHA384Canonicalizer();
 
-    public URDNA2015SHA384Canonicalizer() {
-        super(List.of("urdna2015"));
-    }
+	public URDNA2015SHA384Canonicalizer() {
+		super(List.of("urdna2015"));
+	}
 
-    public static URDNA2015SHA384Canonicalizer getInstance() {
-        return INSTANCE;
-    }
+	public static URDNA2015SHA384Canonicalizer getInstance() {
+		return INSTANCE;
+	}
 
-    @Override
-    public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException, NoSuchAlgorithmException {
+	@Override
+	public String canonicalize(JsonLDObject jsonLDObject) throws JsonLDException, IOException, NoSuchAlgorithmException {
 
-        RdfDataset rdfDataset = jsonLDObject.toDataset();
-        rdfDataset = RdfNormalize.normalize(rdfDataset, "urdna2015");
-        StringWriter stringWriter = new StringWriter();
-        NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
-        nQuadsWriter.write(rdfDataset);
-        return stringWriter.getBuffer().toString();
-    }
+		RdfDataset rdfDataset = jsonLDObject.toDataset();
+		rdfDataset = RdfNormalize.normalize(rdfDataset, "urdna2015");
+		StringWriter stringWriter = new StringWriter();
+		NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
+		nQuadsWriter.write(rdfDataset);
+		return stringWriter.getBuffer().toString();
+	}
 
-    @Override
-    public byte[] canonicalize(DataIntegrityProof dataIntegrityProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
+	@Override
+	public byte[] canonicalize(DataIntegrityProof dataIntegrityProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
-        // construct the LD object without proof
+		// construct the LD object without proof
 
-        JsonLDObject jsonLdObjectWithoutProof = JsonLDObject.builder()
-                .base(jsonLdObject)
-                .build();
-        jsonLdObjectWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        DataIntegrityProof.removeFromJsonLdObject(jsonLdObjectWithoutProof);
+		JsonLDObject jsonLdObjectWithoutProof = JsonLDObject.builder()
+				.base(jsonLdObject)
+				.build();
+		jsonLdObjectWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
+		DataIntegrityProof.removeFromJsonLdObject(jsonLdObjectWithoutProof);
 
-        // construct the LD proof without proof values
+		// construct the LD proof without proof values
 
-        DataIntegrityProof dataIntegrityProofWithoutProofValues = DataIntegrityProof.builder()
-                .base(dataIntegrityProof)
-                .defaultContexts(false)
-                .build();
-        dataIntegrityProofWithoutProofValues.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        DataIntegrityProof.removeLdProofValues(dataIntegrityProofWithoutProofValues);
+		DataIntegrityProof dataIntegrityProofWithoutProofValues = DataIntegrityProof.builder()
+				.base(dataIntegrityProof)
+				.defaultContexts(false)
+				.build();
+		dataIntegrityProofWithoutProofValues.setDocumentLoader(jsonLdObject.getDocumentLoader());
+		DataIntegrityProof.removeLdProofValues(dataIntegrityProofWithoutProofValues);
 
-        // canonicalize the LD object and LD proof options
+		// canonicalize the LD object and LD proof options
 
-        jsonLdObjectWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        String canonicalizedJsonLdObjectWithoutProof = this.canonicalize(jsonLdObjectWithoutProof);
-        byte[] canonicalizedJsonLdObjectWithoutProofHash = SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof);
-        if (log.isDebugEnabled()) log.debug("Canonicalized LD object without proof: {}", canonicalizedJsonLdObjectWithoutProof);
-        if (log.isDebugEnabled()) log.debug("Hashed canonicalized LD object without proof: {}", Hex.encodeHexString(canonicalizedJsonLdObjectWithoutProofHash));
+		jsonLdObjectWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
+		String canonicalizedJsonLdObjectWithoutProof = this.canonicalize(jsonLdObjectWithoutProof);
+		byte[] canonicalizedJsonLdObjectWithoutProofHash = SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof);
+		if (log.isDebugEnabled()) log.debug("Canonicalized LD object without proof: {}", canonicalizedJsonLdObjectWithoutProof);
+		if (log.isDebugEnabled()) log.debug("Hashed canonicalized LD object without proof: {}", Hex.encodeHexString(canonicalizedJsonLdObjectWithoutProofHash));
 
-        dataIntegrityProofWithoutProofValues.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        String canonicalizedLdProofWithoutProofValues = this.canonicalize(dataIntegrityProofWithoutProofValues);
-        byte[] canonicalizedLdProofWithoutProofValuesHash = SHAUtil.sha256(canonicalizedLdProofWithoutProofValues);
-        if (log.isDebugEnabled()) log.debug("Canonicalized LD proof without proof value: {}", canonicalizedLdProofWithoutProofValues);
-        if (log.isDebugEnabled()) log.debug("Hashed canonicalized LD proof without proof value: {}", Hex.encodeHexString(canonicalizedLdProofWithoutProofValuesHash));
+		dataIntegrityProofWithoutProofValues.setDocumentLoader(jsonLdObject.getDocumentLoader());
+		String canonicalizedLdProofWithoutProofValues = this.canonicalize(dataIntegrityProofWithoutProofValues);
+		byte[] canonicalizedLdProofWithoutProofValuesHash = SHAUtil.sha256(canonicalizedLdProofWithoutProofValues);
+		if (log.isDebugEnabled()) log.debug("Canonicalized LD proof without proof value: {}", canonicalizedLdProofWithoutProofValues);
+		if (log.isDebugEnabled()) log.debug("Hashed canonicalized LD proof without proof value: {}", Hex.encodeHexString(canonicalizedLdProofWithoutProofValuesHash));
 
-        // construct the canonicalization result
+		// construct the canonicalization result
 
-        byte[] canonicalizationResult = new byte[64];
-        System.arraycopy(canonicalizedLdProofWithoutProofValuesHash, 0, canonicalizationResult, 0, 32);
-        System.arraycopy(canonicalizedJsonLdObjectWithoutProofHash, 0, canonicalizationResult, 32, 32);
+		byte[] canonicalizationResult = new byte[64];
+		System.arraycopy(canonicalizedLdProofWithoutProofValuesHash, 0, canonicalizationResult, 0, 32);
+		System.arraycopy(canonicalizedJsonLdObjectWithoutProofHash, 0, canonicalizationResult, 32, 32);
 
-        return canonicalizationResult;
-    }
+		return canonicalizationResult;
+	}
 }

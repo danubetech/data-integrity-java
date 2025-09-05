@@ -18,102 +18,102 @@ import java.util.Objects;
 
 public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
-    private static final Logger log = LoggerFactory.getLogger(LdVerifier.class);
+	private static final Logger log = LoggerFactory.getLogger(LdVerifier.class);
 
-    private final DATAINTEGRITYSUITE dataIntegritySuite;
+	private final DATAINTEGRITYSUITE dataIntegritySuite;
 
-    private ByteVerifier verifier;
+	private ByteVerifier verifier;
 
-    protected LdVerifier(DATAINTEGRITYSUITE dataIntegritySuite, ByteVerifier verifier) {
-        this.dataIntegritySuite = dataIntegritySuite;
-        this.verifier = verifier;
-    }
+	protected LdVerifier(DATAINTEGRITYSUITE dataIntegritySuite, ByteVerifier verifier) {
+		this.dataIntegritySuite = dataIntegritySuite;
+		this.verifier = verifier;
+	}
 
-    /**
-     * @deprecated
-     * Use LdVerifierRegistry.getLdVerifierByDataIntegritySuiteTerm(dataIntegritySuiteTerm) instead.
-     */
-    @Deprecated
-    public static LdVerifier<? extends DataIntegritySuite> ldVerifierForDataIntegritySuite(String dataIntegritySuiteTerm) {
-        return LdVerifierRegistry.getLdVerifierByDataIntegritySuiteTerm(dataIntegritySuiteTerm);
-    }
+	/**
+	 * @deprecated
+	 * Use LdVerifierRegistry.getLdVerifierByDataIntegritySuiteTerm(dataIntegritySuiteTerm) instead.
+	 */
+	@Deprecated
+	public static LdVerifier<? extends DataIntegritySuite> ldVerifierForDataIntegritySuite(String dataIntegritySuiteTerm) {
+		return LdVerifierRegistry.getLdVerifierByDataIntegritySuiteTerm(dataIntegritySuiteTerm);
+	}
 
-    /**
-     * @deprecated
-     * Use LdVerifierRegistry.getLdVerifierByDataIntegritySuite(dataIntegritySuite) instead.
-     */
-    @Deprecated
-    public static LdVerifier<? extends DataIntegritySuite> ldVerifierForDataIntegritySuite(DataIntegritySuite dataIntegritySuite) {
-        return LdVerifierRegistry.getLdVerifierByDataIntegritySuite(dataIntegritySuite);
-    }
+	/**
+	 * @deprecated
+	 * Use LdVerifierRegistry.getLdVerifierByDataIntegritySuite(dataIntegritySuite) instead.
+	 */
+	@Deprecated
+	public static LdVerifier<? extends DataIntegritySuite> ldVerifierForDataIntegritySuite(DataIntegritySuite dataIntegritySuite) {
+		return LdVerifierRegistry.getLdVerifierByDataIntegritySuite(dataIntegritySuite);
+	}
 
-    public boolean verify(JsonLDObject jsonLdObject, DataIntegrityProof dataIntegrityProof) throws IOException, GeneralSecurityException, JsonLDException {
+	public boolean verify(JsonLDObject jsonLdObject, DataIntegrityProof dataIntegrityProof) throws IOException, GeneralSecurityException, JsonLDException {
 
-        // check the proof object
+		// check the proof object
 
-        if (! this.getDataIntegritySuite().getTerm().equals(dataIntegrityProof.getType()))
-            throw new GeneralSecurityException("Unexpected signature type: " + dataIntegrityProof.getType() + " is not " + this.getDataIntegritySuite().getTerm());
+		if (! this.getDataIntegritySuite().getTerm().equals(dataIntegrityProof.getType()))
+			throw new GeneralSecurityException("Unexpected signature type: " + dataIntegrityProof.getType() + " is not " + this.getDataIntegritySuite().getTerm());
 
-        // initialize
+		// initialize
 
-        this.initialize(dataIntegrityProof);
+		this.initialize(dataIntegrityProof);
 
-        // construct LD proof options
+		// construct LD proof options
 
-        DataIntegrityProof ldProofOptions = DataIntegrityProof.fromJson(dataIntegrityProof.toJson());
-        if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
-            JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
-        }
+		DataIntegrityProof ldProofOptions = DataIntegrityProof.fromJson(dataIntegrityProof.toJson());
+		if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
+			JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
+		}
 
-        // obtain the canonicalized document
+		// obtain the canonicalized document
 
-        Canonicalizer canonicalizer = this.getCanonicalizer(ldProofOptions);
-        byte[] canonicalizationResult = canonicalizer.canonicalize(ldProofOptions, jsonLdObject);
-        if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHexString(canonicalizationResult));
+		Canonicalizer canonicalizer = this.getCanonicalizer(ldProofOptions);
+		byte[] canonicalizationResult = canonicalizer.canonicalize(ldProofOptions, jsonLdObject);
+		if (log.isDebugEnabled()) log.debug("Canonicalization result with {}: {}", canonicalizer.getClass().getSimpleName(), Hex.encodeHexString(canonicalizationResult));
 
-        // verify
+		// verify
 
-        boolean verify = this.verify(canonicalizationResult, ldProofOptions);
-        if (log.isDebugEnabled()) log.debug("Verified data integrity proof: {} --> {}", dataIntegrityProof, verify);
+		boolean verify = this.verify(canonicalizationResult, ldProofOptions);
+		if (log.isDebugEnabled()) log.debug("Verified data integrity proof: {} --> {}", dataIntegrityProof, verify);
 
-        // done
+		// done
 
-        return verify;
-    }
+		return verify;
+	}
 
-    public boolean verify(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
+	public boolean verify(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
-        // obtain the signature object
+		// obtain the signature object
 
-        DataIntegrityProof dataIntegrityProof = DataIntegrityProof.getFromJsonLDObject(jsonLdObject);
-        if (dataIntegrityProof == null) return false;
+		DataIntegrityProof dataIntegrityProof = DataIntegrityProof.getFromJsonLDObject(jsonLdObject);
+		if (dataIntegrityProof == null) return false;
 
-        // done
+		// done
 
-        return this.verify(jsonLdObject, dataIntegrityProof);
-    }
+		return this.verify(jsonLdObject, dataIntegrityProof);
+	}
 
-    public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+	public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
 
-    }
+	}
 
-    public abstract boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException;
+	public abstract boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException;
 
-    public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
+	public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
 
-    /*
-     * Getters and setters
-     */
+	/*
+	 * Getters and setters
+	 */
 
-    public DATAINTEGRITYSUITE getDataIntegritySuite() {
-        return this.dataIntegritySuite;
-    }
+	public DATAINTEGRITYSUITE getDataIntegritySuite() {
+		return this.dataIntegritySuite;
+	}
 
-    public ByteVerifier getVerifier() {
-        return this.verifier;
-    }
+	public ByteVerifier getVerifier() {
+		return this.verifier;
+	}
 
-    public void setVerifier(ByteVerifier verifier) {
-        this.verifier = verifier;
-    }
+	public void setVerifier(ByteVerifier verifier) {
+		this.verifier = verifier;
+	}
 }

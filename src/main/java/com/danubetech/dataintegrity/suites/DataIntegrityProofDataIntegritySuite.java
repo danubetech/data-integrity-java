@@ -57,7 +57,7 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 						KeyTypeName.P_256, List.of(JWSAlgorithm.ES256),
 						KeyTypeName.P_384, List.of(JWSAlgorithm.ES384),
 						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512)),
-                List.of(DataIntegrityContexts.JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2, DataIntegrityContexts.JSONLD_CONTEXT_W3C_CREDENTIALS_V2));
+				List.of(DataIntegrityContexts.JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2, DataIntegrityContexts.JSONLD_CONTEXT_W3C_CREDENTIALS_V2));
 	}
 
 	@Override

@@ -14,42 +14,42 @@ import java.security.GeneralSecurityException;
 
 public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2020DataIntegritySuite> {
 
-    public Ed25519Signature2020LdVerifier(ByteVerifier verifier) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020, verifier);
-    }
+	public Ed25519Signature2020LdVerifier(ByteVerifier verifier) {
+		super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020, verifier);
+	}
 
-    public Ed25519Signature2020LdVerifier(byte[] publicKey) {
-        this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
-    }
+	public Ed25519Signature2020LdVerifier(byte[] publicKey) {
+		this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
+	}
 
-    public Ed25519Signature2020LdVerifier() {
-        this((ByteVerifier) null);
-    }
+	public Ed25519Signature2020LdVerifier() {
+		this((ByteVerifier) null);
+	}
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015SHA256Canonicalizer.getInstance();
-    }
+	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+		return URDNA2015SHA256Canonicalizer.getInstance();
+	}
 
-    public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
+	public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
 
-        // verify
+		// verify
 
-        String proofValue = dataIntegrityProof.getProofValue();
-        if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
+		String proofValue = dataIntegrityProof.getProofValue();
+		if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
 
-        boolean verify;
+		boolean verify;
 
-        byte[] bytes = Multibase.decode(proofValue);
-        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA);
+		byte[] bytes = Multibase.decode(proofValue);
+		verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA);
 
-        // done
+		// done
 
-        return verify;
-    }
+		return verify;
+	}
 
-    @Override
-    public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+	@Override
+	public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
 
-        return verify(signingInput, dataIntegrityProof, this.getVerifier());
-    }
+		return verify(signingInput, dataIntegrityProof, this.getVerifier());
+	}
 }

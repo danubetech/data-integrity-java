@@ -14,39 +14,39 @@ import java.security.GeneralSecurityException;
 
 public class Ed25519Signature2020LdSigner extends LdSigner<Ed25519Signature2020DataIntegritySuite> {
 
-    public Ed25519Signature2020LdSigner(ByteSigner signer) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020, signer);
-    }
+	public Ed25519Signature2020LdSigner(ByteSigner signer) {
+		super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2020, signer);
+	}
 
-    public Ed25519Signature2020LdSigner(byte[] privateKey) {
-        this(new Ed25519_EdDSA_PrivateKeySigner(privateKey));
-    }
+	public Ed25519Signature2020LdSigner(byte[] privateKey) {
+		this(new Ed25519_EdDSA_PrivateKeySigner(privateKey));
+	}
 
-    public Ed25519Signature2020LdSigner() {
-        this((ByteSigner) null);
-    }
+	public Ed25519Signature2020LdSigner() {
+		this((ByteSigner) null);
+	}
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015SHA256Canonicalizer.getInstance();
-    }
+	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+		return URDNA2015SHA256Canonicalizer.getInstance();
+	}
 
-    public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+	public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
-        // sign
+		// sign
 
-        String proofValue;
+		String proofValue;
 
-        byte[] bytes = signer.sign(signingInput, JWSAlgorithm.EdDSA);
-        proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
+		byte[] bytes = signer.sign(signingInput, JWSAlgorithm.EdDSA);
+		proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
 
-        // done
+		// done
 
-        ldProofBuilder.proofValue(proofValue);
-    }
+		ldProofBuilder.proofValue(proofValue);
+	}
 
-    @Override
-    public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+	@Override
+	public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
-        sign(ldProofBuilder, signingInput, this.getSigner());
-    }
+		sign(ldProofBuilder, signingInput, this.getSigner());
+	}
 }

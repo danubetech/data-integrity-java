@@ -6,24 +6,24 @@ import java.security.GeneralSecurityException;
 
 public class RDFC10SHA384Canonicalizer extends RDFC10Canonicalizer {
 
-    private static final RDFC10SHA384Canonicalizer INSTANCE = new RDFC10SHA384Canonicalizer();
+	private static final RDFC10SHA384Canonicalizer INSTANCE = new RDFC10SHA384Canonicalizer();
 
-    public static RDFC10SHA384Canonicalizer getInstance() {
-        return INSTANCE;
-    }
+	public static RDFC10SHA384Canonicalizer getInstance() {
+		return INSTANCE;
+	}
 
-    @Override
-    public String hashAlgorithm() {
-        return "SHA-384";
-    }
+	@Override
+	public String hashAlgorithm() {
+		return "SHA-384";
+	}
 
-    @Override
-    public int hashLength() {
-        return 48;
-    }
+	@Override
+	public int hashLength() {
+		return 48;
+	}
 
-    @Override
-    public byte[] hash(byte[] input) throws GeneralSecurityException {
-        return SHA384Provider.get().sha384(input);
-    }
+	@Override
+	public byte[] hash(byte[] input) throws GeneralSecurityException {
+		return SHA384Provider.get().sha384(input);
+	}
 }

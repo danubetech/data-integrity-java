@@ -16,39 +16,39 @@ import java.util.Map;
 
 public class JcsEcdsaSecp256k1Signature2019LdSigner extends LdSigner<JcsEcdsaSecp256k1Signature2019DataIntegritySuite> {
 
-    public JcsEcdsaSecp256k1Signature2019LdSigner(ByteSigner signer) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019, signer);
-    }
+	public JcsEcdsaSecp256k1Signature2019LdSigner(ByteSigner signer) {
+		super(DataIntegritySuites.DATA_INTEGRITY_SUITE_JCSECDSASECP256L1SIGNATURE2019, signer);
+	}
 
-    public JcsEcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
-        this(new secp256k1_ES256K_PrivateKeySigner(privateKey));
-    }
+	public JcsEcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
+		this(new secp256k1_ES256K_PrivateKeySigner(privateKey));
+	}
 
-    public JcsEcdsaSecp256k1Signature2019LdSigner() {
-        this((ByteSigner) null);
-    }
+	public JcsEcdsaSecp256k1Signature2019LdSigner() {
+		this((ByteSigner) null);
+	}
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return JCSSHA256Canonicalizer.getInstance();
-    }
+	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+		return JCSSHA256Canonicalizer.getInstance();
+	}
 
-    public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+	public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
-        // sign
+		// sign
 
-        String signatureValue;
+		String signatureValue;
 
-        byte[] bytes = signer.sign(signingInput, JWSAlgorithm.ES256K);
-        signatureValue = Base58.encode(bytes);
+		byte[] bytes = signer.sign(signingInput, JWSAlgorithm.ES256K);
+		signatureValue = Base58.encode(bytes);
 
-        // done
+		// done
 
-        ldProofBuilder.properties(Map.of("signatureValue", signatureValue));
-    }
+		ldProofBuilder.properties(Map.of("signatureValue", signatureValue));
+	}
 
-    @Override
-    public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+	@Override
+	public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
-        sign(ldProofBuilder, signingInput, this.getSigner());
-    }
+		sign(ldProofBuilder, signingInput, this.getSigner());
+	}
 }

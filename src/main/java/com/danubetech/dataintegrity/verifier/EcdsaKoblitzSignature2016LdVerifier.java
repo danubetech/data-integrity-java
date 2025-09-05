@@ -20,51 +20,51 @@ import java.text.ParseException;
 
 public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitzSignature2016DataIntegritySuite> {
 
-    public EcdsaKoblitzSignature2016LdVerifier(ByteVerifier verifier) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016, verifier);
-    }
+	public EcdsaKoblitzSignature2016LdVerifier(ByteVerifier verifier) {
+		super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ECDSAKOBLITZSIGNATURE2016, verifier);
+	}
 
-    public EcdsaKoblitzSignature2016LdVerifier(ECKey publicKey) {
-        this(new secp256k1_ES256K_PublicKeyVerifier(publicKey));
-    }
+	public EcdsaKoblitzSignature2016LdVerifier(ECKey publicKey) {
+		this(new secp256k1_ES256K_PublicKeyVerifier(publicKey));
+	}
 
-    public EcdsaKoblitzSignature2016LdVerifier() {
-        this((ByteVerifier) null);
-    }
+	public EcdsaKoblitzSignature2016LdVerifier() {
+		this((ByteVerifier) null);
+	}
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015SHA256Canonicalizer.getInstance();
-    }
+	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+		return URDNA2015SHA256Canonicalizer.getInstance();
+	}
 
-    public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
+	public static boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof, ByteVerifier verifier) throws GeneralSecurityException {
 
-        // build the JWS and verify
+		// build the JWS and verify
 
-        String jws = dataIntegrityProof.getJws();
-        if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
+		String jws = dataIntegrityProof.getJws();
+		if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
 
-        boolean verify;
+		boolean verify;
 
-        try {
+		try {
 
-            JWSObject detachedJwsObject = JWSObject.parse(jws);
-            byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
+			JWSObject detachedJwsObject = JWSObject.parse(jws);
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
 
-            JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.ES256K);
-            verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
-        } catch (JOSEException | ParseException ex) {
+			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.ES256K);
+			verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
+		} catch (JOSEException | ParseException ex) {
 
-            throw new GeneralSecurityException("JOSE verification problem: " + ex.getMessage(), ex);
-        }
+			throw new GeneralSecurityException("JOSE verification problem: " + ex.getMessage(), ex);
+		}
 
-        // done
+		// done
 
-        return verify;
-    }
+		return verify;
+	}
 
-    @Override
-    public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+	@Override
+	public boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
 
-        return verify(signingInput, dataIntegrityProof, this.getVerifier());
-    }
+		return verify(signingInput, dataIntegrityProof, this.getVerifier());
+	}
 }

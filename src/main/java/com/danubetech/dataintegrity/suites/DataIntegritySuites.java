@@ -63,8 +63,8 @@ public class DataIntegritySuites {
 		for (DataIntegritySuite dataIntegritySuite : DATA_INTEGRITY_SUITES) {
 			Set<KeyTypeName> keyTypeNames = dataIntegritySuite.getJwsAlgorithmsByKeyTypeName().keySet();
 			for (KeyTypeName keyTypeName : keyTypeNames) {
-                List<DataIntegritySuite> dataIntegritySuitesList = DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.computeIfAbsent(keyTypeName, k -> new ArrayList<>());
-                dataIntegritySuitesList.add(dataIntegritySuite);
+				List<DataIntegritySuite> dataIntegritySuitesList = DATA_INTEGRITY_SUITES_BY_KEY_TYPE_NAME.computeIfAbsent(keyTypeName, k -> new ArrayList<>());
+				dataIntegritySuitesList.add(dataIntegritySuite);
 			}
 		}
 	}

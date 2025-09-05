@@ -13,70 +13,70 @@ import java.util.Objects;
 
 public class DataIntegrityContexts {
 
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V1 = URI.create("https://w3id.org/security/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V2 = URI.create("https://w3id.org/security/v2");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V3 = URI.create("https://w3id.org/security/v3");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1 = URI.create("https://w3id.org/security/bbs/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1 = URI.create("https://w3id.org/security/suites/secp256k1-2019/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2018_V1 = URI.create("https://w3id.org/security/suites/ed25519-2018/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2020_V1 = URI.create("https://w3id.org/security/suites/ed25519-2020/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_X25519_2019_V1 = URI.create("https://w3id.org/security/suites/x25519-2019/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1 = URI.create("https://w3id.org/security/suites/jws-2020/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V1 = URI.create("https://w3id.org/security/data-integrity/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2 = URI.create("https://w3id.org/security/data-integrity/v2");
-    public static final URI JSONLD_CONTEXT_W3ID_ZCAP_V1 = URI.create("https://w3id.org/zcap/v1");
-    public static final URI JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1 = URI.create("https://w3id.org/json-ld-patch/v1");
-    public static final URI JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1 = URI.create("https://www.w3.org/2018/credentials/v1");
-    public static final URI JSONLD_CONTEXT_W3C_CREDENTIALS_V2 = URI.create("https://www.w3.org/ns/credentials/v2");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V1 = URI.create("https://w3id.org/security/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V2 = URI.create("https://w3id.org/security/v2");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_V3 = URI.create("https://w3id.org/security/v3");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1 = URI.create("https://w3id.org/security/bbs/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1 = URI.create("https://w3id.org/security/suites/secp256k1-2019/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2018_V1 = URI.create("https://w3id.org/security/suites/ed25519-2018/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2020_V1 = URI.create("https://w3id.org/security/suites/ed25519-2020/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_X25519_2019_V1 = URI.create("https://w3id.org/security/suites/x25519-2019/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1 = URI.create("https://w3id.org/security/suites/jws-2020/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V1 = URI.create("https://w3id.org/security/data-integrity/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2 = URI.create("https://w3id.org/security/data-integrity/v2");
+	public static final URI JSONLD_CONTEXT_W3ID_ZCAP_V1 = URI.create("https://w3id.org/zcap/v1");
+	public static final URI JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1 = URI.create("https://w3id.org/json-ld-patch/v1");
+	public static final URI JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1 = URI.create("https://www.w3.org/2018/credentials/v1");
+	public static final URI JSONLD_CONTEXT_W3C_CREDENTIALS_V2 = URI.create("https://www.w3.org/ns/credentials/v2");
 
-    public static final Map<URI, JsonDocument> CONTEXTS;
-    public static final DocumentLoader DOCUMENT_LOADER;
+	public static final Map<URI, JsonDocument> CONTEXTS;
+	public static final DocumentLoader DOCUMENT_LOADER;
 
-    static {
+	static {
 
-        try {
+		try {
 
-            CONTEXTS = new HashMap<>();
+			CONTEXTS = new HashMap<>();
 
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v1.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V2,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v2.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V3,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v3-unstable.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-bbs-v1.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-secp256k1-2019.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2018_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-ed25519-2018.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2020_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-ed25519-2020.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_X25519_2019_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-x25519-2019.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-jws-2020.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-dataintegrity-v1.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-dataintegrity-v2.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_ZCAP_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("zcap-v1.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("json-ld-patch-v1.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v1.jsonld"))));
-            CONTEXTS.put(JSONLD_CONTEXT_W3C_CREDENTIALS_V2,
-                    JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v2.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v1.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V2,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v2.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_V3,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-v3-unstable.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-bbs-v1.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_SECP256K1_2019_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-secp256k1-2019.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2018_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-ed25519-2018.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_ED25519_2020_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-ed25519-2020.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_X25519_2019_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-x25519-2019.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_SUITES_JWS_2020_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-suites-jws-2020.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-dataintegrity-v1.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("security-dataintegrity-v2.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_ZCAP_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("zcap-v1.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("json-ld-patch-v1.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v1.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3C_CREDENTIALS_V2,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v2.jsonld"))));
 
-            for (Map.Entry<URI, JsonDocument> context : CONTEXTS.entrySet()) {
-                context.getValue().setDocumentUrl(context.getKey());
-            }
-        } catch (JsonLdError ex) {
+			for (Map.Entry<URI, JsonDocument> context : CONTEXTS.entrySet()) {
+				context.getValue().setDocumentUrl(context.getKey());
+			}
+		} catch (JsonLdError ex) {
 
-            throw new ExceptionInInitializerError(ex);
-        }
+			throw new ExceptionInInitializerError(ex);
+		}
 
-        DOCUMENT_LOADER = new ConfigurableDocumentLoader(CONTEXTS);
-    }
+		DOCUMENT_LOADER = new ConfigurableDocumentLoader(CONTEXTS);
+	}
 }

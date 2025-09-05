@@ -20,49 +20,49 @@ import java.util.Collections;
 
 public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018DataIntegritySuite> {
 
-    public Ed25519Signature2018LdSigner(ByteSigner signer) {
-        super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018, signer);
-    }
+	public Ed25519Signature2018LdSigner(ByteSigner signer) {
+		super(DataIntegritySuites.DATA_INTEGRITY_SUITE_ED25519SIGNATURE2018, signer);
+	}
 
-    public Ed25519Signature2018LdSigner(byte[] privateKey) {
-        this(new Ed25519_EdDSA_PrivateKeySigner(privateKey));
-    }
+	public Ed25519Signature2018LdSigner(byte[] privateKey) {
+		this(new Ed25519_EdDSA_PrivateKeySigner(privateKey));
+	}
 
-    public Ed25519Signature2018LdSigner() {
-        this((ByteSigner) null);
-    }
+	public Ed25519Signature2018LdSigner() {
+		this((ByteSigner) null);
+	}
 
-    public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
-        return URDNA2015SHA256Canonicalizer.getInstance();
-    }
+	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
+		return URDNA2015SHA256Canonicalizer.getInstance();
+	}
 
-    public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+	public static void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
-        // build the JWS and sign
+		// build the JWS and sign
 
-        String jws;
+		String jws;
 
-        try {
+		try {
 
-            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
-            byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
-            JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.EdDSA);
-            Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
-            jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
-        } catch (JOSEException ex) {
+			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.EdDSA);
+			Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
+			jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
+		} catch (JOSEException ex) {
 
-            throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
-        }
+			throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
+		}
 
-        // done
+		// done
 
-        ldProofBuilder.jws(jws);
-    }
+		ldProofBuilder.jws(jws);
+	}
 
-    @Override
-    public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+	@Override
+	public void sign(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
-        sign(ldProofBuilder, signingInput, this.getSigner());
-    }
+		sign(ldProofBuilder, signingInput, this.getSigner());
+	}
 }
