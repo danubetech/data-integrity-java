@@ -47,7 +47,7 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 		return LdVerifierRegistry.getLdVerifierByDataIntegritySuite(dataIntegritySuite);
 	}
 
-	public boolean verify(JsonLDObject jsonLdObject, DataIntegrityProof dataIntegrityProof) throws IOException, GeneralSecurityException, JsonLDException {
+	public LdVerifierResult verifyWithResult(JsonLDObject jsonLdObject, DataIntegrityProof dataIntegrityProof) throws IOException, GeneralSecurityException, JsonLDException {
 
 		// check the proof object
 
@@ -73,24 +73,32 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 
 		// verify
 
-		boolean verify = this.verify(canonicalizationResult, ldProofOptions);
-		if (log.isDebugEnabled()) log.debug("Verified data integrity proof: {} --> {}", dataIntegrityProof, verify);
+		boolean verified = this.verify(canonicalizationResult, ldProofOptions);
+		if (log.isDebugEnabled()) log.debug("Verified data integrity proof: {} --> {}", dataIntegrityProof, verified);
 
 		// done
 
-		return verify;
+		return new LdVerifierResult(dataIntegrityProof, ldProofOptions, canonicalizer, canonicalizationResult, verified);
 	}
 
-	public boolean verify(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
+	public LdVerifierResult verifyWithResult(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
 		// obtain the signature object
 
 		DataIntegrityProof dataIntegrityProof = DataIntegrityProof.getFromJsonLDObject(jsonLdObject);
-		if (dataIntegrityProof == null) return false;
+		if (dataIntegrityProof == null) return new LdVerifierResult(dataIntegrityProof, null, null, null, false);
 
 		// done
 
-		return this.verify(jsonLdObject, dataIntegrityProof);
+		return this.verifyWithResult(jsonLdObject, dataIntegrityProof);
+	}
+
+	public boolean verify(JsonLDObject jsonLdObject, DataIntegrityProof dataIntegrityProof) throws IOException, GeneralSecurityException, JsonLDException {
+		return this.verifyWithResult(jsonLdObject, dataIntegrityProof).verified();
+	}
+
+	public boolean verify(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
+		return this.verifyWithResult(jsonLdObject).verified();
 	}
 
 	public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
@@ -100,6 +108,13 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 	public abstract boolean verify(byte[] signingInput, DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException;
 
 	public abstract Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof);
+
+	/*
+	 * Helper records
+	 */
+
+	public record LdVerifierResult(DataIntegrityProof dataIntegrityProof, DataIntegrityProof ldProofOptions, Canonicalizer canonicalizer, byte[] canonicalizationResult, boolean verified) {
+	}
 
 	/*
 	 * Getters and setters
