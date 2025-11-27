@@ -158,36 +158,36 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.12.0</version>
+			<version>6.0.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>5.12.0</version>
+			<version>6.0.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>5.16.0</version>
+			<version>5.20.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>5.16.0</version>
+			<version>5.20.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>decentralized-identity</groupId>
 			<artifactId>jsonld-common-java</artifactId>
-			<version>1.14.0</version>
+			<version>1.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.danubetech</groupId>
 			<artifactId>key-formats-java</artifactId>
-			<version>1.22.0</version>
+			<version>1.23.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.setl</groupId>
@@ -208,12 +208,12 @@
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>
-			<version>10.0.2</version>
+			<version>10.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.multiformats</groupId>
 			<artifactId>java-multibase</artifactId>
-			<version>1.1.1</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hyperledger</groupId>
@@ -224,7 +224,7 @@
 		<dependency>
 			<groupId>com.google.crypto.tink</groupId>
 			<artifactId>tink</artifactId>
-			<version>1.17.0</version>
+			<version>1.19.0</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
