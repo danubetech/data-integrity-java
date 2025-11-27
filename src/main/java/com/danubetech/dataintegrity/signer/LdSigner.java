@@ -83,7 +83,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
 		// build the base proof object
 
-		DataIntegrityProof dataIntegrityProof = DataIntegrityProof.builder()
+		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofOptionsBuilder = DataIntegrityProof.builder()
 				.defaultContexts(false)
 				.defaultTypes(false)
 				.type(this.getDataIntegritySuite().getTerm())
@@ -98,28 +98,23 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 				.previousProof(this.getPreviousProof())
 				.capability(this.getCapability())
 				.capabilityChains(this.getCapabilityChains())
-				.capabilityAction(this.getCapabilityAction())
-				.build();
-		if (log.isDebugEnabled()) log.debug("Constructed data integrity proof: {}", dataIntegrityProof);
+				.capabilityAction(this.getCapabilityAction());
 
 		// initialize
 
-		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder = DataIntegrityProof.builder()
-				.base(dataIntegrityProof)
-				.defaultContexts(defaultContexts);
+		this.initialize(ldProofOptionsBuilder);
 
-		this.initialize(ldProofBuilder);
+		// construct LD proof options
+
+		DataIntegrityProof ldProofOptions = ldProofOptionsBuilder.build();
+		if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
+			JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
+		}
+		if (log.isDebugEnabled()) log.debug("Data integrity proof options: {}", ldProofOptions);
 
 		// add missing context(s)
 
 		this.loadMissingContext(jsonLdObject);
-
-		// construct LD proof options
-
-		DataIntegrityProof ldProofOptions = DataIntegrityProof.fromJson(dataIntegrityProof.toJson());
-		if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
-			JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
-		}
 
 		// obtain the canonicalized document
 
@@ -129,9 +124,13 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
 		// sign
 
+		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder = DataIntegrityProof.builder()
+				.base(ldProofOptions)
+				.defaultContexts(defaultContexts);
+
 		this.sign(ldProofBuilder, canonicalizationResult);
 
-		dataIntegrityProof = ldProofBuilder.build();
+		DataIntegrityProof dataIntegrityProof = ldProofBuilder.build();
 		if (log.isDebugEnabled()) log.debug("Signed data integrity proof: {}", dataIntegrityProof);
 
 		// add proof to JSON-LD
