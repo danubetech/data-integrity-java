@@ -65,7 +65,7 @@ public class JsonLdSignDataIntegrityProof_bip340_jcs_2025_Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("z3XoNJWmxpCDif1xVm4H8mk2jRVyBRfTw6qsvv6Mkc83GGP1KjFWyxUPVFaP2QkTpnKAvan4iftNQkQj2JE68qUth", dataIntegrityProof.getProofValue());
+		assertEquals("z3GvujVfoijLvU6HUe1eQ4pxTZ4keqZjxyKtECYt7ttQzr31rLyphV95Eh2PPJ3umzChxZQcoX6AtaYDA1LGFYxpE", dataIntegrityProof.getProofValue());
 
 		PublicKeyVerifier<?> publicKeyVerifier = PublicKeyVerifierFactory.publicKeyVerifierForKey(KeyTypeName.secp256k1, JWSAlgorithm.ES256KS, TestKeys.testSecp256k1PublicKey);
 		DataIntegrityProofLdVerifier verifier = new DataIntegrityProofLdVerifier(publicKeyVerifier);

@@ -57,10 +57,10 @@ public class JsonLdSignJcsEd25519Signature2020Test {
 		assertEquals(expires, dataIntegrityProof.getExpires());
 		assertEquals(domain, dataIntegrityProof.getDomain());
 		assertEquals(nonce, dataIntegrityProof.getNonce());
-		assertEquals("5weiGcw9Tg7HtLVgV9Cth9UCFsGq1RKqTWGj5RZrTeF25s5Z6kUUukt3Uh5Z53hTaaGNUsub3RNzozNTHg7B7W9D", dataIntegrityProof.getJsonObject().get("signatureValue"));
+		assertEquals("2uNctn17nSsgMd8PGRWPrxdwopwRn9yjUEf3WKWsZEswaDkRJnh1rsYGxitSQYyxWNJPANzu2fkshMnN5bw9rj44", dataIntegrityProof.getJsonObject().get("signatureValue"));
 
 		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestKeys.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, dataIntegrityProof);
 		assertTrue(verify);
-	}
+ 	}
 }

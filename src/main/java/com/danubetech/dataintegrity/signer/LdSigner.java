@@ -17,7 +17,6 @@ import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
@@ -81,9 +80,13 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
 	public DataIntegrityProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
-		// build the base proof object
+        // add missing context(s)
 
-		DataIntegrityProof dataIntegrityProof = DataIntegrityProof.builder()
+        this.loadMissingContext(jsonLdObject);
+
+		// build the proof options
+
+		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofOptionsBuilder = DataIntegrityProof.builder()
 				.defaultContexts(false)
 				.defaultTypes(false)
 				.type(this.getDataIntegritySuite().getTerm())
@@ -98,28 +101,16 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 				.previousProof(this.getPreviousProof())
 				.capability(this.getCapability())
 				.capabilityChains(this.getCapabilityChains())
-				.capabilityAction(this.getCapabilityAction())
-				.build();
-		if (log.isDebugEnabled()) log.debug("Constructed data integrity proof: {}", dataIntegrityProof);
+				.capabilityAction(this.getCapabilityAction());
 
 		// initialize
 
-		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder = DataIntegrityProof.builder()
-				.base(dataIntegrityProof)
-				.defaultContexts(defaultContexts);
-
-		this.initialize(ldProofBuilder);
-
-		// add missing context(s)
-
-		this.loadMissingContext(jsonLdObject);
+		this.initialize(ldProofOptionsBuilder, jsonLdObject);
 
 		// construct LD proof options
 
-		DataIntegrityProof ldProofOptions = DataIntegrityProof.fromJson(dataIntegrityProof.toJson());
-		if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
-			JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
-		}
+		DataIntegrityProof ldProofOptions = ldProofOptionsBuilder.build();
+		if (log.isDebugEnabled()) log.debug("Data integrity proof options: {}", ldProofOptions);
 
 		// obtain the canonicalized document
 
@@ -129,9 +120,13 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
 		// sign
 
+		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder = DataIntegrityProof.builder()
+				.base(ldProofOptions)
+				.defaultContexts(defaultContexts);
+
 		this.sign(ldProofBuilder, canonicalizationResult);
 
-		dataIntegrityProof = ldProofBuilder.build();
+		DataIntegrityProof dataIntegrityProof = ldProofBuilder.build();
 		if (log.isDebugEnabled()) log.debug("Signed data integrity proof: {}", dataIntegrityProof);
 
 		// add proof to JSON-LD
@@ -148,7 +143,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 		return this.sign(jsonLdObject, true, false);
 	}
 
-	public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder) throws GeneralSecurityException {
+	public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLdObject) throws GeneralSecurityException {
 
 	}
 

@@ -8,6 +8,7 @@ import com.danubetech.dataintegrity.suites.JcsEd25519Signature2020DataIntegrityS
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
+import foundation.identity.jsonld.JsonLDObject;
 import io.ipfs.multibase.Base58;
 
 import java.security.GeneralSecurityException;
@@ -27,6 +28,7 @@ public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signatur
 		this((ByteSigner) null);
 	}
 
+    @Override
 	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
 		return JCSSHA256Canonicalizer.getInstance();
 	}

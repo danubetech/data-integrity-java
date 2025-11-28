@@ -13,6 +13,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
+import foundation.identity.jsonld.JsonLDObject;
 
 import java.security.GeneralSecurityException;
 import java.util.Collections;
@@ -27,6 +28,13 @@ public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020D
 		this(null);
 	}
 
+
+    @Override
+    public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLDObject) throws GeneralSecurityException {
+        proofOptionsBuilder.contexts(jsonLDObject.getContexts());
+    }
+
+    @Override
 	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
 		return URDNA2015SHA256Canonicalizer.getInstance();
 	}

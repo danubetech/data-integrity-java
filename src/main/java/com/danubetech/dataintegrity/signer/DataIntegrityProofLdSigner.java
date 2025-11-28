@@ -5,11 +5,13 @@ import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteSigner;
+import foundation.identity.jsonld.JsonLDObject;
 import io.ipfs.multibase.Multibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataIntegritySuite> {
 
@@ -24,7 +26,7 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
 	}
 
 	@Override
-	public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder) throws GeneralSecurityException {
+	public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLDObject) throws GeneralSecurityException {
 
 		// determine algorithm and cryptosuite
 
@@ -37,9 +39,15 @@ public class DataIntegrityProofLdSigner extends LdSigner<DataIntegrityProofDataI
 			}
 		} else {
 			cryptosuite = DataIntegritySuites.DATA_INTEGRITY_SUITE_DATAINTEGRITYPROOF.findDefaultCryptosuiteForJwsAlgorithm(algorithm);
-			ldProofBuilder.cryptosuite(cryptosuite);
+			proofOptionsBuilder.cryptosuite(cryptosuite);
 		}
 		if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);
+
+        // determine @context
+
+        if (cryptosuite.contains("rdfc")) {
+            proofOptionsBuilder.forceContextsArray(true).contexts(jsonLDObject.getContexts().stream().filter(Objects::nonNull).toList());
+        }
 	}
 
 	@Override

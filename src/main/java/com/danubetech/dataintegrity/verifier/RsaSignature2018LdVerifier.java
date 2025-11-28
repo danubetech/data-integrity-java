@@ -13,10 +13,12 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
+import foundation.identity.jsonld.JsonLDObject;
 
 import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
+import java.util.Objects;
 
 public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018DataIntegritySuite> {
 
@@ -32,6 +34,12 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018DataI
 		this((ByteVerifier) null);
 	}
 
+    @Override
+    public void initialize(DataIntegrityProof dataIntegrityProof, DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLDObject) throws GeneralSecurityException {
+        proofOptionsBuilder.forceContextsArray(true).contexts(jsonLDObject.getContexts().stream().filter(Objects::nonNull).toList());
+    }
+
+    @Override
 	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
 		return URDNA2015SHA256Canonicalizer.getInstance();
 	}
