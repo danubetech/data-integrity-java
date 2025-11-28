@@ -5,11 +5,13 @@ import com.danubetech.dataintegrity.canonicalizer.Canonicalizer;
 import com.danubetech.dataintegrity.suites.DataIntegrityProofDataIntegritySuite;
 import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteVerifier;
+import foundation.identity.jsonld.JsonLDObject;
 import io.ipfs.multibase.Multibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofDataIntegritySuite> {
 
@@ -24,7 +26,7 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
 	}
 
 	@Override
-	public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+    public void initialize(DataIntegrityProof dataIntegrityProof, DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLDObject) throws GeneralSecurityException {
 
 		// determine algorithm and cryptosuite
 
@@ -36,6 +38,12 @@ public class DataIntegrityProofLdVerifier extends LdVerifier<DataIntegrityProofD
 			throw new GeneralSecurityException("Algorithm " + algorithm + " is not supported by cryptosuite " + cryptosuite);
 		}
 		if (log.isDebugEnabled()) log.debug("Determined algorithm {} and cryptosuite: {}", algorithm, cryptosuite);
+
+        // determine @context
+
+        if (cryptosuite.contains("rdfc")) {
+            proofOptionsBuilder.forceContextsArray(true).contexts(jsonLDObject.getContexts().stream().filter(Objects::nonNull).toList());
+        }
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Objects;
 
 public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
@@ -54,16 +53,19 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 		if (! this.getDataIntegritySuite().getTerm().equals(dataIntegrityProof.getType()))
 			throw new GeneralSecurityException("Unexpected signature type: " + dataIntegrityProof.getType() + " is not " + this.getDataIntegritySuite().getTerm());
 
+        // build the proof options
+
+        DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofOptionsBuilder = DataIntegrityProof.builder()
+                .base(dataIntegrityProof);
+
 		// initialize
 
-		this.initialize(dataIntegrityProof);
+		this.initialize(dataIntegrityProof, ldProofOptionsBuilder, jsonLdObject);
 
 		// construct LD proof options
 
-		DataIntegrityProof ldProofOptions = DataIntegrityProof.fromJson(dataIntegrityProof.toJson());
-		if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
-			JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
-		}
+        DataIntegrityProof ldProofOptions = ldProofOptionsBuilder.build();
+        if (log.isDebugEnabled()) log.debug("Data integrity proof options: {}", ldProofOptions);
 
 		// obtain the canonicalized document
 
@@ -101,7 +103,7 @@ public abstract class LdVerifier<DATAINTEGRITYSUITE extends DataIntegritySuite> 
 		return this.verifyWithResult(jsonLdObject).verified();
 	}
 
-	public void initialize(DataIntegrityProof dataIntegrityProof) throws GeneralSecurityException {
+    public void initialize(DataIntegrityProof dataIntegrityProof, DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLdObject) throws GeneralSecurityException {
 
 	}
 

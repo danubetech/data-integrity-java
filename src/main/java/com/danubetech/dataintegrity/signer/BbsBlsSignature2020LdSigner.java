@@ -9,9 +9,11 @@ import com.danubetech.dataintegrity.suites.DataIntegritySuites;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.Bls12381G2_BBSPlus_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
+import foundation.identity.jsonld.JsonLDObject;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020DataIntegritySuite> {
 
@@ -27,6 +29,12 @@ public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020Dat
 		this((ByteSigner) null);
 	}
 
+    @Override
+    public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLDObject) throws GeneralSecurityException {
+        proofOptionsBuilder.forceContextsArray(true).contexts(jsonLDObject.getContexts().stream().filter(Objects::nonNull).toList());
+    }
+
+    @Override
 	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
 		return URDNA2015SHA256Canonicalizer.getInstance();
 	}

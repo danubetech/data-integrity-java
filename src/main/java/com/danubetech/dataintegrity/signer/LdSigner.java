@@ -17,7 +17,6 @@ import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
@@ -81,7 +80,11 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
 	public DataIntegrityProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
-		// build the base proof object
+        // add missing context(s)
+
+        this.loadMissingContext(jsonLdObject);
+
+		// build the proof options
 
 		DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofOptionsBuilder = DataIntegrityProof.builder()
 				.defaultContexts(false)
@@ -102,19 +105,12 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 
 		// initialize
 
-		this.initialize(ldProofOptionsBuilder);
+		this.initialize(ldProofOptionsBuilder, jsonLdObject);
 
 		// construct LD proof options
 
 		DataIntegrityProof ldProofOptions = ldProofOptionsBuilder.build();
-		if (ldProofOptions.getContexts() == null || ldProofOptions.getContexts().isEmpty()) {
-			JsonLDUtils.jsonLdAdd(ldProofOptions, Keywords.CONTEXT, jsonLdObject.getContexts().stream().map(JsonLDUtils::uriToString).filter(Objects::nonNull).toList());
-		}
 		if (log.isDebugEnabled()) log.debug("Data integrity proof options: {}", ldProofOptions);
-
-		// add missing context(s)
-
-		this.loadMissingContext(jsonLdObject);
 
 		// obtain the canonicalized document
 
@@ -147,7 +143,7 @@ public abstract class LdSigner<DATAINTEGRITYSUITE extends DataIntegritySuite> {
 		return this.sign(jsonLdObject, true, false);
 	}
 
-	public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> ldProofBuilder) throws GeneralSecurityException {
+	public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLdObject) throws GeneralSecurityException {
 
 	}
 

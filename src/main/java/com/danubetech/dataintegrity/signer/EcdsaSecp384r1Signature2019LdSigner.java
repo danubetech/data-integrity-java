@@ -8,10 +8,12 @@ import com.danubetech.dataintegrity.suites.EcdsaSecp384r1Signature2019DataIntegr
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.P_384_ES384_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
+import foundation.identity.jsonld.JsonLDObject;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPrivateKey;
+import java.util.Objects;
 
 public class EcdsaSecp384r1Signature2019LdSigner extends LdSigner<EcdsaSecp384r1Signature2019DataIntegritySuite> {
 
@@ -27,6 +29,12 @@ public class EcdsaSecp384r1Signature2019LdSigner extends LdSigner<EcdsaSecp384r1
 		this((ByteSigner) null);
 	}
 
+    @Override
+    public void initialize(DataIntegrityProof.Builder<? extends DataIntegrityProof.Builder<?>> proofOptionsBuilder, JsonLDObject jsonLDObject) throws GeneralSecurityException {
+        proofOptionsBuilder.forceContextsArray(true).contexts(jsonLDObject.getContexts().stream().filter(Objects::nonNull).toList());
+    }
+
+    @Override
 	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
 		return URDNA2015SHA384Canonicalizer.getInstance();
 	}

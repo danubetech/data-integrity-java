@@ -28,6 +28,7 @@ public class JcsEcdsaSecp256k1Signature2019LdSigner extends LdSigner<JcsEcdsaSec
 		this((ByteSigner) null);
 	}
 
+    @Override
 	public Canonicalizer getCanonicalizer(DataIntegrityProof dataIntegrityProof) {
 		return JCSSHA256Canonicalizer.getInstance();
 	}
