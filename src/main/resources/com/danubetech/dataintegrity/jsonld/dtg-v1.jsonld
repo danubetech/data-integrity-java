@@ -1,0 +1,61 @@
+{
+    "@context": {
+        "@protected": true,
+        "DTGCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#DTGCredential"
+        },
+        "RelationshipCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#RelationshipCredential"
+        },
+        "MembershipCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#MembershipCredential"
+        },
+        "InvitationCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#InvitationCredential"
+        },
+        "PersonaCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#PersonaCredential"
+        },
+        "EndorsementCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#EndorsementCredential",
+            "@context": {
+                "@protected": true,
+                "endorsement": {
+                    "@id": "https://firstperson.network/credentials/dtg/v1#endorsement",
+                    "@context": {
+                        "@protected": true,
+                        "type": "@type",
+                        "name": "https://firstperson.network/credentials/dtg/v1#name",
+                        "competencyLevel": "https://firstperson.network/credentials/dtg/v1#competencyLevel"
+                    }
+                }
+            }
+        },
+        "WitnessCredential": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#WitnessCredential",
+            "@context": {
+                "@protected": true,
+                "digest": "https://firstperson.network/credentials/dtg/v1#digest",
+                "witnessContext": {
+                    "@id": "https://firstperson.network/credentials/dtg/v1#witnessContext",
+                    "@context": {
+                        "@protected": true,
+                        "event": "https://firstperson.network/credentials/dtg/v1#event",
+                        "sessionId": "https://firstperson.network/credentials/dtg/v1#sessionId",
+                        "method": "https://firstperson.network/credentials/dtg/v1#method"
+                    }
+                }
+            }
+        },
+        "RelationshipCard": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#RelationshipCard",
+            "@context": {
+                "@protected": true,
+                "card": {
+                    "@id": "https://firstperson.network/credentials/dtg/v1#card",
+                    "@type": "@json"
+                }
+            }
+        }
+    }
+}
