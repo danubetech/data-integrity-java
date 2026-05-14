@@ -28,6 +28,7 @@ public class DataIntegrityContexts {
 	public static final URI JSONLD_CONTEXT_W3ID_JSON_LD_PATCH_V1 = URI.create("https://w3id.org/json-ld-patch/v1");
 	public static final URI JSONLD_CONTEXT_W3C_2018_CREDENTIALS_V1 = URI.create("https://www.w3.org/2018/credentials/v1");
 	public static final URI JSONLD_CONTEXT_W3C_CREDENTIALS_V2 = URI.create("https://www.w3.org/ns/credentials/v2");
+	public static final URI JSONLD_CONTEXT_W3C_ACTIVITYSTREAMS = URI.create("https://www.w3.org/ns/activitystreams");
 
 	public static final Map<URI, JsonDocument> CONTEXTS;
 	public static final DocumentLoader DOCUMENT_LOADER;
@@ -68,6 +69,8 @@ public class DataIntegrityContexts {
 					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v1.jsonld"))));
 			CONTEXTS.put(JSONLD_CONTEXT_W3C_CREDENTIALS_V2,
 					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("credentials-v2.jsonld"))));
+			CONTEXTS.put(JSONLD_CONTEXT_W3C_ACTIVITYSTREAMS,
+					JsonDocument.of(MediaType.JSON_LD, Objects.requireNonNull(DataIntegrityContexts.class.getResourceAsStream("activitystreams.jsonld"))));
 
 			for (Map.Entry<URI, JsonDocument> context : CONTEXTS.entrySet()) {
 				context.getValue().setDocumentUrl(context.getKey());
