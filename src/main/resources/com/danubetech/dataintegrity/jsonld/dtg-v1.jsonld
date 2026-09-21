@@ -17,19 +17,7 @@
             "@id": "https://firstperson.network/credentials/dtg/v1#PersonaCredential"
         },
         "EndorsementCredential": {
-            "@id": "https://firstperson.network/credentials/dtg/v1#EndorsementCredential",
-            "@context": {
-                "@protected": true,
-                "endorsement": {
-                    "@id": "https://firstperson.network/credentials/dtg/v1#endorsement",
-                    "@context": {
-                        "@protected": true,
-                        "type": "@type",
-                        "name": "https://firstperson.network/credentials/dtg/v1#name",
-                        "competencyLevel": "https://firstperson.network/credentials/dtg/v1#competencyLevel"
-                    }
-                }
-            }
+            "@id": "https://firstperson.network/credentials/dtg/v1#EndorsementCredential"
         },
         "WitnessCredential": {
             "@id": "https://firstperson.network/credentials/dtg/v1#WitnessCredential",
@@ -55,6 +43,20 @@
                     "@id": "https://firstperson.network/credentials/dtg/v1#card",
                     "@type": "@json"
                 }
+            }
+        },
+        "Person": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#Person",
+            "@context": {
+                "endorsement": "https://firstperson.network/credentials/dtg/v1#endorsement"
+            }
+        },
+        "SkillEndorsement": {
+            "@id": "https://firstperson.network/credentials/dtg/v1#SkillEndorsement",
+            "@context": {
+                "@protected": true,
+                "name": "https://schema.org/name",
+                "competencyLevel": "https://firstperson.network/credentials/dtg/v1#competencyLevel"
             }
         }
     }
