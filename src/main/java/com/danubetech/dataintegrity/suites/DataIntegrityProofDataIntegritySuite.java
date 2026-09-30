@@ -36,6 +36,16 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 			),
 			"bip340-jcs-2025", Map.of(
 					JWSAlgorithm.ES256KS, JCSSHA256Canonicalizer.getInstance()
+			),
+			"mldsa-rdfc-2025", Map.of(
+					JWSAlgorithm.ML_DSA_44, RDFC10SHA256Canonicalizer.getInstance(),
+					JWSAlgorithm.ML_DSA_65, RDFC10SHA384Canonicalizer.getInstance(),
+					JWSAlgorithm.ML_DSA_87, RDFC10SHA512Canonicalizer.getInstance()
+			),
+			"mldsa-jcs-2025", Map.of(
+					JWSAlgorithm.ML_DSA_44, JCSSHA256Canonicalizer.getInstance(),
+					JWSAlgorithm.ML_DSA_65, JCSSHA384Canonicalizer.getInstance(),
+					JWSAlgorithm.ML_DSA_87, JCSSHA512Canonicalizer.getInstance()
 			)
 	);
 
@@ -45,7 +55,10 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 			JWSAlgorithm.ES256KS, List.of("bip340-rdfc-2025", "bip340-jcs-2025"),
 			JWSAlgorithm.ES256, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
 			JWSAlgorithm.ES384, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
-			JWSAlgorithm.ES512, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019")
+			JWSAlgorithm.ES512, List.of("ecdsa-rdfc-2019", "ecdsa-jcs-2019"),
+			JWSAlgorithm.ML_DSA_44, List.of("mldsa-rdfc-2025", "mldsa-jcs-2025"),
+			JWSAlgorithm.ML_DSA_65, List.of("mldsa-rdfc-2025", "mldsa-jcs-2025"),
+			JWSAlgorithm.ML_DSA_87, List.of("mldsa-rdfc-2025", "mldsa-jcs-2025")
 	);
 
 	DataIntegrityProofDataIntegritySuite() {
@@ -56,7 +69,10 @@ public class DataIntegrityProofDataIntegritySuite extends DataIntegritySuite {
 						KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K, JWSAlgorithm.ES256KS),
 						KeyTypeName.P_256, List.of(JWSAlgorithm.ES256),
 						KeyTypeName.P_384, List.of(JWSAlgorithm.ES384),
-						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512)),
+						KeyTypeName.P_521, List.of(JWSAlgorithm.ES512),
+						KeyTypeName.ML_DSA_44, List.of(JWSAlgorithm.ML_DSA_44),
+						KeyTypeName.ML_DSA_65, List.of(JWSAlgorithm.ML_DSA_65),
+						KeyTypeName.ML_DSA_87, List.of(JWSAlgorithm.ML_DSA_87)),
 				List.of(DataIntegrityContexts.JSONLD_CONTEXT_W3ID_SECURITY_DATAINTEGRITY_V2, DataIntegrityContexts.JSONLD_CONTEXT_W3C_CREDENTIALS_V2));
 	}
 
